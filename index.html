@@ -1,0 +1,2673 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/>
+  <meta content="mobile_tab" name="shell-type"/>
+  <title>FreshWash - Smart Laundry Management System</title>
+  
+  <!-- Progressive Web App (PWA) Meta & Icons -->
+  <link rel="manifest" href="manifest.json"/>
+  <meta name="theme-color" content="#00685f"/>
+  <meta name="mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="default"/>
+  <meta name="apple-mobile-web-app-title" content="FreshWash"/>
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png"/>
+  <link rel="icon" type="image/svg+xml" href="assets/icon.svg"/>
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/icon-192.png"/>
+  
+  <link href="https://fonts.googleapis.com" rel="preconnect"/>
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            'primary': '#00685f',
+            'on-primary': '#ffffff',
+            'primary-container': '#008378',
+            'on-primary-container': '#f4fffc',
+            'inverse-primary': '#6bd8cb',
+            'primary-fixed': '#89f5e7',
+            'primary-fixed-dim': '#6bd8cb',
+            'on-primary-fixed': '#00201d',
+            'on-primary-fixed-variant': '#005049',
+            'secondary': '#00687a',
+            'on-secondary': '#ffffff',
+            'secondary-container': '#57dffe',
+            'on-secondary-container': '#006172',
+            'secondary-fixed': '#acedff',
+            'secondary-fixed-dim': '#4cd7f6',
+            'on-secondary-fixed': '#001f26',
+            'on-secondary-fixed-variant': '#004e5c',
+            'tertiary': '#525e5c',
+            'on-tertiary': '#ffffff',
+            'tertiary-container': '#6b7775',
+            'on-tertiary-container': '#f3fffc',
+            'tertiary-fixed': '#d8e5e2',
+            'tertiary-fixed-dim': '#bcc9c6',
+            'on-tertiary-fixed': '#121e1c',
+            'on-tertiary-fixed-variant': '#3d4947',
+            'surface': '#faf8ff',
+            'surface-dim': '#d2d9f4',
+            'surface-bright': '#faf8ff',
+            'surface-container-lowest': '#ffffff',
+            'surface-container-low': '#f2f3ff',
+            'surface-container': '#eaedff',
+            'surface-container-high': '#e2e7ff',
+            'surface-container-highest': '#dae2fd',
+            'on-surface': '#131b2e',
+            'on-surface-variant': '#3d4947',
+            'inverse-surface': '#283044',
+            'inverse-on-surface': '#eef0ff',
+            'background': '#faf8ff',
+            'on-background': '#131b2e',
+            'surface-variant': '#dae2fd',
+            'outline': '#6d7a77',
+            'outline-variant': '#bcc9c6',
+            'error': '#ba1a1a',
+            'on-error': '#ffffff',
+            'error-container': '#ffdad6',
+            'on-error-container': '#93000a'
+          },
+          fontFamily: {
+            sans: ['Plus Jakarta Sans', 'sans-serif'],
+            'display-lg': ['Plus Jakarta Sans'],
+            'headline-lg': ['Plus Jakarta Sans'],
+            'headline-md': ['Plus Jakarta Sans'],
+            'headline-sm': ['Plus Jakarta Sans'],
+            'body-lg': ['Plus Jakarta Sans'],
+            'body-md': ['Plus Jakarta Sans'],
+            'body-sm': ['Plus Jakarta Sans'],
+            'label-lg': ['Plus Jakarta Sans'],
+            'label-md': ['Plus Jakarta Sans'],
+            'label-sm': ['Plus Jakarta Sans']
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    @layer base {
+      html, body {
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        background-color: #0b1120;
+        font-family: 'Plus Jakarta Sans', sans-serif;
+      }
+      body {
+        overscroll-behavior: none;
+        -webkit-tap-highlight-color: transparent;
+      }
+      .pb-safe { padding-bottom: env(safe-area-inset-bottom, 0px); }
+      .pt-safe { padding-top: env(safe-area-inset-top, 0px); }
+    }
+    ::-webkit-scrollbar { display: none; }
+    
+    .screen-panel {
+      display: none;
+      opacity: 0;
+      transition: opacity 0.25s ease-in-out;
+    }
+    .screen-panel.active {
+      display: block;
+      opacity: 1;
+    }
+    
+    /* Device frame styling */
+    .app-viewport {
+      width: 100%;
+      max-width: 440px;
+      min-height: 100vh;
+      background-color: #faf8ff;
+      margin: 0 auto;
+      position: relative;
+      box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.4);
+      display: flex;
+      flex-col: column;
+    }
+    
+    @media (max-width: 640px) {
+      .app-viewport {
+        max-width: 100%;
+        box-shadow: none;
+      }
+    }
+    
+    /* Toast animation */
+    .toast-enter {
+      transform: translateY(-100%);
+      opacity: 0;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .toast-enter-active {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  </style>
+</head>
+<body class="bg-slate-900 text-on-surface antialiased min-h-screen flex items-center justify-center p-0 sm:py-6">
+
+  <!-- Desktop Controls Bar (Visible on wider screens) -->
+  <aside class="hidden lg:flex fixed left-8 top-1/2 -translate-y-1/2 flex-col gap-4 text-white z-40 max-w-xs">
+    <div class="bg-slate-800/80 backdrop-blur-md p-5 rounded-3xl border border-slate-700/60 shadow-xl">
+      <div class="flex items-center gap-3 mb-3">
+        <div class="w-10 h-10 rounded-2xl bg-teal-500/20 text-teal-300 flex items-center justify-center font-bold text-xl">
+          <span class="material-symbols-outlined text-2xl text-teal-400">local_laundry_service</span>
+        </div>
+        <div>
+          <h2 class="font-bold text-base text-white">FreshWash Smart</h2>
+          <p class="text-xs text-slate-400">Smart Laundry System</p>
+        </div>
+      </div>
+      <p class="text-xs text-slate-300 leading-relaxed mb-4">
+        Aplikasi mobile customer laundry modern dengan fitur pemesanan antar-jemput kiloan/satuan, timbangan digital real-time, dan pelacakan cucian GPS.
+      </p>
+      
+      <div class="space-y-2 text-xs font-medium">
+        <button onclick="switchScreen('beranda')" class="w-full text-left px-3 py-2 rounded-xl bg-slate-700/50 hover:bg-teal-700/40 text-slate-200 hover:text-white flex items-center justify-between transition-colors">
+          <span class="flex items-center gap-2"><span class="material-symbols-outlined text-sm text-teal-400">home</span> 1. Beranda Pelanggan</span>
+          <span class="text-[10px] bg-slate-600 px-1.5 py-0.5 rounded">#beranda</span>
+        </button>
+        <button onclick="switchScreen('pesan-antar')" class="w-full text-left px-3 py-2 rounded-xl bg-slate-700/50 hover:bg-teal-700/40 text-slate-200 hover:text-white flex items-center justify-between transition-colors">
+          <span class="flex items-center gap-2"><span class="material-symbols-outlined text-sm text-teal-400">local_shipping</span> 2. Form Pesan Antar</span>
+          <span class="text-[10px] bg-slate-600 px-1.5 py-0.5 rounded">#pesan-antar</span>
+        </button>
+        <button onclick="switchScreen('lacak')" class="w-full text-left px-3 py-2 rounded-xl bg-slate-700/50 hover:bg-teal-700/40 text-slate-200 hover:text-white flex items-center justify-between transition-colors">
+          <span class="flex items-center gap-2"><span class="material-symbols-outlined text-sm text-teal-400">radar</span> 3. Lacak Status Pesanan</span>
+          <span class="text-[10px] bg-slate-600 px-1.5 py-0.5 rounded">#lacak</span>
+        </button>
+        <button onclick="switchScreen('akun')" class="w-full text-left px-3 py-2 rounded-xl bg-slate-700/50 hover:bg-teal-700/40 text-slate-200 hover:text-white flex items-center justify-between transition-colors">
+          <span class="flex items-center gap-2"><span class="material-symbols-outlined text-sm text-teal-400">account_circle</span> 4. Akun & Riwayat</span>
+          <span class="text-[10px] bg-slate-600 px-1.5 py-0.5 rounded">#akun</span>
+        </button>
+      </div>
+
+      <div class="mt-4 pt-4 border-t border-slate-700 flex items-center justify-between text-xs text-slate-400">
+        <span>Saldo FreshPay:</span>
+        <span class="font-bold text-teal-400" id="desktopBalance">Rp 125.000</span>
+      </div>
+      <button onclick="openTopUpModal()" class="w-full mt-2.5 py-2 px-3 rounded-xl bg-teal-600 hover:bg-teal-500 text-white font-bold text-xs flex items-center justify-center gap-1.5 transition-all shadow-md">
+        <span class="material-symbols-outlined text-sm">add_card</span>
+        <span>Top Up Saldo</span>
+      </button>
+
+      <button onclick="openDownloadModal()" class="w-full mt-2 py-2 px-3 rounded-xl bg-gradient-to-r from-teal-400 to-cyan-400 hover:from-teal-300 hover:to-cyan-300 text-slate-950 font-bold text-xs flex items-center justify-center gap-1.5 transition-all shadow-lg active:scale-95">
+        <span class="material-symbols-outlined text-sm font-bold">install_mobile</span>
+        <span>Buka & Install di HP</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- Notification Toast Container -->
+  <div id="toastContainer" class="fixed top-4 inset-x-0 z-[100] flex justify-center pointer-events-none px-4"></div>
+
+  <!-- MAIN APP CONTAINER (Simulated Mobile Device / Native View) -->
+  <div class="app-viewport overflow-hidden relative flex flex-col min-h-screen sm:rounded-[36px] sm:border-[8px] sm:border-slate-800">
+    
+    <!-- Top Mobile Header (Fixed across all screens) -->
+    <header class="fixed top-0 inset-x-0 z-50 bg-surface/90 backdrop-blur-xl pt-safe shadow-[0_1px_8px_rgba(0,0,0,0.04)] max-w-[440px] mx-auto">
+      <div class="h-16 px-4 flex items-center justify-between gap-3">
+        <div class="flex items-center gap-2.5 min-w-0">
+          <div class="w-9 h-9 rounded-2xl bg-primary/10 flex items-center justify-center text-primary flex-shrink-0">
+            <span class="material-symbols-outlined text-2xl font-bold">local_laundry_service</span>
+          </div>
+          <div class="flex flex-col min-w-0">
+            <div class="flex items-center gap-1.5">
+              <span class="font-headline-sm text-lg text-primary leading-tight font-bold tracking-tight truncate cursor-pointer" onclick="switchScreen('beranda')">FreshWash</span>
+              <span class="text-[11px] font-bold text-secondary bg-secondary-fixed/50 px-1.5 py-0.2 rounded-md" id="headerScreenLabel">Home</span>
+            </div>
+            <button onclick="openLocationModal()" class="flex items-center gap-0.5 text-on-surface-variant hover:text-primary transition-colors text-left -mt-0.5">
+              <span class="material-symbols-outlined text-[13px] text-primary flex-shrink-0">location_on</span>
+              <span class="font-label-sm text-xs truncate max-w-[150px]" id="selectedAddressText">Jl. Anggrek No. 14, Jakarta</span>
+              <span class="material-symbols-outlined text-[14px]">keyboard_arrow_down</span>
+            </button>
+          </div>
+        </div>
+        
+        <div class="flex items-center gap-1.5 flex-shrink-0">
+          <!-- Install App Quick Pill -->
+          <button onclick="openDownloadModal()" class="flex items-center gap-1 px-2.5 py-1 rounded-full bg-primary/10 hover:bg-primary/20 text-primary text-[10px] font-bold transition-all shadow-xs" title="Download & Pasang di HP">
+            <span class="material-symbols-outlined text-[14px]">download</span>
+            <span>Install</span>
+          </button>
+          <button onclick="toggleNotifications()" aria-label="Notifications" class="relative w-9 h-9 flex items-center justify-center rounded-full text-on-surface hover:bg-surface-container transition-colors">
+            <span class="material-symbols-outlined text-[22px]">notifications</span>
+            <span class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-error ring-2 ring-surface"></span>
+          </button>
+          <button onclick="switchScreen('akun')" class="w-9 h-9 flex items-center justify-center">
+            <img alt="Profile" class="w-7 h-7 rounded-full object-cover ring-2 ring-primary/20 hover:ring-primary transition-all" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA42lCx6DYuo72ZYLVSAvPcR3vbv2PFPGDNnGD2YugISmUMr5LizmsD20vCZ3Tf30jhvYNSKCjrOGMfgU6A6ibQa2NjYXJ8zX0dqmLAkl-f37AbmwSTzxBg4NsKelDOkUjJC9AclMUBY76Bh2ro5zN-yyVCsB12NOZrUdE30RP9bnDFLaYQ9CgLUpWFf3KbeIgbmHvhuEUw_PKaDGemnPpVKUt6YN3jogkrRAsAisuiMxDexmrx6HAFgg"/>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- CONTENT WRAPPER -->
+    <main class="flex-1 flex flex-col relative w-full pt-16 pb-20 bg-background overflow-y-auto">
+
+      <!-- Floating PWA Install App Banner -->
+      <div id="pwaInstallBanner" class="hidden mx-4 mt-2 p-3 rounded-2xl bg-gradient-to-r from-primary via-primary-container to-secondary text-white shadow-lg flex items-center justify-between gap-3 border border-white/20">
+        <div class="flex items-center gap-2.5 min-w-0">
+          <div class="w-8 h-8 rounded-xl bg-white/20 flex items-center justify-center flex-shrink-0">
+            <span class="material-symbols-outlined text-[20px] text-white">install_mobile</span>
+          </div>
+          <div class="min-w-0">
+            <h4 class="text-xs font-bold leading-tight truncate">Pasang FreshWash di HP</h4>
+            <p class="text-[10px] text-white/80 leading-tight truncate">Akses instan dari Layar Utama (Bisa Offline)</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-1.5 flex-shrink-0">
+          <button onclick="triggerPWAInstall()" class="px-3 py-1.5 rounded-xl bg-white text-primary text-[11px] font-bold shadow-sm active:scale-95 transition-transform hover:bg-white/90">
+            Install
+          </button>
+          <button onclick="dismissInstallBanner()" class="w-6 h-6 rounded-full flex items-center justify-center text-white/80 hover:text-white">
+            <span class="material-symbols-outlined text-[14px]">close</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- ======================================================== -->
+      <!-- SCREEN 1: BERANDA PELANGGAN -->
+      <!-- ======================================================== -->
+      <section id="screen-beranda" class="screen-panel active px-4 space-y-4 pt-3 pb-6">
+        
+        <!-- Welcome Greeting & FreshPay Bento Banner -->
+        <div class="bg-gradient-to-br from-primary via-primary to-primary-container rounded-3xl p-5 text-on-primary shadow-lg shadow-primary/20 relative overflow-hidden">
+          <div class="absolute -right-6 -bottom-6 w-32 h-32 rounded-full bg-secondary-container/20 blur-2xl pointer-events-none"></div>
+          <div class="absolute right-12 top-2 w-16 h-16 rounded-full bg-primary-fixed/15 blur-xl pointer-events-none"></div>
+          
+          <div class="relative z-10 flex flex-col space-y-4">
+            <div class="flex items-center justify-between">
+              <div class="min-w-0">
+                <div class="flex items-center gap-1.5 mb-0.5">
+                  <span class="text-xs text-primary-fixed font-medium">Selamat Pagi ✨</span>
+                </div>
+                <h1 class="text-2xl font-bold tracking-tight text-white truncate">Halo, Sarah!</h1>
+              </div>
+              <div class="flex items-center gap-1.5 bg-on-primary-fixed/25 backdrop-blur-md px-3 py-1.5 rounded-full shadow-sm cursor-pointer" onclick="switchScreen('akun')">
+                <span class="material-symbols-outlined text-[16px] text-secondary-container" style="font-variation-settings: 'FILL' 1;">stars</span>
+                <div class="text-right">
+                  <span class="text-[11px] text-white block leading-tight font-bold">Gold Member</span>
+                  <span class="text-[10px] text-primary-fixed-dim leading-none block" id="homePointsText">450 Poin</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Quick Wallet Balance Pill -->
+            <div class="bg-surface-container-lowest/15 backdrop-blur-md rounded-2xl p-3 flex items-center justify-between">
+              <div class="flex items-center gap-2.5">
+                <div class="w-9 h-9 rounded-xl bg-white/20 flex items-center justify-center text-white">
+                  <span class="material-symbols-outlined text-[20px]">account_balance_wallet</span>
+                </div>
+                <div>
+                  <span class="text-[10px] text-primary-fixed uppercase tracking-wider block font-semibold">FreshPay Saldo</span>
+                  <span class="text-lg font-bold text-white tracking-tight" id="homeBalanceText">Rp 125.000</span>
+                </div>
+              </div>
+              <button onclick="openTopUpModal()" class="bg-secondary-container text-on-secondary-fixed hover:bg-secondary-fixed transition-all active:scale-95 px-3.5 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1 shadow-sm">
+                <span class="material-symbols-outlined text-[16px]">add_circle</span>
+                <span>Top Up</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. Active Order Live Tracker Card -->
+        <div class="bg-surface-container-lowest rounded-3xl p-4 shadow-md shadow-primary/5 flex flex-col space-y-3 relative border border-outline-variant/15">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <span class="relative flex h-2.5 w-2.5">
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-secondary opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-primary"></span>
+              </span>
+              <span class="text-xs font-bold text-on-surface">Pesanan Aktif <span class="text-primary font-semibold" id="homeActiveOrderCode">#FW-8821</span></span>
+            </div>
+            <span class="bg-primary-fixed/50 text-on-primary-fixed-variant px-2.5 py-0.5 rounded-full text-[11px] font-bold flex items-center gap-1" id="homeActiveStatusBadge">
+              <span class="material-symbols-outlined text-[14px]">local_laundry_service</span>
+              Sedang Dicuci
+            </span>
+          </div>
+
+          <!-- Live Stage Description -->
+          <div class="flex items-center gap-3 bg-surface-container-low rounded-2xl p-3 cursor-pointer hover:bg-surface-container transition-colors" onclick="switchScreen('lacak')">
+            <div class="relative w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center flex-shrink-0 text-primary">
+              <span class="material-symbols-outlined text-[26px] animate-spin" style="animation-duration: 4s;">sync</span>
+              <div class="absolute -top-1 -right-1 w-4 h-4 bg-secondary text-white rounded-full flex items-center justify-center text-[9px] font-bold">2</div>
+            </div>
+            <div class="min-w-0 flex-1">
+              <p class="text-xs font-bold text-on-surface truncate" id="homeActiveOrderDesc">Cuci Komplit (5.2 kg) • Lavender Bliss</p>
+              <p class="text-[11px] text-on-surface-variant flex items-center gap-1 mt-0.5">
+                <span class="material-symbols-outlined text-[14px] text-primary">schedule</span>
+                <span id="homeActiveOrderEstimate">Selesai Besok, 16:00 WIB</span>
+              </p>
+            </div>
+            <span class="material-symbols-outlined text-outline">chevron_right</span>
+          </div>
+
+          <!-- Stepper Progress Bar -->
+          <div class="space-y-1.5 pt-1">
+            <div class="w-full bg-surface-container-high h-2 rounded-full overflow-hidden flex">
+              <div class="bg-primary h-full w-3/5 rounded-full transition-all duration-500" id="homeProgressBar"></div>
+            </div>
+            <div class="flex justify-between text-[10px] text-on-surface-variant px-0.5">
+              <span class="text-primary font-bold">Diterima</span>
+              <span class="text-primary font-bold">Proses Cuci</span>
+              <span>Setrika Rapih</span>
+              <span>Antar Pulang</span>
+            </div>
+          </div>
+
+          <div class="flex items-center justify-between pt-1">
+            <span class="text-xs text-on-surface-variant">Kurir: <strong class="text-on-surface font-semibold">Budi Pratama</strong></span>
+            <button onclick="switchScreen('lacak')" class="bg-surface-container-high hover:bg-surface-variant active:scale-95 transition-all text-primary text-xs font-bold px-3 py-1.5 rounded-xl flex items-center gap-1">
+              <span>Lihat Detail</span>
+              <span class="material-symbols-outlined text-[16px]">chevron_right</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- 3. Service Categories (2x2 Grid) -->
+        <div class="space-y-3">
+          <div class="flex items-center justify-between">
+            <div>
+              <h2 class="text-lg font-bold text-on-surface tracking-tight">Layanan FreshWash</h2>
+              <p class="text-xs text-on-surface-variant">Pilih perawatan higienis untuk pakaianmu</p>
+            </div>
+            <button onclick="selectServiceCategory('kiloan')" class="text-xs font-bold text-primary hover:underline">Semua (8)</button>
+          </div>
+
+          <div class="grid grid-cols-2 gap-3">
+            <!-- 1. Cuci Komplit Kiloan (Best Seller) -->
+            <div onclick="selectServiceCategory('kiloan')" class="bg-surface-container-lowest rounded-2xl p-3.5 shadow-sm hover:shadow-md transition-all flex flex-col justify-between relative group cursor-pointer active:scale-[0.98] border border-outline-variant/10">
+              <span class="absolute top-2.5 right-2.5 bg-secondary-container text-on-secondary-fixed text-[9px] font-bold px-2 py-0.5 rounded-full shadow-xs">
+                Best Seller
+              </span>
+              <div class="w-11 h-11 rounded-2xl bg-primary-fixed/40 text-primary flex items-center justify-center mb-2.5 group-hover:scale-105 transition-transform">
+                <span class="material-symbols-outlined text-[24px]">dry_cleaning</span>
+              </div>
+              <div>
+                <h3 class="text-xs font-bold text-on-surface leading-snug">Cuci Komplit Kiloan</h3>
+                <p class="text-[11px] text-on-surface-variant line-clamp-1 mt-0.5">Cuci, kering & setrika wangi</p>
+                <div class="mt-2 pt-2 flex items-baseline gap-1 bg-surface-container-low/60 rounded-xl px-2 py-1">
+                  <span class="text-[10px] text-on-surface-variant">Mulai</span>
+                  <span class="text-xs font-bold text-primary">Rp 8.000</span>
+                  <span class="text-[10px] text-on-surface-variant">/kg</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- 2. Dry Cleaning & Satuan -->
+            <div onclick="selectServiceCategory('satuan')" class="bg-surface-container-lowest rounded-2xl p-3.5 shadow-sm hover:shadow-md transition-all flex flex-col justify-between cursor-pointer active:scale-[0.98] group border border-outline-variant/10">
+              <div class="w-11 h-11 rounded-2xl bg-secondary-fixed/40 text-secondary flex items-center justify-center mb-2.5 group-hover:scale-105 transition-transform">
+                <span class="material-symbols-outlined text-[24px]">styler</span>
+              </div>
+              <div>
+                <h3 class="text-xs font-bold text-on-surface leading-snug">Dry Clean & Satuan</h3>
+                <p class="text-[11px] text-on-surface-variant line-clamp-1 mt-0.5">Jas, gaun, kemeja & jaket</p>
+                <div class="mt-2 pt-2 flex items-baseline gap-1 bg-surface-container-low/60 rounded-xl px-2 py-1">
+                  <span class="text-[10px] text-on-surface-variant">Mulai</span>
+                  <span class="text-xs font-bold text-primary">Rp 25.000</span>
+                  <span class="text-[10px] text-on-surface-variant">/pcs</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- 3. Cuci Sepatu & Tas -->
+            <div onclick="selectServiceCategory('sepatu')" class="bg-surface-container-lowest rounded-2xl p-3.5 shadow-sm hover:shadow-md transition-all flex flex-col justify-between cursor-pointer active:scale-[0.98] group border border-outline-variant/10">
+              <div class="w-11 h-11 rounded-2xl bg-tertiary-fixed text-on-tertiary-fixed-variant flex items-center justify-center mb-2.5 group-hover:scale-105 transition-transform">
+                <span class="material-symbols-outlined text-[24px]">roller_skating</span>
+              </div>
+              <div>
+                <h3 class="text-xs font-bold text-on-surface leading-snug">Cuci Sepatu & Tas</h3>
+                <p class="text-[11px] text-on-surface-variant line-clamp-1 mt-0.5">Deep clean sneakers & tas</p>
+                <div class="mt-2 pt-2 flex items-baseline gap-1 bg-surface-container-low/60 rounded-xl px-2 py-1">
+                  <span class="text-[10px] text-on-surface-variant">Mulai</span>
+                  <span class="text-xs font-bold text-primary">Rp 30.000</span>
+                  <span class="text-[10px] text-on-surface-variant">/psg</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- 4. Bedcover & Karpet -->
+            <div onclick="selectServiceCategory('bedcover')" class="bg-surface-container-lowest rounded-2xl p-3.5 shadow-sm hover:shadow-md transition-all flex flex-col justify-between cursor-pointer active:scale-[0.98] group border border-outline-variant/10">
+              <div class="w-11 h-11 rounded-2xl bg-surface-container-high text-primary flex items-center justify-center mb-2.5 group-hover:scale-105 transition-transform">
+                <span class="material-symbols-outlined text-[24px]">bed</span>
+              </div>
+              <div>
+                <h3 class="text-xs font-bold text-on-surface leading-snug">Bedcover & Karpet</h3>
+                <p class="text-[11px] text-on-surface-variant line-clamp-1 mt-0.5">Cuci tebal anti-bakteri</p>
+                <div class="mt-2 pt-2 flex items-baseline gap-1 bg-surface-container-low/60 rounded-xl px-2 py-1">
+                  <span class="text-[10px] text-on-surface-variant">Mulai</span>
+                  <span class="text-xs font-bold text-primary">Rp 35.000</span>
+                  <span class="text-[10px] text-on-surface-variant">/item</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4. Express Service Promo Card -->
+        <div class="bg-surface-container rounded-3xl p-4 shadow-sm relative overflow-hidden flex items-center justify-between border border-outline-variant/20">
+          <div class="flex-1 pr-3 z-10">
+            <div class="inline-flex items-center gap-1 bg-primary text-white text-[10px] font-bold px-2.5 py-0.5 rounded-full mb-1.5 shadow-xs">
+              <span class="material-symbols-outlined text-[12px]">celebration</span>
+              PROMO SPESIAL
+            </div>
+            <h3 class="text-sm font-bold text-on-surface leading-tight">Diskon 30% Pengguna Baru!</h3>
+            <p class="text-xs text-on-surface-variant mt-1 leading-snug">Bebas repot cuci perdana sepuasnya tanpa minimum order.</p>
+            
+            <div class="mt-3 inline-flex items-center gap-2 bg-surface-container-lowest px-3 py-1.5 rounded-xl shadow-xs">
+              <span class="text-xs text-on-surface-variant">Kode:</span>
+              <span class="text-xs font-bold text-primary tracking-wider font-mono" id="voucherCode">BERSIHSEGAR</span>
+              <button onclick="copyPromoVoucher()" class="text-primary hover:text-primary-container active:scale-90 transition-transform" id="btnCopyVoucher" title="Salin Kode Voucher">
+                <span class="material-symbols-outlined text-[16px]">content_copy</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="w-16 h-16 rounded-2xl bg-secondary-container/40 flex items-center justify-center flex-shrink-0 text-secondary relative z-0">
+            <span class="material-symbols-outlined text-[36px]">local_mall</span>
+            <div class="absolute -bottom-1 -right-1 bg-primary text-white rounded-full p-1 shadow-sm">
+              <span class="material-symbols-outlined text-[12px]">bolt</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 5. Fragrance Selection Carousel -->
+        <div class="space-y-3">
+          <div class="flex items-center justify-between">
+            <div>
+              <h2 class="text-base font-bold text-on-surface tracking-tight">Pewangi Premium Gratis</h2>
+              <p class="text-xs text-on-surface-variant">Pilih aroma favorit untuk cucian Anda</p>
+            </div>
+            <span class="material-symbols-outlined text-primary text-[20px]">air</span>
+          </div>
+
+          <div class="flex gap-2.5 overflow-x-auto pb-1 scrollbar-none" id="homeAromaList">
+            <button onclick="setGlobalAroma('Lavender Bliss')" class="aroma-card flex-shrink-0 bg-primary text-on-primary rounded-2xl px-3.5 py-2.5 flex items-center gap-2.5 shadow-sm transition-all" data-aroma="Lavender Bliss">
+              <div class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-white">
+                <span class="material-symbols-outlined text-[18px]">spa</span>
+              </div>
+              <div class="text-left">
+                <span class="text-xs font-bold block leading-tight">Lavender Bliss</span>
+                <span class="text-[10px] text-primary-fixed-dim leading-none">Menenangkan & Soft</span>
+              </div>
+              <span class="material-symbols-outlined text-[16px] text-secondary-container aroma-check">check_circle</span>
+            </button>
+            
+            <button onclick="setGlobalAroma('Ocean Fresh')" class="aroma-card flex-shrink-0 bg-surface-container-lowest text-on-surface rounded-2xl px-3.5 py-2.5 flex items-center gap-2.5 shadow-xs transition-all hover:bg-surface-container-low" data-aroma="Ocean Fresh">
+              <div class="w-8 h-8 rounded-full bg-secondary-fixed/50 text-secondary flex items-center justify-center">
+                <span class="material-symbols-outlined text-[18px]">waves</span>
+              </div>
+              <div class="text-left">
+                <span class="text-xs font-bold block leading-tight">Ocean Fresh</span>
+                <span class="text-[10px] text-on-surface-variant leading-none">Segar Semriwing</span>
+              </div>
+              <span class="material-symbols-outlined text-[16px] text-secondary-container aroma-check hidden">check_circle</span>
+            </button>
+            
+            <button onclick="setGlobalAroma('Baby Powder')" class="aroma-card flex-shrink-0 bg-surface-container-lowest text-on-surface rounded-2xl px-3.5 py-2.5 flex items-center gap-2.5 shadow-xs transition-all hover:bg-surface-container-low" data-aroma="Baby Powder">
+              <div class="w-8 h-8 rounded-full bg-surface-container-high text-primary flex items-center justify-center">
+                <span class="material-symbols-outlined text-[18px]">child_care</span>
+              </div>
+              <div class="text-left">
+                <span class="text-xs font-bold block leading-tight">Baby Powder</span>
+                <span class="text-[10px] text-on-surface-variant leading-none">Hipoalergenik</span>
+              </div>
+              <span class="material-symbols-outlined text-[16px] text-secondary-container aroma-check hidden">check_circle</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- 6. Trust Badges Bento -->
+        <div class="bg-surface-container-lowest rounded-3xl p-4 shadow-sm space-y-3.5 border border-outline-variant/15">
+          <div class="flex items-center gap-2">
+            <div class="w-8 h-8 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
+              <span class="material-symbols-outlined text-[20px]">verified_user</span>
+            </div>
+            <div>
+              <h2 class="text-sm font-bold text-on-surface">Mengapa FreshWash?</h2>
+              <p class="text-[11px] text-on-surface-variant">Standar kebersihan tertinggi di setiap cucian</p>
+            </div>
+          </div>
+          <div class="grid grid-cols-2 gap-2.5">
+            <div class="bg-surface-container-low rounded-2xl p-2.5 flex flex-col space-y-1">
+              <span class="material-symbols-outlined text-teal-600 text-[18px]">water_voc</span>
+              <h4 class="text-xs font-bold text-on-surface">1 Mesin 1 Pelanggan</h4>
+              <p class="text-[10px] text-on-surface-variant">Tidak dicampur, higienis 100%.</p>
+            </div>
+            <div class="bg-surface-container-low rounded-2xl p-2.5 flex flex-col space-y-1">
+              <span class="material-symbols-outlined text-cyan-600 text-[18px]">scale</span>
+              <h4 class="text-xs font-bold text-on-surface">Timbangan Digital</h4>
+              <p class="text-[10px] text-on-surface-variant">Foto & bukti kiloan via app.</p>
+            </div>
+            <div class="bg-surface-container-low rounded-2xl p-2.5 flex flex-col space-y-1">
+              <span class="material-symbols-outlined text-teal-600 text-[18px]">auto_awesome</span>
+              <h4 class="text-xs font-bold text-on-surface">Wangi 14 Hari</h4>
+              <p class="text-[10px] text-on-surface-variant">Microcapsule scent lock.</p>
+            </div>
+            <div class="bg-surface-container-low rounded-2xl p-2.5 flex flex-col space-y-1">
+              <span class="material-symbols-outlined text-cyan-600 text-[18px]">published_with_changes</span>
+              <h4 class="text-xs font-bold text-on-surface">Garansi Cuci Ulang</h4>
+              <p class="text-[10px] text-on-surface-variant">Kurang rapi? Cuci ulang gratis.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Floating Pickup CTA Button -->
+        <div class="pt-2">
+          <button onclick="switchScreen('pesan-antar')" class="w-full bg-primary hover:bg-primary-container text-on-primary rounded-2xl py-3.5 px-4 text-base font-bold flex items-center justify-center gap-2 shadow-lg shadow-primary/25 active:scale-[0.98] transition-all">
+            <span class="material-symbols-outlined text-[22px]">local_shipping</span>
+            <span>Pesan Jemput Cucian Sekarang</span>
+          </button>
+          <p class="text-center text-xs text-on-surface-variant mt-2 flex items-center justify-center gap-1">
+            <span class="material-symbols-outlined text-[14px] text-primary">schedule</span>
+            Penjemputan terdekat tersedia dalam <span class="text-primary font-bold">25 menit</span>
+          </p>
+        </div>
+
+      </section>
+
+      <!-- ======================================================== -->
+      <!-- SCREEN 2: FORM PESAN ANTAR (PICKUP BOOKING) -->
+      <!-- ======================================================== -->
+      <section id="screen-pesan-antar" class="screen-panel px-4 space-y-4 pt-3 pb-24">
+        
+        <!-- Step Progress Bar -->
+        <div class="bg-surface-container-lowest p-3.5 rounded-2xl shadow-sm border border-outline-variant/15">
+          <div class="flex items-center justify-between relative">
+            <div class="absolute left-6 right-6 top-3.5 h-0.5 bg-surface-container-high -z-0"></div>
+            <div id="bookingStepLine" class="absolute left-6 w-1/4 top-3.5 h-0.5 bg-primary -z-0 transition-all duration-300"></div>
+
+            <div class="flex flex-col items-center z-10 cursor-pointer" onclick="setBookingStep(1)">
+              <div id="step-badge-1" class="w-7 h-7 rounded-full bg-primary text-on-primary flex items-center justify-center text-xs font-bold ring-4 ring-primary-fixed">1</div>
+              <span class="text-[10px] font-bold text-primary mt-1">Layanan</span>
+            </div>
+            <div class="flex flex-col items-center z-10 cursor-pointer" onclick="setBookingStep(2)">
+              <div id="step-badge-2" class="w-7 h-7 rounded-full bg-surface-container-highest text-on-surface-variant flex items-center justify-center text-xs font-bold">2</div>
+              <span class="text-[10px] text-on-surface-variant mt-1">Jadwal</span>
+            </div>
+            <div class="flex flex-col items-center z-10 cursor-pointer" onclick="setBookingStep(3)">
+              <div id="step-badge-3" class="w-7 h-7 rounded-full bg-surface-container-highest text-on-surface-variant flex items-center justify-center text-xs font-bold">3</div>
+              <span class="text-[10px] text-on-surface-variant mt-1">Preferensi</span>
+            </div>
+            <div class="flex flex-col items-center z-10 cursor-pointer" onclick="setBookingStep(4)">
+              <div id="step-badge-4" class="w-7 h-7 rounded-full bg-surface-container-highest text-on-surface-variant flex items-center justify-center text-xs font-bold">4</div>
+              <span class="text-[10px] text-on-surface-variant mt-1">Bayar</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 1. Category Switcher Pills -->
+        <div class="bg-surface-container-low p-1.5 rounded-full flex gap-1 shadow-sm">
+          <button id="cat-btn-kiloan" onclick="setCategoryTab('kiloan')" class="flex-1 py-2 px-3 rounded-full bg-primary text-on-primary text-xs font-bold flex items-center justify-center gap-1.5 shadow-sm transition-all">
+            <span class="material-symbols-outlined text-[17px]">local_laundry_service</span>
+            <span>Kiloan</span>
+          </button>
+          <button id="cat-btn-satuan" onclick="setCategoryTab('satuan')" class="flex-1 py-2 px-3 rounded-full text-on-surface-variant hover:bg-surface-container-lowest text-xs font-medium flex items-center justify-center gap-1.5 transition-all">
+            <span class="material-symbols-outlined text-[17px]">dry_cleaning</span>
+            <span>Satuan</span>
+          </button>
+          <button id="cat-btn-sepatu" onclick="setCategoryTab('sepatu')" class="flex-1 py-2 px-3 rounded-full text-on-surface-variant hover:bg-surface-container-lowest text-xs font-medium flex items-center justify-center gap-1.5 transition-all">
+            <span class="material-symbols-outlined text-[17px]">roller_skating</span>
+            <span>Sepatu</span>
+          </button>
+        </div>
+
+        <!-- 2. Address Selection Card -->
+        <div class="bg-surface-container-lowest p-4 rounded-2xl shadow-sm flex flex-col gap-3 border border-outline-variant/15">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <span class="material-symbols-outlined text-primary text-[20px]" style="font-variation-settings: 'FILL' 1;">home_pin</span>
+              <span class="text-sm font-bold text-on-surface">Alamat Penjemputan</span>
+            </div>
+            <button onclick="openLocationModal()" class="text-primary text-xs font-bold hover:underline">Ubah Alamat</button>
+          </div>
+          <div class="bg-surface-container-low p-3 rounded-xl flex items-start gap-3">
+            <div class="w-8 h-8 rounded-full bg-primary-fixed text-on-primary-fixed flex items-center justify-center flex-shrink-0 mt-0.5">
+              <span class="material-symbols-outlined text-[18px]">pin_drop</span>
+            </div>
+            <div class="flex flex-col min-w-0 flex-1">
+              <div class="flex items-center gap-1.5">
+                <span class="text-xs font-bold text-on-surface" id="bookingAddrLabel">Rumah (Utama)</span>
+                <span class="bg-primary/10 text-primary text-[9px] px-1.5 py-0.5 rounded font-bold">Default</span>
+              </div>
+              <p class="text-xs text-on-surface-variant mt-0.5 leading-snug" id="bookingAddrDetail">
+                Jl. Anggrek No. 14, Kebayoran Baru, Jakarta Selatan
+              </p>
+              <span class="text-[10px] text-tertiary mt-1">Patokan: Pagar hitam depan pos satpam</span>
+            </div>
+          </div>
+          <label class="flex items-center justify-between cursor-pointer pt-1">
+            <div class="flex items-center gap-2">
+              <span class="material-symbols-outlined text-primary text-[18px]">sync_alt</span>
+              <span class="text-xs text-on-surface">Alamat antar sama dengan jemput</span>
+            </div>
+            <input checked type="checkbox" class="w-4 h-4 accent-primary rounded"/>
+          </label>
+        </div>
+
+        <!-- 3. Service Speed Tiers -->
+        <div class="bg-surface-container-lowest p-4 rounded-2xl shadow-sm flex flex-col gap-3 border border-outline-variant/15">
+          <div class="flex items-center justify-between">
+            <div>
+              <h2 class="text-sm font-bold text-on-surface">Pilih Kecepatan Paket</h2>
+              <p class="text-[11px] text-on-surface-variant">Durasi proses cuci, kering, dan setrika uap</p>
+            </div>
+            <span class="material-symbols-outlined text-secondary text-[22px]">timer</span>
+          </div>
+
+          <div class="flex flex-col gap-2.5">
+            <!-- Paket 1: Reguler -->
+            <label onclick="setPackageSpeed('reguler', 8000)" class="package-radio-label flex items-center justify-between p-3 rounded-xl bg-surface-container-low cursor-pointer transition-all hover:bg-surface-container border border-transparent">
+              <div class="flex items-center gap-3">
+                <input type="radio" name="package_tier" value="reguler" class="w-4 h-4 text-primary accent-primary"/>
+                <div class="flex flex-col">
+                  <span class="text-xs font-bold text-on-surface">Paket Reguler</span>
+                  <span class="text-[11px] text-on-surface-variant">Estimasi selesai 2 Hari (48 Jam)</span>
+                </div>
+              </div>
+              <span class="text-xs font-bold text-on-surface">Rp 8.000<span class="text-[10px] font-normal text-on-surface-variant">/kg</span></span>
+            </label>
+
+            <!-- Paket 2: Kilat Express (Default Selected) -->
+            <label onclick="setPackageSpeed('express', 12000)" class="package-radio-label active-tier relative flex items-center justify-between p-3.5 rounded-xl bg-surface-container-lowest shadow-md ring-2 ring-primary cursor-pointer border border-primary/20">
+              <span class="absolute -top-2.5 right-3 bg-secondary text-on-secondary text-[9px] px-2 py-0.5 rounded-full font-bold tracking-wider shadow-sm flex items-center gap-1">
+                <span class="material-symbols-outlined text-[11px]">local_fire_department</span> Terpopuler
+              </span>
+              <div class="flex items-center gap-3">
+                <input checked type="radio" name="package_tier" value="express" class="w-4 h-4 text-primary accent-primary"/>
+                <div class="flex flex-col">
+                  <div class="flex items-center gap-1.5">
+                    <span class="text-xs font-bold text-primary">Paket Kilat Express</span>
+                    <span class="material-symbols-outlined text-[14px] text-primary">bolt</span>
+                  </div>
+                  <span class="text-[11px] text-on-surface-variant">Estimasi selesai 1 Hari (24 Jam)</span>
+                </div>
+              </div>
+              <span class="text-xs font-bold text-primary">Rp 12.000<span class="text-[10px] font-normal text-on-surface-variant">/kg</span></span>
+            </label>
+
+            <!-- Paket 3: Super Flash -->
+            <label onclick="setPackageSpeed('flash', 18000)" class="package-radio-label flex items-center justify-between p-3 rounded-xl bg-surface-container-low cursor-pointer transition-all hover:bg-surface-container border border-transparent">
+              <div class="flex items-center gap-3">
+                <input type="radio" name="package_tier" value="flash" class="w-4 h-4 text-primary accent-primary"/>
+                <div class="flex flex-col">
+                  <span class="text-xs font-bold text-on-surface">Paket Super Flash</span>
+                  <span class="text-[11px] text-on-surface-variant">Selesai kilat dalam 6 Jam</span>
+                </div>
+              </div>
+              <span class="text-xs font-bold text-on-surface">Rp 18.000<span class="text-[10px] font-normal text-on-surface-variant">/kg</span></span>
+            </label>
+          </div>
+
+          <!-- Estimasi Berat Stepper -->
+          <div class="mt-2 pt-3 border-t border-surface-container-high flex flex-col gap-2">
+            <div class="flex items-center justify-between">
+              <div>
+                <span class="text-xs font-bold text-on-surface">Estimasi Berat Cucian</span>
+                <p class="text-[11px] text-on-surface-variant">Bantu kurir siapkan kantong laundry</p>
+              </div>
+              
+              <div class="flex items-center gap-2 bg-surface-container-low p-1 rounded-full shadow-inner">
+                <button onclick="changeWeight(-1)" class="w-8 h-8 rounded-full bg-surface-container-lowest text-on-surface flex items-center justify-center font-bold shadow-sm active:scale-95 transition-transform hover:bg-surface-container">
+                  <span class="material-symbols-outlined text-[18px]">remove</span>
+                </button>
+                <span class="text-xs font-bold text-on-surface px-2 min-w-[50px] text-center" id="bookingWeightDisplay">4 Kg</span>
+                <button onclick="changeWeight(1)" class="w-8 h-8 rounded-full bg-primary text-on-primary flex items-center justify-center font-bold shadow-sm active:scale-95 transition-transform hover:bg-primary-container">
+                  <span class="material-symbols-outlined text-[18px]">add</span>
+                </button>
+              </div>
+            </div>
+            
+            <div class="flex items-center gap-2 px-3 py-2 bg-secondary-fixed/30 rounded-xl text-on-secondary-container">
+              <span class="material-symbols-outlined text-[16px] flex-shrink-0 text-secondary">info</span>
+              <span class="text-[11px] leading-tight">Berat pasti ditimbang secara digital transparan oleh kurir di tempat penjemputan.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4. Pickup Schedule (Date & Time Selector) -->
+        <div class="bg-surface-container-lowest p-4 rounded-2xl shadow-sm flex flex-col gap-3 border border-outline-variant/15">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <span class="material-symbols-outlined text-primary text-[20px]">calendar_clock</span>
+              <h2 class="text-sm font-bold text-on-surface">Jadwal Penjemputan</h2>
+            </div>
+            <span class="text-[11px] bg-surface-container-high text-on-surface-variant px-2 py-0.5 rounded-full font-medium" id="currentMonthBadge">Hari Ini</span>
+          </div>
+
+          <!-- Date Pills -->
+          <div class="flex gap-2 overflow-x-auto pb-1" id="pickupDateSelector">
+            <button onclick="selectDate(this, 'Hari Ini, 24 Okt')" class="date-pill flex-1 min-w-[90px] py-2.5 px-3 rounded-xl bg-primary text-on-primary flex flex-col items-center justify-center shadow-sm">
+              <span class="text-[10px] uppercase tracking-wider opacity-90">Hari Ini</span>
+              <span class="text-sm font-bold">24 Okt</span>
+            </button>
+            <button onclick="selectDate(this, 'Besok, 25 Okt')" class="date-pill flex-1 min-w-[90px] py-2.5 px-3 rounded-xl bg-surface-container-low text-on-surface flex flex-col items-center justify-center hover:bg-surface-container transition-colors">
+              <span class="text-[10px] text-on-surface-variant uppercase tracking-wider">Besok</span>
+              <span class="text-sm font-bold">25 Okt</span>
+            </button>
+            <button onclick="selectDate(this, 'Lusa, 26 Okt')" class="date-pill flex-1 min-w-[90px] py-2.5 px-3 rounded-xl bg-surface-container-low text-on-surface flex flex-col items-center justify-center hover:bg-surface-container transition-colors">
+              <span class="text-[10px] text-on-surface-variant uppercase tracking-wider">Lusa</span>
+              <span class="text-sm font-bold">26 Okt</span>
+            </button>
+          </div>
+
+          <!-- Time Slot Selector -->
+          <div class="flex flex-col gap-1.5 mt-1">
+            <span class="text-[10px] text-on-surface-variant font-bold uppercase tracking-wider">Slot Waktu Driver Tersedia</span>
+            <div class="grid grid-cols-2 gap-2" id="timeSlotContainer">
+              <button onclick="selectTimeSlot(this, '09:00 - 11:00')" class="slot-btn py-2.5 px-3 rounded-xl bg-surface-container-low text-on-surface text-xs flex items-center justify-between hover:bg-surface-container">
+                <span>09:00 - 11:00</span>
+                <span class="material-symbols-outlined text-[16px] text-outline">schedule</span>
+              </button>
+              <button onclick="selectTimeSlot(this, '13:00 - 15:00')" class="slot-btn py-2.5 px-3 rounded-xl bg-primary-container text-on-primary-container text-xs font-bold flex items-center justify-between shadow-sm ring-2 ring-primary">
+                <span>13:00 - 15:00</span>
+                <span class="material-symbols-outlined text-[16px] text-on-primary-container" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+              </button>
+              <button onclick="selectTimeSlot(this, '16:00 - 18:00')" class="slot-btn py-2.5 px-3 rounded-xl bg-surface-container-low text-on-surface text-xs flex items-center justify-between hover:bg-surface-container">
+                <span>16:00 - 18:00</span>
+                <span class="material-symbols-outlined text-[16px] text-outline">schedule</span>
+              </button>
+              <button onclick="selectTimeSlot(this, '19:00 - 21:00')" class="slot-btn py-2.5 px-3 rounded-xl bg-surface-container-low text-on-surface text-xs flex items-center justify-between hover:bg-surface-container">
+                <span>19:00 - 21:00</span>
+                <span class="material-symbols-outlined text-[16px] text-outline">schedule</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 5. Washing & Fragrance Preferences -->
+        <div class="bg-surface-container-lowest p-4 rounded-2xl shadow-sm flex flex-col gap-3.5 border border-outline-variant/15">
+          <div class="flex items-center gap-2">
+            <span class="material-symbols-outlined text-primary text-[20px]">air</span>
+            <h2 class="text-sm font-bold text-on-surface">Aroma Parfum & Catatan</h2>
+          </div>
+
+          <div class="grid grid-cols-2 gap-2">
+            <label class="flex items-center gap-2.5 p-2.5 rounded-xl bg-surface-container-highest cursor-pointer shadow-sm ring-1 ring-primary">
+              <input checked type="radio" name="booking_perfume" value="Lavender Bliss" class="accent-primary"/>
+              <div class="flex flex-col min-w-0">
+                <span class="text-xs font-bold text-on-surface truncate">Lavender Bliss</span>
+                <span class="text-[10px] text-primary">Rileks & Bunga</span>
+              </div>
+            </label>
+            <label class="flex items-center gap-2.5 p-2.5 rounded-xl bg-surface-container-low cursor-pointer hover:bg-surface-container">
+              <input type="radio" name="booking_perfume" value="Ocean Fresh" class="accent-primary"/>
+              <div class="flex flex-col min-w-0">
+                <span class="text-xs text-on-surface truncate">Ocean Fresh</span>
+                <span class="text-[10px] text-on-surface-variant">Segar Laut</span>
+              </div>
+            </label>
+            <label class="flex items-center gap-2.5 p-2.5 rounded-xl bg-surface-container-low cursor-pointer hover:bg-surface-container">
+              <input type="radio" name="booking_perfume" value="Baby Powder" class="accent-primary"/>
+              <div class="flex flex-col min-w-0">
+                <span class="text-xs text-on-surface truncate">Baby Powder</span>
+                <span class="text-[10px] text-on-surface-variant">Hypoallergenic</span>
+              </div>
+            </label>
+            <label class="flex items-center gap-2.5 p-2.5 rounded-xl bg-surface-container-low cursor-pointer hover:bg-surface-container">
+              <input type="radio" name="booking_perfume" value="Vanilla Sweet" class="accent-primary"/>
+              <div class="flex flex-col min-w-0">
+                <span class="text-xs text-on-surface truncate">Vanilla Sweet</span>
+                <span class="text-[10px] text-on-surface-variant">Hangat & Manis</span>
+              </div>
+            </label>
+          </div>
+
+          <!-- Addons Checklist -->
+          <div class="flex flex-col gap-2 pt-2 border-t border-surface-container-high">
+            <span class="text-[10px] text-on-surface-variant font-bold uppercase tracking-wider">Instruksi Penanganan Khusus</span>
+            <label class="flex items-center gap-2.5 cursor-pointer py-1">
+              <input checked type="checkbox" id="chkPisahLuntur" class="w-4 h-4 rounded accent-primary"/>
+              <span class="text-xs text-on-surface">Pisahkan pakaian warna luntur</span>
+            </label>
+            <label class="flex items-center gap-2.5 cursor-pointer py-1">
+              <input checked type="checkbox" id="chkLipatRapi" class="w-4 h-4 rounded accent-primary"/>
+              <span class="text-xs text-on-surface">Lipat rapi kompak (siap simpan lemari)</span>
+            </label>
+            <label class="flex items-center justify-between cursor-pointer py-1">
+              <div class="flex items-center gap-2.5">
+                <input type="checkbox" id="chkExtraSoftener" onchange="recalculatePrice()" class="w-4 h-4 rounded accent-primary"/>
+                <span class="text-xs text-on-surface">Gunakan pelembut ekstra premium</span>
+              </div>
+              <span class="text-[11px] text-secondary font-bold">+Rp 2.000/kg</span>
+            </label>
+          </div>
+
+          <div class="flex flex-col gap-1.5 pt-1">
+            <span class="text-[10px] text-on-surface-variant font-bold uppercase tracking-wider">Catatan Khusus untuk Kurir / Cuci</span>
+            <textarea id="bookingNotes" class="w-full bg-surface-container-low text-on-surface p-3 rounded-xl text-xs resize-none focus:outline-none focus:bg-surface-container-lowest focus:ring-2 focus:ring-primary placeholder:text-outline" rows="2" placeholder="Contoh: Ada 2 kemeja putih tolong noda kerah, rumah pagar abu-abu..."></textarea>
+          </div>
+        </div>
+
+        <!-- Sticky Summary & Checkout Action -->
+        <div class="bg-surface-container-lowest/95 backdrop-blur-md p-4 rounded-2xl shadow-lg border border-outline-variant/20 flex items-center justify-between gap-3">
+          <div class="flex flex-col min-w-0">
+            <div class="flex items-center gap-1.5">
+              <span class="text-[11px] text-on-surface-variant">Estimasi Total</span>
+              <span class="bg-primary-fixed text-on-primary-fixed-variant text-[9px] font-bold px-1.5 py-0.2 rounded-full">Gratis Antar</span>
+            </div>
+            <div class="flex items-baseline gap-1">
+              <span class="text-xl font-bold text-primary" id="bookingTotalPrice">Rp 48.000</span>
+              <span class="text-[11px] text-on-surface-variant" id="bookingTotalWeight">~4 kg</span>
+            </div>
+          </div>
+          
+          <button onclick="openCheckoutModal()" class="flex-1 max-w-[190px] py-3.5 px-4 rounded-2xl bg-primary text-on-primary text-xs font-bold flex items-center justify-center gap-2 shadow-md hover:bg-primary-container active:scale-[0.98] transition-all">
+            <span>Lanjutkan Bayar</span>
+            <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+          </button>
+        </div>
+
+      </section>
+
+      <!-- ======================================================== -->
+      <!-- SCREEN 3: LACAK STATUS PESANAN (REAL-TIME TRACKING) -->
+      <!-- ======================================================== -->
+      <section id="screen-lacak" class="screen-panel px-4 space-y-4 pt-3 pb-24">
+        
+        <!-- Status Highlight Banner -->
+        <div class="relative overflow-hidden bg-primary text-on-primary rounded-2xl p-4 shadow-md flex items-center justify-between">
+          <div class="flex flex-col z-10">
+            <div class="flex items-center gap-1.5 mb-1">
+              <span class="inline-block w-2 h-2 rounded-full bg-secondary-container animate-ping"></span>
+              <span class="text-[10px] uppercase tracking-wider text-secondary-container font-bold">Live Tracking</span>
+            </div>
+            <span class="text-base font-bold leading-tight" id="trackingStatusHeadline">Sedang Dicuci (Tahap 3/5)</span>
+            <span class="text-xs text-on-primary/80 mt-0.5" id="trackingEtaText">Estimasi siap antar: Hari ini, 15:30 WIB</span>
+          </div>
+          <div class="w-12 h-12 rounded-full bg-on-primary/10 flex items-center justify-center flex-shrink-0 z-10">
+            <span class="material-symbols-outlined text-[28px] text-secondary-container animate-spin" style="animation-duration: 6s;">local_laundry_service</span>
+          </div>
+          <div class="absolute -right-6 -bottom-6 w-28 h-28 rounded-full bg-primary-container/40 pointer-events-none"></div>
+        </div>
+
+        <!-- Simulation Toolbar Button -->
+        <div class="bg-secondary-fixed/30 rounded-2xl p-3 flex items-center justify-between gap-2 border border-secondary/20">
+          <div class="flex items-center gap-2">
+            <span class="material-symbols-outlined text-secondary text-[20px]">play_circle</span>
+            <div>
+              <p class="text-xs font-bold text-on-secondary-fixed">Simulasi Status Live</p>
+              <p class="text-[10px] text-on-secondary-fixed-variant">Uji coba perpindahan tahap pengerjaan cucian</p>
+            </div>
+          </div>
+          <button onclick="advanceTrackingStage()" class="bg-secondary hover:bg-secondary/90 text-white text-[11px] font-bold px-3 py-1.5 rounded-xl shadow-xs active:scale-95 transition-transform flex items-center gap-1">
+            <span>Next Stage</span>
+            <span class="material-symbols-outlined text-[14px]">fast_forward</span>
+          </button>
+        </div>
+
+        <!-- Order Header Card -->
+        <div class="bg-surface-container-lowest rounded-2xl p-4 shadow-sm flex flex-col gap-3 border border-outline-variant/15">
+          <div class="flex items-center justify-between pb-3 border-b border-surface-container-high">
+            <div class="flex flex-col">
+              <div class="flex items-center gap-2">
+                <span class="text-sm font-bold text-on-surface" id="trackingOrderCode">#FW-8821</span>
+                <span class="px-2 py-0.5 rounded-full bg-primary-fixed text-on-primary-fixed-variant text-[10px] font-bold" id="trackingPackageBadge">Kilat Express</span>
+              </div>
+              <span class="text-xs text-on-surface-variant mt-0.5" id="trackingOrderDate">Masuk: 24 Okt 2024, 10:15 WIB</span>
+            </div>
+            <button onclick="shareTrackingStatus()" aria-label="Bagikan Status" class="w-9 h-9 rounded-full bg-surface-container flex items-center justify-center text-primary hover:bg-surface-container-high transition-colors">
+              <span class="material-symbols-outlined text-[18px]">share</span>
+            </button>
+          </div>
+
+          <!-- Quick stats strip -->
+          <div class="grid grid-cols-3 gap-2 p-2.5 bg-surface-container-low rounded-xl text-center">
+            <div class="flex flex-col">
+              <span class="text-[10px] text-on-surface-variant">Berat Resmi</span>
+              <span class="text-xs font-bold text-primary mt-0.5" id="trackingOfficialWeight">5.2 Kg</span>
+            </div>
+            <div class="flex flex-col">
+              <span class="text-[10px] text-on-surface-variant">Layanan</span>
+              <span class="text-xs font-bold text-on-surface mt-0.5" id="trackingServiceType">Cuci & Setrika</span>
+            </div>
+            <div class="flex flex-col">
+              <span class="text-[10px] text-on-surface-variant">Status Biaya</span>
+              <span class="text-xs font-bold text-primary-container mt-0.5">Lunas</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Kurir & Outlet Info Card -->
+        <div class="bg-surface-container-lowest rounded-2xl p-4 shadow-sm flex flex-col gap-3 border border-outline-variant/15">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2 text-on-surface">
+              <span class="material-symbols-outlined text-[20px] text-primary">store</span>
+              <span class="text-xs font-bold">FreshWash Gandaria</span>
+              <span class="text-[11px] text-on-surface-variant">• 0.8 km</span>
+            </div>
+            <span class="px-2 py-0.5 rounded bg-surface-container text-on-surface-variant text-[10px]">Workshop Utama</span>
+          </div>
+
+          <div class="p-3 bg-surface-container-low rounded-xl flex items-center justify-between gap-3">
+            <div class="flex items-center gap-3 min-w-0">
+              <div class="relative flex-shrink-0">
+                <img class="w-11 h-11 rounded-full object-cover shadow-sm" alt="Kurir Budi" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDwAMSah09grfpUXKM2_9M0mHWcd8Q0ekrSMBZJvS1Q2sI_1b74fcnLN9VLnijqjLO32J6SRcoCR2V-rhwGGmRyh8-1TJXsBJxVIgJA28qVoRFZPXB5qqO6A1eBqXlRFq7uRoyKVbQ2DdYGwx4emNtAIOX8fcQ0-iaVjLd8zJLydgClqrvuBthtcLRg3h5U1fTiRcS0YM3sDT-q2yauJ_9HtLpL-o5_VFm_tKOqkDR3nB4pf1h_W7YJfA"/>
+                <span class="absolute -bottom-1 -right-1 bg-surface-container-lowest rounded-full p-0.5">
+                  <span class="material-symbols-outlined text-[13px] text-primary" style="font-variation-settings: 'FILL' 1;">verified</span>
+                </span>
+              </div>
+              <div class="flex flex-col min-w-0">
+                <div class="flex items-center gap-1.5">
+                  <span class="text-xs font-bold text-on-surface truncate">Budi Santoso</span>
+                  <span class="flex items-center text-primary text-[11px] font-bold">
+                    <span class="material-symbols-outlined text-[12px] text-secondary" style="font-variation-settings: 'FILL' 1;">star</span>
+                    4.9
+                  </span>
+                </div>
+                <span class="text-[11px] text-on-surface-variant truncate">Kurir FreshRider • B 1234 ABC</span>
+              </div>
+            </div>
+            <div class="flex items-center gap-2 flex-shrink-0">
+              <a href="tel:08123456789" class="w-9 h-9 rounded-full bg-primary text-on-primary flex items-center justify-center hover:opacity-90 shadow-sm transition-transform active:scale-95" title="Telepon Kurir">
+                <span class="material-symbols-outlined text-[18px]">phone</span>
+              </a>
+              <button onclick="openCourierChatModal()" class="w-9 h-9 rounded-full bg-secondary-container text-on-secondary-fixed flex items-center justify-center hover:opacity-90 shadow-sm transition-transform active:scale-95" title="Chat WhatsApp">
+                <span class="material-symbols-outlined text-[18px]">chat</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Foto Verifikasi Cucian & Timbangan (Transparansi) -->
+        <div class="bg-surface-container-lowest rounded-2xl p-4 shadow-sm flex flex-col gap-3 border border-outline-variant/15">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-1.5">
+              <span class="material-symbols-outlined text-[20px] text-primary">scale</span>
+              <span class="text-sm font-bold text-on-surface">Verifikasi Timbangan Digital</span>
+            </div>
+            <span class="text-[10px] text-primary font-bold bg-primary-fixed px-2 py-0.5 rounded-full">Valid & Akurat</span>
+          </div>
+          <p class="text-[11px] text-on-surface-variant">Foto pakaian saat pertama kali tiba di outlet sebelum diproses ke mesin cuci.</p>
+          <div class="grid grid-cols-2 gap-2.5 mt-1">
+            <div onclick="openPhotoPreview('scale')" class="relative rounded-xl overflow-hidden group shadow-sm cursor-pointer">
+              <img class="w-full h-24 object-cover group-hover:scale-105 transition-transform duration-300" alt="Timbangan Digital" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAaw3bOmxkqjSJ53TXUoAn2hzHx7kpK83rFfcunF2PqGtWgqDYxg5Lw1FS2QiCsipNWE0eZnPHcrSepVaTpSG6Ew6lt7eRapAQySXGaxG_Ti5DlktPKNex1Sd0vuNkOcvW7ayLcUh5pMN2cgutqYp2-IfYJ0VzoSuS7Hmd80bksJl2BC2M5jw594kcqfbrQZ78zaeXPLxHJDECFvPtdLWn2aF1DhPvnRUZPi2eHsdDSqaDEHqzHnWulYw"/>
+              <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/80 to-transparent p-1.5 text-white flex items-center justify-between">
+                <span class="text-[10px]">Display Timbangan</span>
+                <span class="text-[10px] font-bold text-secondary-container">5.20 Kg</span>
+              </div>
+            </div>
+            <div onclick="openPhotoPreview('clothes')" class="relative rounded-xl overflow-hidden group shadow-sm cursor-pointer">
+              <img class="w-full h-24 object-cover group-hover:scale-105 transition-transform duration-300" alt="Foto Pakaian" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAQEvgaaz9xsWst-yeB0XgIBRUMnFUHlPiny9b-Dqteer5zauxKyvkoWE4irWByEccaROLdmhFc7iWYrb1J04y-nIKN3o3OSai3iQewbILgzrFN-V6FNVH-m4oPFDBmcOZJVSXEHlufQi4FzQq5jKugkpTwJUB3iLFmxu8KUArxHe7liPH5jxxbKQXkNgWKqrn_NmpaKPzrWsn4NC6xipv_s-3l3NwGlgEcUuaR2DOFgWQVujETemSYZQ"/>
+              <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/80 to-transparent p-1.5 text-white flex items-center justify-between">
+                <span class="text-[10px]">Foto Fisik</span>
+                <span class="text-[10px] font-bold">14 Pcs</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Real-time Status Timeline -->
+        <div class="bg-surface-container-lowest rounded-2xl p-4 shadow-sm flex flex-col gap-4 border border-outline-variant/15">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-1.5">
+              <span class="material-symbols-outlined text-[20px] text-primary">timeline</span>
+              <span class="text-sm font-bold text-on-surface">Proses Pengerjaan</span>
+            </div>
+            <span class="text-[10px] text-primary font-bold bg-primary-fixed/40 px-2 py-0.5 rounded-full">Otomatis Terupdate</span>
+          </div>
+
+          <div class="flex flex-col relative pl-2 space-y-4" id="trackingTimelineContainer">
+            <!-- Step 1 -->
+            <div class="flex gap-3 relative timeline-step" id="tl-step-1">
+              <div class="flex flex-col items-center">
+                <div class="w-7 h-7 rounded-full bg-primary text-on-primary flex items-center justify-center shadow-sm z-10 flex-shrink-0">
+                  <span class="material-symbols-outlined text-[16px]">check</span>
+                </div>
+                <div class="w-0.5 flex-1 bg-primary mt-1"></div>
+              </div>
+              <div class="flex flex-col min-w-0 pt-0.5">
+                <div class="flex items-center justify-between gap-2">
+                  <span class="text-xs font-bold text-on-surface">Penjemputan Selesai</span>
+                  <span class="text-[10px] text-on-surface-variant">10:15 WIB</span>
+                </div>
+                <span class="text-[11px] text-on-surface-variant mt-0.5">Kurir Budi Santoso telah mengambil paket pakaian dari lokasi Anda.</span>
+              </div>
+            </div>
+
+            <!-- Step 2 -->
+            <div class="flex gap-3 relative timeline-step" id="tl-step-2">
+              <div class="flex flex-col items-center">
+                <div class="w-7 h-7 rounded-full bg-primary text-on-primary flex items-center justify-center shadow-sm z-10 flex-shrink-0">
+                  <span class="material-symbols-outlined text-[16px]">check</span>
+                </div>
+                <div class="w-0.5 flex-1 bg-primary mt-1"></div>
+              </div>
+              <div class="flex flex-col min-w-0 pt-0.5">
+                <div class="flex items-center justify-between gap-2">
+                  <span class="text-xs font-bold text-on-surface">Tiba di Workshop & Ditimbang</span>
+                  <span class="text-[10px] text-on-surface-variant">10:50 WIB</span>
+                </div>
+                <span class="text-[11px] text-on-surface-variant mt-0.5">Berat diverifikasi digital: 5.2 Kg. QR Tag dipasang pada keranjang.</span>
+              </div>
+            </div>
+
+            <!-- Step 3 (Active) -->
+            <div class="flex gap-3 relative timeline-step" id="tl-step-3">
+              <div class="flex flex-col items-center">
+                <div class="w-7 h-7 rounded-full bg-secondary-container text-on-secondary-fixed flex items-center justify-center shadow-md z-10 flex-shrink-0 animate-pulse">
+                  <span class="material-symbols-outlined text-[16px]">autorenew</span>
+                </div>
+                <div class="w-0.5 flex-1 bg-surface-container mt-1"></div>
+              </div>
+              <div class="flex flex-col min-w-0 pt-0.5 p-3 rounded-xl bg-surface-container-low flex-1">
+                <div class="flex items-center justify-between gap-2">
+                  <span class="text-xs font-bold text-secondary">Proses Pencucian (Aktif)</span>
+                  <span class="text-[10px] text-secondary font-bold">11:30 WIB</span>
+                </div>
+                <span class="text-[11px] text-on-surface mt-1">Mesin LG Commercial Washer #03 berputar. Menggunakan air ozone ramah lingkungan.</span>
+                <div class="w-full bg-surface-container rounded-full h-1.5 mt-2 overflow-hidden">
+                  <div class="bg-secondary h-1.5 rounded-full w-3/5"></div>
+                </div>
+                <div class="flex justify-between items-center mt-1">
+                  <span class="text-[10px] text-on-surface-variant">Pembilasan 2/3</span>
+                  <span class="text-[10px] text-secondary font-bold">Sisa 18 menit</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Step 4 -->
+            <div class="flex gap-3 relative timeline-step" id="tl-step-4">
+              <div class="flex flex-col items-center">
+                <div class="w-7 h-7 rounded-full bg-surface-container text-outline flex items-center justify-center z-10 flex-shrink-0">
+                  <span class="material-symbols-outlined text-[16px]">wb_sunny</span>
+                </div>
+                <div class="w-0.5 flex-1 bg-surface-container mt-1"></div>
+              </div>
+              <div class="flex flex-col min-w-0 pt-0.5">
+                <div class="flex items-center justify-between gap-2">
+                  <span class="text-xs font-bold text-outline">Pengeringan & Setrika Uap</span>
+                  <span class="text-[10px] text-outline">Est. 13:30 WIB</span>
+                </div>
+                <span class="text-[11px] text-outline mt-0.5">Dryer High-Heat anti tungau & setrika uap boiler tegak rapi.</span>
+              </div>
+            </div>
+
+            <!-- Step 5 -->
+            <div class="flex gap-3 relative timeline-step" id="tl-step-5">
+              <div class="flex flex-col items-center">
+                <div class="w-7 h-7 rounded-full bg-surface-container text-outline flex items-center justify-center z-10 flex-shrink-0">
+                  <span class="material-symbols-outlined text-[16px]">local_shipping</span>
+                </div>
+              </div>
+              <div class="flex flex-col min-w-0 pt-0.5">
+                <div class="flex items-center justify-between gap-2">
+                  <span class="text-xs font-bold text-outline">Pengantaran Kembali ke Rumah</span>
+                  <span class="text-[10px] text-outline">Est. 15:00 WIB</span>
+                </div>
+                <span class="text-[11px] text-outline mt-0.5">Diantar kembali oleh tim FreshWash langsung ke depan pintu Anda.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Rincian Nota Digital (Digital Receipt) -->
+        <div class="bg-surface-container-lowest rounded-2xl p-4 shadow-sm flex flex-col gap-3 border border-outline-variant/15">
+          <div class="flex items-center justify-between pb-2 border-b border-surface-container-high">
+            <div class="flex items-center gap-1.5">
+              <span class="material-symbols-outlined text-[20px] text-primary">receipt_long</span>
+              <span class="text-sm font-bold text-on-surface">Rincian Nota Digital</span>
+            </div>
+            <span class="text-[10px] text-primary font-bold bg-primary-fixed px-2 py-0.5 rounded-full">LUNAS</span>
+          </div>
+          <div class="flex flex-col gap-2 pt-1 text-xs text-on-surface-variant">
+            <div class="flex justify-between items-center">
+              <span>Cuci Kilat Express (5.2 Kg @ Rp 12.000)</span>
+              <span class="font-bold text-on-surface">Rp 62.400</span>
+            </div>
+            <div class="flex justify-between items-center">
+              <span>Ekstra Pelembut & Pewangi Khusus</span>
+              <span class="font-bold text-on-surface">Rp 5.000</span>
+            </div>
+            <div class="flex justify-between items-center">
+              <span>Ongkir Antar-Jemput (Radius 2 Km)</span>
+              <span class="text-primary font-bold">Rp 0 (Promo)</span>
+            </div>
+            <div class="flex justify-between items-center text-primary font-medium">
+              <span>Diskon Voucher (BERSIHSEGAR)</span>
+              <span>-Rp 15.000</span>
+            </div>
+            <div class="h-[1px] bg-surface-container-highest my-1"></div>
+            <div class="flex justify-between items-center text-on-surface">
+              <span class="font-bold text-sm">Total Pembayaran</span>
+              <span class="text-base font-bold text-primary">Rp 52.400</span>
+            </div>
+            <div class="flex items-center justify-between text-[11px] text-on-surface-variant">
+              <span>Metode: FreshPay Saldo</span>
+              <span>Ref: FP-99201948</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bottom Action Buttons -->
+        <div class="grid grid-cols-2 gap-3 pt-1">
+          <button onclick="downloadDigitalInvoice()" class="flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-surface-container-high text-on-surface text-xs font-bold hover:bg-surface-container transition-all active:scale-[0.98]">
+            <span class="material-symbols-outlined text-[18px] text-primary">download</span>
+            <span>Unduh PDF</span>
+          </button>
+          <button onclick="openSupportModal()" class="flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-primary text-on-primary text-xs font-bold hover:bg-primary-container shadow-md transition-all active:scale-[0.98]">
+            <span class="material-symbols-outlined text-[18px]">support_agent</span>
+            <span>Bantuan CS</span>
+          </button>
+        </div>
+
+      </section>
+
+      <!-- ======================================================== -->
+      <!-- SCREEN 4: AKUN & RIWAYAT PESANAN -->
+      <!-- ======================================================== -->
+      <section id="screen-akun" class="screen-panel px-4 space-y-4 pt-3 pb-24">
+        
+        <!-- Profile Header Card -->
+        <div class="bg-surface-container-lowest rounded-2xl p-4 shadow-sm flex flex-col gap-3.5 relative overflow-hidden border border-outline-variant/15">
+          <div class="absolute -top-12 -right-12 w-32 h-32 bg-secondary-container/20 rounded-full blur-2xl pointer-events-none"></div>
+          
+          <div class="flex items-center gap-3.5 relative">
+            <div class="relative flex-shrink-0">
+              <img alt="Sarah Amalia" class="w-14 h-14 rounded-full object-cover shadow-sm" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA42lCx6DYuo72ZYLVSAvPcR3vbv2PFPGDNnGD2YugISmUMr5LizmsD20vCZ3Tf30jhvYNSKCjrOGMfgU6A6ibQa2NjYXJ8zX0dqmLAkl-f37AbmwSTzxBg4NsKelDOkUjJC9AclMUBY76Bh2ro5zN-yyVCsB12NOZrUdE30RP9bnDFLaYQ9CgLUpWFf3KbeIgbmHvhuEUw_PKaDGemnPpVKUt6YN3jogkrRAsAisuiMxDexmrx6HAFgg"/>
+              <span class="absolute -bottom-1 -right-1 bg-amber-400 text-on-surface p-1 rounded-full flex items-center justify-center shadow-xs">
+                <span class="material-symbols-outlined text-[12px] leading-none" style="font-variation-settings: 'FILL' 1;">workspace_premium</span>
+              </span>
+            </div>
+            
+            <div class="flex flex-col min-w-0 flex-1">
+              <div class="flex items-center justify-between gap-1">
+                <h1 class="text-base font-bold text-on-surface truncate">Sarah Amalia</h1>
+                <span class="px-2 py-0.5 rounded-full bg-amber-100 text-amber-900 text-[10px] font-bold flex items-center gap-1 flex-shrink-0">
+                  <span class="material-symbols-outlined text-[12px] text-amber-700" style="font-variation-settings: 'FILL' 1;">stars</span>
+                  Gold Member
+                </span>
+              </div>
+              <p class="text-xs text-on-surface-variant mt-0.5 truncate">+62 812-8921-8890</p>
+              <div class="flex items-center gap-1 text-primary mt-1">
+                <span class="material-symbols-outlined text-[13px]">verified</span>
+                <span class="text-[11px] font-semibold">Akun Terverifikasi</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tier Progress to Platinum -->
+          <div class="bg-surface-container-low rounded-xl p-3 flex flex-col gap-2">
+            <div class="flex items-center justify-between text-xs">
+              <span class="text-on-surface font-semibold flex items-center gap-1">
+                <span class="material-symbols-outlined text-[15px] text-primary">auto_awesome</span>
+                Menuju Platinum Tier
+              </span>
+              <span class="text-primary font-bold">7 / 10 Pesanan</span>
+            </div>
+            <div class="w-full bg-surface-container-high h-2 rounded-full overflow-hidden">
+              <div class="bg-gradient-to-r from-primary to-secondary-container h-full rounded-full" style="width: 70%;"></div>
+            </div>
+            <p class="text-[11px] text-on-surface-variant flex items-center gap-1">
+              <span class="material-symbols-outlined text-[14px] text-secondary">info</span>
+              Selesaikan <strong class="text-on-surface font-semibold">3 pesanan lagi</strong> untuk diskon member 15%!
+            </p>
+          </div>
+        </div>
+
+        <!-- Saldo & Reward Cards (2 Columns) -->
+        <div class="grid grid-cols-2 gap-3">
+          <!-- FreshPay Card -->
+          <div class="bg-surface-container-lowest rounded-2xl p-3.5 shadow-sm flex flex-col justify-between gap-2.5 border border-outline-variant/15">
+            <div class="flex flex-col gap-1">
+              <div class="flex items-center justify-between text-on-surface-variant">
+                <div class="flex items-center gap-1.5">
+                  <div class="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+                    <span class="material-symbols-outlined text-[15px]">account_balance_wallet</span>
+                  </div>
+                  <span class="text-xs font-semibold">FreshPay</span>
+                </div>
+              </div>
+              <p class="text-base font-bold text-on-surface mt-1" id="accountBalanceText">Rp 125.000</p>
+            </div>
+            <div class="flex items-center gap-1.5 pt-1">
+              <button onclick="openTopUpModal()" class="flex-1 py-1.5 px-2 rounded-full bg-primary text-on-primary text-xs font-bold flex items-center justify-center gap-0.5 shadow-xs active:scale-95 transition-transform">
+                <span class="material-symbols-outlined text-[13px]">add</span>
+                Top Up
+              </button>
+              <button onclick="showTransactionHistoryToast()" aria-label="Riwayat Saldo" class="p-1.5 rounded-full bg-surface-container text-on-surface-variant hover:text-primary active:scale-95 transition-transform">
+                <span class="material-symbols-outlined text-[16px]">receipt_long</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- FreshPoints Card -->
+          <div class="bg-surface-container-lowest rounded-2xl p-3.5 shadow-sm flex flex-col justify-between gap-2.5 border border-outline-variant/15">
+            <div class="flex flex-col gap-1">
+              <div class="flex items-center justify-between text-on-surface-variant">
+                <div class="flex items-center gap-1.5">
+                  <div class="w-6 h-6 rounded-full bg-secondary-container/40 flex items-center justify-center text-secondary">
+                    <span class="material-symbols-outlined text-[15px]">loyalty</span>
+                  </div>
+                  <span class="text-xs font-semibold">FreshPoints</span>
+                </div>
+              </div>
+              <p class="text-base font-bold text-on-surface mt-1" id="accountPointsText">450 <span class="text-xs font-normal text-on-surface-variant">Poin</span></p>
+            </div>
+            <div class="flex items-center gap-1.5 pt-1">
+              <button onclick="openRedeemPointsModal()" class="w-full py-1.5 px-2 rounded-full bg-surface-container-high text-on-surface text-xs font-bold flex items-center justify-center gap-1 active:scale-95 transition-transform hover:bg-surface-container-highest">
+                <span>Tukar Kupon</span>
+                <span class="material-symbols-outlined text-[13px] text-primary">arrow_forward</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Voucher Promo Micro Highlight -->
+        <div class="bg-secondary-fixed/30 rounded-2xl p-3 flex items-center justify-between gap-2.5 border border-secondary/20">
+          <div class="flex items-center gap-2 min-w-0">
+            <div class="w-8 h-8 rounded-xl bg-surface-container-lowest flex items-center justify-center text-secondary flex-shrink-0 shadow-xs">
+              <span class="material-symbols-outlined text-[18px]">confirmation_number</span>
+            </div>
+            <p class="text-xs text-on-secondary-fixed-variant truncate">
+              Tukar 400 poin hemat <strong class="text-on-secondary-fixed font-bold">Rp 50.000</strong>
+            </p>
+          </div>
+          <button onclick="openRedeemPointsModal()" class="text-xs text-secondary font-bold whitespace-nowrap flex-shrink-0 hover:underline">
+            Klaim
+          </button>
+        </div>
+
+        <!-- Order History Section with Tabs -->
+        <div class="bg-surface-container-lowest rounded-2xl p-4 shadow-sm flex flex-col gap-3.5 border border-outline-variant/15">
+          <div class="flex items-center justify-between">
+            <h2 class="text-sm font-bold text-on-surface">Riwayat Pesanan</h2>
+            <button onclick="filterHistory('semua')" class="text-xs text-primary font-bold hover:underline flex items-center gap-0.5">
+              Semua
+              <span class="material-symbols-outlined text-[14px]">chevron_right</span>
+            </button>
+          </div>
+
+          <!-- Segmented Tabs -->
+          <div class="grid grid-cols-2 p-1 bg-surface-container-low rounded-xl gap-1">
+            <button id="tab-proses" onclick="switchOrderTab('proses')" class="py-1.5 rounded-lg text-xs font-bold text-on-surface-variant transition-all text-center flex items-center justify-center gap-1.5">
+              <span>Dalam Proses</span>
+              <span class="px-1.5 py-0.2 bg-secondary-container text-on-secondary-container rounded-full text-[10px] font-bold" id="badgeCountProses">1</span>
+            </button>
+            <button id="tab-selesai" onclick="switchOrderTab('selesai')" class="py-1.5 rounded-lg text-xs bg-surface-container-lowest text-primary font-bold shadow-xs transition-all text-center flex items-center justify-center gap-1.5">
+              <span>Selesai</span>
+              <span class="px-1.5 py-0.2 bg-surface-container-high text-on-surface rounded-full text-[10px]" id="badgeCountSelesai">3</span>
+            </button>
+          </div>
+
+          <!-- Tab Content: Dalam Proses -->
+          <div id="content-proses" class="hidden flex-col gap-3 py-1">
+            <div class="bg-surface-container-low rounded-xl p-3 flex flex-col gap-2">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-bold text-on-surface">#FW-8821</span>
+                <span class="px-2 py-0.5 rounded-full bg-secondary-container/50 text-secondary text-[10px] font-bold flex items-center gap-1">
+                  <span class="w-1.5 h-1.5 rounded-full bg-secondary animate-ping"></span>
+                  Sedang Dicuci
+                </span>
+              </div>
+              <div class="flex items-center justify-between text-on-surface-variant text-xs">
+                <span>Cuci Komplit Express 5.2 Kg</span>
+                <span>Est. Besok 16:00</span>
+              </div>
+              <div class="flex items-center justify-between pt-1">
+                <span class="text-xs font-bold text-on-surface">Rp 52.400</span>
+                <button onclick="switchScreen('lacak')" class="px-3 py-1 bg-primary text-on-primary rounded-full text-xs font-bold flex items-center gap-1 hover:bg-primary-container">
+                  <span class="material-symbols-outlined text-[13px]">radar</span>
+                  Lacak Pesanan
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tab Content: Selesai -->
+          <div id="content-selesai" class="flex flex-col gap-3">
+            <!-- Order 1 -->
+            <div class="bg-surface-container-low rounded-xl p-3 flex flex-col gap-2.5">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                  <div class="w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center">
+                    <span class="material-symbols-outlined text-[16px]">local_laundry_service</span>
+                  </div>
+                  <div>
+                    <span class="text-xs font-bold text-on-surface">#FW-7612</span>
+                    <span class="text-on-surface-variant text-[11px] ml-1.5">• 20 Okt</span>
+                  </div>
+                </div>
+                <span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-bold">
+                  Selesai
+                </span>
+              </div>
+              <div class="flex items-center justify-between">
+                <div>
+                  <p class="text-xs text-on-surface font-semibold">Cuci Kiloan Reguler 4.8 Kg</p>
+                  <p class="text-[11px] text-on-surface-variant">Parfum Lavender • Rapi Lipat</p>
+                </div>
+                <span class="text-xs font-bold text-on-surface">Rp 38.400</span>
+              </div>
+              <div class="flex items-center justify-end gap-2 pt-1">
+                <button onclick="showReviewModal('#FW-7612')" class="px-2.5 py-1.5 rounded-full bg-surface-container-high text-on-surface text-[11px] font-medium flex items-center gap-1 active:scale-95 transition-transform">
+                  <span class="material-symbols-outlined text-[13px] text-amber-500" style="font-variation-settings: 'FILL' 1;">star</span>
+                  Beri Ulasan
+                </button>
+                <button onclick="reorderService('kiloan', 4)" class="px-3 py-1.5 rounded-full bg-primary text-on-primary text-[11px] font-bold flex items-center gap-1 active:scale-95 transition-transform shadow-xs">
+                  <span class="material-symbols-outlined text-[13px]">refresh</span>
+                  Pesan Lagi
+                </button>
+              </div>
+            </div>
+
+            <!-- Order 2 -->
+            <div class="bg-surface-container-low rounded-xl p-3 flex flex-col gap-2.5">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                  <div class="w-7 h-7 rounded-full bg-secondary/10 text-secondary flex items-center justify-center">
+                    <span class="material-symbols-outlined text-[16px]">dry_cleaning</span>
+                  </div>
+                  <div>
+                    <span class="text-xs font-bold text-on-surface">#FW-7301</span>
+                    <span class="text-on-surface-variant text-[11px] ml-1.5">• 15 Okt</span>
+                  </div>
+                </div>
+                <span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-bold">
+                  Selesai
+                </span>
+              </div>
+              <div class="flex items-center justify-between">
+                <div>
+                  <p class="text-xs text-on-surface font-semibold">Dry Clean 2 Jas Formal + 1 Gaun</p>
+                  <p class="text-[11px] text-on-surface-variant">Dust-bag pelindung premium</p>
+                </div>
+                <span class="text-xs font-bold text-on-surface">Rp 95.000</span>
+              </div>
+              <div class="flex items-center justify-end gap-2 pt-1">
+                <button onclick="reorderService('satuan', 2)" class="px-3 py-1.5 rounded-full bg-primary text-on-primary text-[11px] font-bold flex items-center gap-1 active:scale-95 transition-transform shadow-xs">
+                  <span class="material-symbols-outlined text-[13px]">refresh</span>
+                  Pesan Lagi
+                </button>
+              </div>
+            </div>
+
+            <!-- Order 3 -->
+            <div class="bg-surface-container-low rounded-xl p-3 flex flex-col gap-2.5">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                  <div class="w-7 h-7 rounded-full bg-tertiary-fixed text-on-tertiary-fixed-variant flex items-center justify-center">
+                    <span class="material-symbols-outlined text-[16px]">roller_skating</span>
+                  </div>
+                  <div>
+                    <span class="text-xs font-bold text-on-surface">#FW-6990</span>
+                    <span class="text-on-surface-variant text-[11px] ml-1.5">• 08 Okt</span>
+                  </div>
+                </div>
+                <span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-bold">
+                  Selesai
+                </span>
+              </div>
+              <div class="flex items-center justify-between">
+                <div>
+                  <p class="text-xs text-on-surface font-semibold">Deep Clean 2 Pasang Sepatu Sneakers</p>
+                  <p class="text-[11px] text-on-surface-variant">Unyellowing & Anti-Bakteri</p>
+                </div>
+                <span class="text-xs font-bold text-on-surface">Rp 70.000</span>
+              </div>
+              <div class="flex items-center justify-end gap-2 pt-1">
+                <button onclick="reorderService('sepatu', 2)" class="px-3 py-1.5 rounded-full bg-primary text-on-primary text-[11px] font-bold flex items-center gap-1 active:scale-95 transition-transform shadow-xs">
+                  <span class="material-symbols-outlined text-[13px]">refresh</span>
+                  Pesan Lagi
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Menu Pengaturan & Bantuan -->
+        <div class="bg-surface-container-lowest rounded-2xl p-4 shadow-sm flex flex-col gap-1 border border-outline-variant/15">
+          <h2 class="text-xs font-bold text-on-surface mb-2 uppercase tracking-wider text-outline">Pengaturan & Bantuan</h2>
+          
+          <button onclick="openLocationModal()" class="w-full flex items-center justify-between py-2.5 px-1 rounded-xl hover:bg-surface-container-low transition-colors group text-left">
+            <div class="flex items-center gap-3 min-w-0">
+              <div class="w-9 h-9 rounded-full bg-surface-container flex items-center justify-center text-primary flex-shrink-0 group-hover:bg-primary-fixed">
+                <span class="material-symbols-outlined text-[18px]">pin_drop</span>
+              </div>
+              <div class="flex flex-col min-w-0">
+                <span class="text-xs font-semibold text-on-surface truncate">Daftar Alamat Tersimpan</span>
+                <span class="text-[11px] text-on-surface-variant truncate">Rumah Utama, Kantor Sudirman, Kos</span>
+              </div>
+            </div>
+            <span class="material-symbols-outlined text-[18px] text-outline">chevron_right</span>
+          </button>
+
+          <button onclick="openPreferencesModal()" class="w-full flex items-center justify-between py-2.5 px-1 rounded-xl hover:bg-surface-container-low transition-colors group text-left">
+            <div class="flex items-center gap-3 min-w-0">
+              <div class="w-9 h-9 rounded-full bg-surface-container flex items-center justify-center text-primary flex-shrink-0 group-hover:bg-primary-fixed">
+                <span class="material-symbols-outlined text-[18px]">tune</span>
+              </div>
+              <div class="flex flex-col min-w-0">
+                <span class="text-xs font-semibold text-on-surface truncate">Preferensi Cucian Default</span>
+                <span class="text-[11px] text-on-surface-variant truncate">Lavender Bliss • Rapi Lipat Kompak</span>
+              </div>
+            </div>
+            <span class="material-symbols-outlined text-[18px] text-outline">chevron_right</span>
+          </button>
+
+          <button onclick="openSupportModal()" class="w-full flex items-center justify-between py-2.5 px-1 rounded-xl hover:bg-surface-container-low transition-colors group text-left">
+            <div class="flex items-center gap-3 min-w-0">
+              <div class="w-9 h-9 rounded-full bg-surface-container flex items-center justify-center text-primary flex-shrink-0 group-hover:bg-primary-fixed">
+                <span class="material-symbols-outlined text-[18px]">support_agent</span>
+              </div>
+              <div class="flex flex-col min-w-0">
+                <span class="text-xs font-semibold text-on-surface truncate">Pusat Bantuan & FAQ</span>
+                <span class="text-[11px] text-on-surface-variant truncate">Garansi cuci ulang • Buka 07:00 - 22:00</span>
+              </div>
+            </div>
+            <span class="material-symbols-outlined text-[18px] text-outline">chevron_right</span>
+          </button>
+
+          <button onclick="openTermsModal()" class="w-full flex items-center justify-between py-2.5 px-1 rounded-xl hover:bg-surface-container-low transition-colors group text-left">
+            <div class="flex items-center gap-3 min-w-0">
+              <div class="w-9 h-9 rounded-full bg-surface-container flex items-center justify-center text-primary flex-shrink-0 group-hover:bg-primary-fixed">
+                <span class="material-symbols-outlined text-[18px]">verified_user</span>
+              </div>
+              <div class="flex flex-col min-w-0">
+                <span class="text-xs font-semibold text-on-surface truncate">Syarat & Kebijakan Garansi</span>
+                <span class="text-[11px] text-on-surface-variant truncate">Perlindungan pakaian & anti-hilang</span>
+              </div>
+            </div>
+            <span class="material-symbols-outlined text-[18px] text-outline">chevron_right</span>
+          </button>
+
+          <!-- Download / Install App Menu -->
+          <button onclick="openDownloadModal()" class="w-full flex items-center justify-between py-2.5 px-1 rounded-xl hover:bg-surface-container-low transition-colors group text-left">
+            <div class="flex items-center gap-3 min-w-0">
+              <div class="w-9 h-9 rounded-full bg-emerald-500/15 flex items-center justify-center text-emerald-600 flex-shrink-0 group-hover:bg-emerald-500/25">
+                <span class="material-symbols-outlined text-[18px]">install_mobile</span>
+              </div>
+              <div class="flex flex-col min-w-0">
+                <span class="text-xs font-semibold text-on-surface truncate">Download Aplikasi di HP</span>
+                <span class="text-[11px] text-on-surface-variant truncate">Pasang di Layar Utama (Android &amp; iPhone)</span>
+              </div>
+            </div>
+            <div class="flex items-center gap-1">
+              <span class="text-[9px] font-bold text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded-full">Bisa Offline</span>
+              <span class="material-symbols-outlined text-[18px] text-outline">chevron_right</span>
+            </div>
+          </button>
+        </div>
+
+        <!-- Tombol Keluar Akun -->
+        <button onclick="confirmLogout()" class="w-full py-3.5 px-4 rounded-xl bg-error-container text-on-error-container text-xs font-bold flex items-center justify-center gap-2 active:scale-95 transition-all shadow-xs">
+          <span class="material-symbols-outlined text-[18px]">logout</span>
+          Keluar Akun
+        </button>
+
+        <div class="text-center pt-1 pb-4">
+          <span class="text-[11px] text-outline">FreshWash Indonesia v2.4.1 (Build 1204)</span>
+        </div>
+
+      </section>
+
+    </main>
+
+    <!-- ======================================================== -->
+    <!-- BOTTOM NAVIGATION (Persistent Tab Bar) -->
+    <!-- ======================================================== -->
+    <nav class="fixed bottom-0 inset-x-0 z-50 pb-safe bg-surface/90 backdrop-blur-xl shadow-[0_-4px_20px_rgba(15,23,42,0.06)] max-w-[440px] mx-auto border-t border-outline-variant/15">
+      <div class="flex items-center justify-around h-16 px-2">
+        <!-- Beranda -->
+        <button id="nav-beranda" onclick="switchScreen('beranda')" class="nav-item flex flex-col items-center justify-center gap-0.5 min-w-[56px] h-12 transition-colors text-primary font-bold">
+          <span class="material-symbols-outlined text-[22px]">local_laundry_service</span>
+          <span class="text-[11px] font-semibold">Beranda</span>
+        </button>
+
+        <!-- Pesan Antar -->
+        <button id="nav-pesan-antar" onclick="switchScreen('pesan-antar')" class="nav-item flex flex-col items-center justify-center gap-0.5 min-w-[56px] h-12 text-on-surface-variant transition-colors hover:text-primary">
+          <span class="material-symbols-outlined text-[22px]">local_shipping</span>
+          <span class="text-[11px] font-semibold">Pesan Antar</span>
+        </button>
+
+        <!-- Lacak -->
+        <button id="nav-lacak" onclick="switchScreen('lacak')" class="nav-item flex flex-col items-center justify-center gap-0.5 min-w-[56px] h-12 text-on-surface-variant transition-colors hover:text-primary">
+          <span class="material-symbols-outlined text-[22px]">radar</span>
+          <span class="text-[11px] font-semibold">Lacak</span>
+        </button>
+
+        <!-- Akun -->
+        <button id="nav-akun" onclick="switchScreen('akun')" class="nav-item flex flex-col items-center justify-center gap-0.5 min-w-[56px] h-12 text-on-surface-variant transition-colors hover:text-primary">
+          <span class="material-symbols-outlined text-[22px]">account_circle</span>
+          <span class="text-[11px] font-semibold">Akun</span>
+        </button>
+      </div>
+    </nav>
+
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- MODALS & OVERLAYS -->
+  <!-- ======================================================== -->
+
+  <!-- 1. Top Up Saldo Modal -->
+  <div id="modalTopUp" class="fixed inset-0 z-[80] bg-black/60 backdrop-blur-sm hidden flex items-end sm:items-center justify-center p-0 sm:p-4">
+    <div class="bg-surface-container-lowest w-full max-w-[440px] rounded-t-3xl sm:rounded-3xl p-5 shadow-2xl flex flex-col gap-4 animate-in fade-in zoom-in-95 duration-200">
+      <div class="flex items-center justify-between border-b border-surface-container-high pb-3">
+        <div class="flex items-center gap-2">
+          <div class="w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center">
+            <span class="material-symbols-outlined text-[18px]">account_balance_wallet</span>
+          </div>
+          <h3 class="text-base font-bold text-on-surface">Top Up Saldo FreshPay</h3>
+        </div>
+        <button onclick="closeModal('modalTopUp')" class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-outline hover:text-on-surface">
+          <span class="material-symbols-outlined text-[18px]">close</span>
+        </button>
+      </div>
+
+      <div class="space-y-3">
+        <p class="text-xs text-on-surface-variant">Pilih nominal penambahan saldo akun FreshWash Anda:</p>
+        <div class="grid grid-cols-2 gap-2.5">
+          <button onclick="selectTopUpAmount(25000)" class="topup-amount-btn py-3 px-3 rounded-xl bg-surface-container-low border border-transparent hover:border-primary text-xs font-bold text-on-surface text-center transition-all">
+            +Rp 25.000
+          </button>
+          <button onclick="selectTopUpAmount(50000)" class="topup-amount-btn py-3 px-3 rounded-xl bg-surface-container-low border border-transparent hover:border-primary text-xs font-bold text-on-surface text-center transition-all ring-1 ring-primary">
+            +Rp 50.000
+          </button>
+          <button onclick="selectTopUpAmount(100000)" class="topup-amount-btn py-3 px-3 rounded-xl bg-surface-container-low border border-transparent hover:border-primary text-xs font-bold text-on-surface text-center transition-all">
+            +Rp 100.000
+          </button>
+          <button onclick="selectTopUpAmount(200000)" class="topup-amount-btn py-3 px-3 rounded-xl bg-surface-container-low border border-transparent hover:border-primary text-xs font-bold text-on-surface text-center transition-all">
+            +Rp 200.000
+          </button>
+        </div>
+
+        <div class="pt-2">
+          <label class="text-[11px] font-bold text-on-surface-variant block mb-1">Metode Pembayaran</label>
+          <div class="space-y-2">
+            <label class="flex items-center justify-between p-2.5 rounded-xl bg-surface-container-low cursor-pointer">
+              <span class="text-xs font-bold text-on-surface flex items-center gap-2">
+                <span class="material-symbols-outlined text-primary text-[18px]">qr_code_scanner</span>
+                QRIS (GoPay, OVO, Dana, ShopeePay)
+              </span>
+              <input checked type="radio" name="topup_method" class="accent-primary"/>
+            </label>
+            <label class="flex items-center justify-between p-2.5 rounded-xl bg-surface-container-low cursor-pointer">
+              <span class="text-xs font-bold text-on-surface flex items-center gap-2">
+                <span class="material-symbols-outlined text-secondary text-[18px]">account_balance</span>
+                BCA / Mandiri Virtual Account
+              </span>
+              <input type="radio" name="topup_method" class="accent-primary"/>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="pt-2">
+        <button onclick="executeTopUp()" class="w-full py-3.5 rounded-2xl bg-primary text-on-primary font-bold text-xs flex items-center justify-center gap-2 shadow-lg shadow-primary/25 hover:bg-primary-container active:scale-95 transition-all">
+          <span class="material-symbols-outlined text-[18px]">verified</span>
+          <span id="btnConfirmTopUpLabel">Isi Saldo Rp 50.000</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. Checkout & Payment Confirmation Modal -->
+  <div id="modalCheckout" class="fixed inset-0 z-[80] bg-black/60 backdrop-blur-sm hidden flex items-end sm:items-center justify-center p-0 sm:p-4">
+    <div class="bg-surface-container-lowest w-full max-w-[440px] rounded-t-3xl sm:rounded-3xl p-5 shadow-2xl flex flex-col gap-4 animate-in fade-in zoom-in-95 duration-200">
+      <div class="flex items-center justify-between border-b border-surface-container-high pb-3">
+        <div class="flex items-center gap-2">
+          <div class="w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center">
+            <span class="material-symbols-outlined text-[18px]">receipt_long</span>
+          </div>
+          <h3 class="text-base font-bold text-on-surface">Konfirmasi Pemesanan</h3>
+        </div>
+        <button onclick="closeModal('modalCheckout')" class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-outline hover:text-on-surface">
+          <span class="material-symbols-outlined text-[18px]">close</span>
+        </button>
+      </div>
+
+      <div class="space-y-3">
+        <!-- Order Summary Breakdown -->
+        <div class="bg-surface-container-low p-3.5 rounded-2xl space-y-2 text-xs">
+          <div class="flex justify-between">
+            <span class="text-on-surface-variant" id="coServiceTier">Paket Kilat Express (4 Kg)</span>
+            <span class="font-bold text-on-surface" id="coBasePrice">Rp 48.000</span>
+          </div>
+          <div class="flex justify-between" id="coSoftenerRow">
+            <span class="text-on-surface-variant">Ekstra Pelembut Premium</span>
+            <span class="font-bold text-on-surface" id="coSoftenerPrice">Rp 0</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-on-surface-variant">Jadwal Penjemputan</span>
+            <span class="font-bold text-primary" id="coSchedule">Hari Ini (13:00)</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-on-surface-variant">Parfum Dipilih</span>
+            <span class="font-bold text-on-surface" id="coFragrance">Lavender Bliss</span>
+          </div>
+          <div class="border-t border-surface-container-high pt-2 flex justify-between items-center text-sm font-bold">
+            <span class="text-on-surface">Total Akhir:</span>
+            <span class="text-primary text-base font-extrabold" id="coFinalPrice">Rp 48.000</span>
+          </div>
+        </div>
+
+        <!-- Payment Option -->
+        <div>
+          <label class="text-[11px] font-bold text-on-surface-variant block mb-1.5 uppercase tracking-wider">Pilih Metode Pembayaran</label>
+          <div class="space-y-2">
+            <label class="flex items-center justify-between p-3 rounded-xl bg-surface-container-low border border-primary/30 cursor-pointer">
+              <div class="flex items-center gap-2.5">
+                <span class="material-symbols-outlined text-primary text-[20px]">account_balance_wallet</span>
+                <div>
+                  <span class="text-xs font-bold text-on-surface block">FreshPay Saldo</span>
+                  <span class="text-[10px] text-primary" id="coAvailableBalance">Tersedia Rp 125.000</span>
+                </div>
+              </div>
+              <input checked type="radio" name="pay_option" value="freshpay" class="accent-primary"/>
+            </label>
+            <label class="flex items-center justify-between p-3 rounded-xl bg-surface-container-low cursor-pointer">
+              <div class="flex items-center gap-2.5">
+                <span class="material-symbols-outlined text-secondary text-[20px]">qr_code_2</span>
+                <div>
+                  <span class="text-xs font-bold text-on-surface block">QRIS / Instant E-Wallet</span>
+                  <span class="text-[10px] text-on-surface-variant">GoPay, ShopeePay, BCA</span>
+                </div>
+              </div>
+              <input type="radio" name="pay_option" value="qris" class="accent-primary"/>
+            </label>
+            <label class="flex items-center justify-between p-3 rounded-xl bg-surface-container-low cursor-pointer">
+              <div class="flex items-center gap-2.5">
+                <span class="material-symbols-outlined text-outline text-[20px]">payments</span>
+                <div>
+                  <span class="text-xs font-bold text-on-surface block">Bayar Tunai ke Kurir</span>
+                  <span class="text-[10px] text-on-surface-variant">Saat penjemputan di lokasi</span>
+                </div>
+              </div>
+              <input type="radio" name="pay_option" value="cash" class="accent-primary"/>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="pt-2">
+        <button onclick="confirmPlaceOrder()" class="w-full py-3.5 rounded-2xl bg-primary text-on-primary font-bold text-xs flex items-center justify-center gap-2 shadow-lg shadow-primary/25 hover:bg-primary-container active:scale-95 transition-all">
+          <span class="material-symbols-outlined text-[18px]">lock_open</span>
+          <span>Bayar & Jadwalkan Penjemputan</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. Location Selector Modal -->
+  <div id="modalLocation" class="fixed inset-0 z-[80] bg-black/60 backdrop-blur-sm hidden flex items-end sm:items-center justify-center p-0 sm:p-4">
+    <div class="bg-surface-container-lowest w-full max-w-[440px] rounded-t-3xl sm:rounded-3xl p-5 shadow-2xl flex flex-col gap-4">
+      <div class="flex items-center justify-between border-b border-surface-container-high pb-3">
+        <div class="flex items-center gap-2">
+          <span class="material-symbols-outlined text-primary text-[20px]">pin_drop</span>
+          <h3 class="text-base font-bold text-on-surface">Pilih Alamat Antar-Jemput</h3>
+        </div>
+        <button onclick="closeModal('modalLocation')" class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-outline hover:text-on-surface">
+          <span class="material-symbols-outlined text-[18px]">close</span>
+        </button>
+      </div>
+
+      <div class="space-y-2.5">
+        <div onclick="selectAddress('Rumah (Utama)', 'Jl. Anggrek No. 14, Jakarta')" class="p-3 rounded-2xl bg-primary/10 border border-primary/30 flex items-start gap-3 cursor-pointer">
+          <span class="material-symbols-outlined text-primary text-[20px] mt-0.5">home</span>
+          <div class="flex-1">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold text-on-surface">Rumah (Utama)</span>
+              <span class="text-[9px] bg-primary text-white px-2 py-0.5 rounded-full font-bold">Terpilih</span>
+            </div>
+            <p class="text-xs text-on-surface-variant mt-0.5">Jl. Anggrek No. 14, Kebayoran Baru, Jakarta Selatan</p>
+          </div>
+        </div>
+
+        <div onclick="selectAddress('Kantor Sudirman', 'Menara BCA Lt. 18, Jl. MH Thamrin, Jakarta')" class="p-3 rounded-2xl bg-surface-container-low hover:bg-surface-container flex items-start gap-3 cursor-pointer">
+          <span class="material-symbols-outlined text-outline text-[20px] mt-0.5">apartment</span>
+          <div class="flex-1">
+            <span class="text-xs font-bold text-on-surface">Kantor Sudirman</span>
+            <p class="text-xs text-on-surface-variant mt-0.5">Menara BCA Lt. 18, Jl. MH Thamrin, Jakarta Pusat</p>
+          </div>
+        </div>
+
+        <div onclick="selectAddress('Kos Dago', 'Jl. Dago Asri No. 8, Bandung')" class="p-3 rounded-2xl bg-surface-container-low hover:bg-surface-container flex items-start gap-3 cursor-pointer">
+          <span class="material-symbols-outlined text-outline text-[20px] mt-0.5">cottage</span>
+          <div class="flex-1">
+            <span class="text-xs font-bold text-on-surface">Kos Dago Asri</span>
+            <p class="text-xs text-on-surface-variant mt-0.5">Jl. Dago Asri No. 8, Coblong, Bandung</p>
+          </div>
+        </div>
+      </div>
+
+      <button onclick="addNewAddressPrompt()" class="w-full py-2.5 rounded-xl border border-dashed border-primary text-primary font-bold text-xs flex items-center justify-center gap-1.5 hover:bg-primary/5 transition-all">
+        <span class="material-symbols-outlined text-[16px]">add</span>
+        <span>Tambah Alamat Baru</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- 4. Photo Preview Modal -->
+  <div id="modalPhoto" class="fixed inset-0 z-[80] bg-black/80 backdrop-blur-md hidden flex items-center justify-center p-4">
+    <div class="bg-surface-container-lowest w-full max-w-sm rounded-3xl overflow-hidden shadow-2xl flex flex-col">
+      <div class="p-4 flex items-center justify-between border-b border-surface-container-high">
+        <h4 class="text-xs font-bold text-on-surface" id="photoModalTitle">Bukti Timbangan Digital</h4>
+        <button onclick="closeModal('modalPhoto')" class="text-outline hover:text-on-surface">
+          <span class="material-symbols-outlined text-[20px]">close</span>
+        </button>
+      </div>
+      <img id="photoModalImg" class="w-full aspect-[4/3] object-cover" src="" alt="Bukti"/>
+      <div class="p-3.5 bg-surface-container-low text-xs text-on-surface-variant" id="photoModalCaption">
+        Timbangan digital resmi terverifikasi otomatis dengan barcode order ID.
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. Courier Chat / WhatsApp Modal -->
+  <div id="modalCourierChat" class="fixed inset-0 z-[80] bg-black/60 backdrop-blur-sm hidden flex items-end sm:items-center justify-center p-0 sm:p-4">
+    <div class="bg-surface-container-lowest w-full max-w-[440px] rounded-t-3xl sm:rounded-3xl p-5 shadow-2xl flex flex-col gap-3">
+      <div class="flex items-center justify-between border-b border-surface-container-high pb-3">
+        <div class="flex items-center gap-2">
+          <div class="w-8 h-8 rounded-full bg-emerald-500/20 text-emerald-600 flex items-center justify-center">
+            <span class="material-symbols-outlined text-[18px]">chat</span>
+          </div>
+          <div>
+            <h3 class="text-sm font-bold text-on-surface">Chat Kurir FreshWash</h3>
+            <span class="text-[10px] text-emerald-600 font-bold">Online • Budi Santoso</span>
+          </div>
+        </div>
+        <button onclick="closeModal('modalCourierChat')" class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-outline">
+          <span class="material-symbols-outlined text-[18px]">close</span>
+        </button>
+      </div>
+
+      <div class="bg-surface-container-low rounded-2xl p-3.5 space-y-2.5 max-h-48 overflow-y-auto text-xs" id="chatMessageList">
+        <div class="bg-surface-container-lowest p-2.5 rounded-xl rounded-tl-none max-w-[80%] text-on-surface shadow-xs">
+          Halo Kak Sarah, cucian sudah ditimbang dan sekarang sedang proses cuci di mesin 03 ya.
+          <span class="block text-[9px] text-outline text-right mt-1">11:15</span>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2 pt-1">
+        <input id="chatInput" type="text" placeholder="Ketik pesan untuk kurir..." class="flex-1 bg-surface-container-low text-on-surface text-xs p-3 rounded-xl focus:outline-none focus:ring-1 focus:ring-primary"/>
+        <button onclick="sendCourierMessage()" class="w-10 h-10 rounded-xl bg-primary text-white flex items-center justify-center active:scale-95 transition-transform">
+          <span class="material-symbols-outlined text-[18px]">send</span>
+        </button>
+      </div>
+
+      <a href="https://wa.me/628123456789?text=Halo%20Mas%20Budi%2C%20mau%20tanya%20status%20cucian%20FreshWash" target="_blank" class="text-center text-[11px] text-emerald-600 font-bold hover:underline pt-1">
+        Buka Langsung di WhatsApp Resmi →
+      </a>
+    </div>
+  </div>
+
+  <!-- 6. Notifications Drawer / Modal -->
+  <div id="modalNotifications" class="fixed inset-0 z-[80] bg-black/60 backdrop-blur-sm hidden flex items-end sm:items-center justify-center p-0 sm:p-4">
+    <div class="bg-surface-container-lowest w-full max-w-[440px] rounded-t-3xl sm:rounded-3xl p-5 shadow-2xl flex flex-col gap-3 max-h-[80vh]">
+      <div class="flex items-center justify-between border-b border-surface-container-high pb-3">
+        <div class="flex items-center gap-2">
+          <span class="material-symbols-outlined text-primary text-[20px]">notifications</span>
+          <h3 class="text-base font-bold text-on-surface">Pemberitahuan</h3>
+        </div>
+        <button onclick="closeModal('modalNotifications')" class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-outline">
+          <span class="material-symbols-outlined text-[18px]">close</span>
+        </button>
+      </div>
+
+      <div class="space-y-2.5 overflow-y-auto">
+        <div class="p-3 rounded-2xl bg-primary/10 flex items-start gap-3">
+          <span class="material-symbols-outlined text-primary text-[18px] mt-0.5">sync</span>
+          <div>
+            <h4 class="text-xs font-bold text-on-surface">Cucian Sedang Dicuci</h4>
+            <p class="text-[11px] text-on-surface-variant mt-0.5">Order #FW-8821 sudah masuk ke tahap pencucian dengan ozon.</p>
+            <span class="text-[9px] text-primary font-bold">10 menit yang lalu</span>
+          </div>
+        </div>
+        <div class="p-3 rounded-2xl bg-surface-container-low flex items-start gap-3">
+          <span class="material-symbols-outlined text-secondary text-[18px] mt-0.5">local_shipping</span>
+          <div>
+            <h4 class="text-xs font-bold text-on-surface">Penjemputan Berhasil</h4>
+            <p class="text-[11px] text-on-surface-variant mt-0.5">Kurir Budi telah mengambil pakaian dari Jl. Anggrek No. 14.</p>
+            <span class="text-[9px] text-outline">1 jam yang lalu</span>
+          </div>
+        </div>
+        <div class="p-3 rounded-2xl bg-surface-container-low flex items-start gap-3">
+          <span class="material-symbols-outlined text-amber-600 text-[18px] mt-0.5">stars</span>
+          <div>
+            <h4 class="text-xs font-bold text-on-surface">Poin Loyalitas Masuk!</h4>
+            <p class="text-[11px] text-on-surface-variant mt-0.5">+50 FreshPoints berhasil ditambahkan dari order selesai.</p>
+            <span class="text-[9px] text-outline">Kemarin</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 7. Download & Install PWA Modal -->
+  <div id="modalDownloadApp" class="fixed inset-0 z-[85] bg-black/70 backdrop-blur-sm hidden flex items-end sm:items-center justify-center p-0 sm:p-4">
+    <div class="bg-surface-container-lowest w-full max-w-[440px] rounded-t-3xl sm:rounded-3xl p-5 shadow-2xl flex flex-col gap-4 max-h-[90vh] overflow-y-auto animate-in fade-in zoom-in-95 duration-200 border border-outline-variant/20">
+      
+      <!-- Modal Header -->
+      <div class="flex items-center justify-between border-b border-surface-container-high pb-3">
+        <div class="flex items-center gap-2.5">
+          <div class="w-9 h-9 rounded-2xl bg-primary/10 text-primary flex items-center justify-center">
+            <span class="material-symbols-outlined text-[22px]">install_mobile</span>
+          </div>
+          <div>
+            <h3 class="text-base font-bold text-on-surface">Download Aplikasi FreshWash</h3>
+            <span class="text-[10px] text-primary font-bold">Progressive Web App (PWA)</span>
+          </div>
+        </div>
+        <button onclick="closeModal('modalDownloadApp')" class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-outline hover:text-on-surface">
+          <span class="material-symbols-outlined text-[18px]">close</span>
+        </button>
+      </div>
+
+      <!-- App Banner Preview -->
+      <div class="p-3.5 rounded-2xl bg-gradient-to-br from-primary via-primary-container to-secondary text-white flex items-center gap-3 shadow-md">
+        <img src="assets/icon-192.png" alt="FreshWash App Icon" class="w-14 h-14 rounded-2xl shadow-md border-2 border-white/20"/>
+        <div class="min-w-0 flex-1">
+          <h4 class="text-sm font-bold">FreshWash Smart Laundry</h4>
+          <p class="text-[11px] text-white/80">v2.4.1 • Gratis &amp; Langsung Pasang</p>
+          <div class="flex items-center gap-1 text-[10px] text-cyan-200 mt-0.5">
+            <span class="material-symbols-outlined text-[12px]">verified</span>
+            <span>Bebas PlayStore/AppStore</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Direct Install Button (Android / Chrome) -->
+      <div id="directInstallWrapper">
+        <button onclick="triggerPWAInstall()" class="w-full py-3.5 px-4 rounded-2xl bg-primary hover:bg-primary-container text-white font-bold text-xs flex items-center justify-center gap-2 shadow-lg shadow-primary/25 active:scale-95 transition-all">
+          <span class="material-symbols-outlined text-[18px]">download_for_offline</span>
+          <span>Pasang ke Layar Utama Sekarang</span>
+        </button>
+      </div>
+
+      <!-- Instructions Tabs (Android vs iPhone) -->
+      <div class="space-y-3 pt-1">
+        <div class="grid grid-cols-2 p-1 bg-surface-container-low rounded-xl gap-1">
+          <button id="pwa-tab-android" onclick="switchPWATab('android')" class="py-2 rounded-lg text-xs font-bold bg-surface-container-lowest text-primary shadow-xs transition-all flex items-center justify-center gap-1.5">
+            <span class="material-symbols-outlined text-[16px]">android</span>
+            <span>Android / Chrome</span>
+          </button>
+          <button id="pwa-tab-ios" onclick="switchPWATab('ios')" class="py-2 rounded-lg text-xs font-bold text-on-surface-variant transition-all flex items-center justify-center gap-1.5">
+            <span class="material-symbols-outlined text-[16px]">phone_iphone</span>
+            <span>iPhone / Safari</span>
+          </button>
+        </div>
+
+        <!-- Android Guide -->
+        <div id="pwa-guide-android" class="space-y-2 text-xs text-on-surface">
+          <div class="p-3 rounded-xl bg-surface-container-low flex items-start gap-2.5">
+            <span class="w-5 h-5 rounded-full bg-primary text-white flex items-center justify-center text-[11px] font-bold flex-shrink-0 mt-0.5">1</span>
+            <p class="text-[11px] leading-relaxed">Ketuk tombol <strong>"Pasang ke Layar Utama Sekarang"</strong> di atas, atau ketuk tombol <strong>⋮ (Titik Tiga)</strong> di pojok kanan atas Chrome.</p>
+          </div>
+          <div class="p-3 rounded-xl bg-surface-container-low flex items-start gap-2.5">
+            <span class="w-5 h-5 rounded-full bg-primary text-white flex items-center justify-center text-[11px] font-bold flex-shrink-0 mt-0.5">2</span>
+            <p class="text-[11px] leading-relaxed">Pilih menu <strong>"Tambahkan ke Layar Utama"</strong> atau <strong>"Install Aplikasi"</strong>.</p>
+          </div>
+          <div class="p-3 rounded-xl bg-surface-container-low flex items-start gap-2.5">
+            <span class="w-5 h-5 rounded-full bg-primary text-white flex items-center justify-center text-[11px] font-bold flex-shrink-0 mt-0.5">3</span>
+            <p class="text-[11px] leading-relaxed">Konfirmasi dan aplikasi FreshWash akan langsung terpasang di menu HP Anda!</p>
+          </div>
+        </div>
+
+        <!-- iOS Guide -->
+        <div id="pwa-guide-ios" class="hidden space-y-2 text-xs text-on-surface">
+          <div class="p-3 rounded-xl bg-surface-container-low flex items-start gap-2.5">
+            <span class="w-5 h-5 rounded-full bg-primary text-white flex items-center justify-center text-[11px] font-bold flex-shrink-0 mt-0.5">1</span>
+            <p class="text-[11px] leading-relaxed">Buka halaman ini menggunakan browser bawaan <strong>Safari</strong> di iPhone/iPad Anda.</p>
+          </div>
+          <div class="p-3 rounded-xl bg-surface-container-low flex items-start gap-2.5">
+            <span class="w-5 h-5 rounded-full bg-primary text-white flex items-center justify-center text-[11px] font-bold flex-shrink-0 mt-0.5">2</span>
+            <p class="text-[11px] leading-relaxed">Ketuk ikon <strong>Bagikan / Share</strong> (ikon kotak dengan panah ke atas) di bilah bawah Safari.</p>
+          </div>
+          <div class="p-3 rounded-xl bg-surface-container-low flex items-start gap-2.5">
+            <span class="w-5 h-5 rounded-full bg-primary text-white flex items-center justify-center text-[11px] font-bold flex-shrink-0 mt-0.5">3</span>
+            <p class="text-[11px] leading-relaxed">Gulir ke bawah dan ketuk <strong>"Tambahkan ke Layar Utama" (Add to Home Screen)</strong> lalu pilih <strong>"Tambah"</strong> di kanan atas.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- QR Code & Link for other devices -->
+      <div class="border-t border-surface-container-high pt-3 text-center">
+        <p class="text-xs font-bold text-on-surface mb-2">Buka dari HP di Jaringan Wi-Fi yang Sama:</p>
+        
+        <div class="p-3 rounded-2xl bg-white inline-block shadow-sm mb-2 border border-outline-variant/30">
+          <img src="https://api.qrserver.com/v1/create-qr-code/?size=160x160&amp;data=http://10.218.247.90:8080/" alt="QR Code Link HP" class="w-32 h-32 mx-auto"/>
+        </div>
+        
+        <div class="flex items-center gap-2 max-w-xs mx-auto">
+          <input type="text" readonly value="http://10.218.247.90:8080/" id="lanUrlInput" class="flex-1 bg-surface-container-low text-on-surface text-[11px] font-mono px-3 py-2 rounded-xl text-center border border-outline-variant/30 select-all"/>
+          <button onclick="copyLanUrl()" class="px-3 py-2 rounded-xl bg-primary text-white text-xs font-bold shadow-xs active:scale-95 transition-transform flex items-center gap-1">
+            <span class="material-symbols-outlined text-[14px]">content_copy</span>
+            <span>Salin</span>
+          </button>
+        </div>
+        <p class="text-[10px] text-on-surface-variant mt-1.5">Arahkan kamera HP ke QR Code untuk langsung membuka aplikasi.</p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- JAVASCRIPT APPLICATION CORE -->
+  <script>
+    // --- GLOBAL APPLICATION STATE ---
+    const STATE = {
+      currentScreen: 'beranda',
+      user: {
+        name: 'Sarah Amalia',
+        phone: '+62 812-8921-8890',
+        balance: 125000,
+        points: 450,
+        tier: 'Gold Member',
+        address: 'Jl. Anggrek No. 14, Jakarta'
+      },
+      booking: {
+        category: 'kiloan',
+        speedTier: 'express',
+        pricePerKg: 12000,
+        weightKg: 4,
+        date: 'Hari Ini, 24 Okt',
+        timeSlot: '13:00 - 15:00',
+        perfume: 'Lavender Bliss',
+        extraSoftener: false,
+        notes: ''
+      },
+      tracking: {
+        orderId: '#FW-8821',
+        serviceName: 'Cuci Komplit Kiloan',
+        weight: '5.2 Kg',
+        stage: 3, // 1: Pickup, 2: Weighed, 3: Washing, 4: Drying/Ironing, 5: Delivered
+        totalStages: 5
+      },
+      selectedTopUp: 50000
+    };
+
+    // Load persisted state if exists
+    try {
+      const saved = localStorage.getItem('freshwash_state');
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (parsed.user?.balance !== undefined) STATE.user.balance = parsed.user.balance;
+        if (parsed.user?.points !== undefined) STATE.user.points = parsed.user.points;
+      }
+    } catch(e) {}
+
+    function saveState() {
+      try {
+        localStorage.setItem('freshwash_state', JSON.stringify({
+          user: STATE.user
+        }));
+      } catch(e) {}
+    }
+
+    // --- SCREEN NAVIGATION ---
+    function switchScreen(screenName) {
+      STATE.currentScreen = screenName;
+      
+      // Update panels
+      document.querySelectorAll('.screen-panel').forEach(panel => {
+        panel.classList.remove('active');
+      });
+      const targetPanel = document.getElementById(`screen-${screenName}`);
+      if (targetPanel) {
+        targetPanel.classList.add('active');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+
+      // Update Nav Bar active states
+      document.querySelectorAll('.nav-item').forEach(item => {
+        item.classList.remove('text-primary', 'font-bold');
+        item.classList.add('text-on-surface-variant');
+      });
+      const activeNav = document.getElementById(`nav-${screenName}`);
+      if (activeNav) {
+        activeNav.classList.remove('text-on-surface-variant');
+        activeNav.classList.add('text-primary', 'font-bold');
+      }
+
+      // Update Header Title Label
+      const labelMap = {
+        'beranda': 'Home',
+        'pesan-antar': 'Pesan Antar',
+        'lacak': 'Live Tracking',
+        'akun': 'Akun Saya'
+      };
+      const headerLabel = document.getElementById('headerScreenLabel');
+      if (headerLabel) headerLabel.innerText = labelMap[screenName] || 'FreshWash';
+
+      // Sync URL hash
+      if (window.location.hash !== `#${screenName}`) {
+        history.replaceState(null, '', `#${screenName}`);
+      }
+
+      updateUIElements();
+    }
+
+    // Hash change routing
+    window.addEventListener('hashchange', () => {
+      const hash = window.location.hash.replace('#', '');
+      if (['beranda', 'pesan-antar', 'lacak', 'akun'].includes(hash)) {
+        switchScreen(hash);
+      }
+    });
+
+    // --- REFRESH UI ELEMENTS ---
+    function updateUIElements() {
+      const formattedBalance = `Rp ${STATE.user.balance.toLocaleString('id-ID')}`;
+      const balanceElems = ['homeBalanceText', 'accountBalanceText', 'desktopBalance'];
+      balanceElems.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.innerText = formattedBalance;
+      });
+
+      const coAvailable = document.getElementById('coAvailableBalance');
+      if (coAvailable) coAvailable.innerText = `Tersedia ${formattedBalance}`;
+
+      const ptsText = `${STATE.user.points} Poin`;
+      const ptsHome = document.getElementById('homePointsText');
+      if (ptsHome) ptsHome.innerText = ptsText;
+      const ptsAcc = document.getElementById('accountPointsText');
+      if (ptsAcc) ptsAcc.innerHTML = `${STATE.user.points} <span class="text-xs font-normal text-on-surface-variant">Poin</span>`;
+
+      recalculatePrice();
+    }
+
+    // --- TOAST NOTIFICATION ---
+    function showToast(message, type = 'info') {
+      const container = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      toast.className = 'toast-enter pointer-events-auto bg-slate-900/95 text-white px-4 py-3 rounded-2xl shadow-2xl flex items-center gap-2.5 text-xs font-medium border border-teal-500/30 max-w-sm mb-2 backdrop-blur-md';
+      
+      const icon = type === 'success' ? 'check_circle' : (type === 'error' ? 'error' : 'info');
+      const iconColor = type === 'success' ? 'text-teal-400' : (type === 'error' ? 'text-rose-400' : 'text-cyan-400');
+      
+      toast.innerHTML = `
+        <span class="material-symbols-outlined text-[18px] ${iconColor}">${icon}</span>
+        <span class="flex-1">${message}</span>
+      `;
+      
+      container.appendChild(toast);
+      setTimeout(() => toast.classList.add('toast-enter-active'), 10);
+      
+      setTimeout(() => {
+        toast.classList.remove('toast-enter-active');
+        setTimeout(() => toast.remove(), 300);
+      }, 3000);
+    }
+
+    // --- MODAL UTILITIES ---
+    function openModal(id) {
+      const modal = document.getElementById(id);
+      if (modal) modal.classList.remove('hidden');
+    }
+    function closeModal(id) {
+      const modal = document.getElementById(id);
+      if (modal) modal.classList.add('hidden');
+    }
+
+    // --- BERANDA INTERACTIONS ---
+    function copyPromoVoucher() {
+      const code = document.getElementById('voucherCode').innerText;
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(code).then(() => {
+          showToast(`Kode promo "${code}" berhasil disalin! Hemat 30%`, 'success');
+        });
+      } else {
+        showToast(`Kode voucher: ${code}`, 'info');
+      }
+    }
+
+    function selectServiceCategory(cat) {
+      switchScreen('pesan-antar');
+      setCategoryTab(cat);
+    }
+
+    function setGlobalAroma(aromaName) {
+      STATE.booking.perfume = aromaName;
+      document.querySelectorAll('#homeAromaList .aroma-card').forEach(btn => {
+        const isMatch = btn.getAttribute('data-aroma') === aromaName;
+        const check = btn.querySelector('.aroma-check');
+        if (isMatch) {
+          btn.className = 'aroma-card flex-shrink-0 bg-primary text-on-primary rounded-2xl px-3.5 py-2.5 flex items-center gap-2.5 shadow-sm transition-all';
+          if (check) check.classList.remove('hidden');
+        } else {
+          btn.className = 'aroma-card flex-shrink-0 bg-surface-container-lowest text-on-surface rounded-2xl px-3.5 py-2.5 flex items-center gap-2.5 shadow-xs transition-all hover:bg-surface-container-low';
+          if (check) check.classList.add('hidden');
+        }
+      });
+      showToast(`Pewangi favorit disetel ke: ${aromaName}`, 'success');
+    }
+
+    // --- BOOKING FORM LOGIC ---
+    function setCategoryTab(cat) {
+      STATE.booking.category = cat;
+      const cats = ['kiloan', 'satuan', 'sepatu'];
+      cats.forEach(c => {
+        const btn = document.getElementById(`cat-btn-${c}`);
+        if (!btn) return;
+        if (c === cat) {
+          btn.className = 'flex-1 py-2 px-3 rounded-full bg-primary text-on-primary text-xs font-bold flex items-center justify-center gap-1.5 shadow-sm transition-all';
+        } else {
+          btn.className = 'flex-1 py-2 px-3 rounded-full text-on-surface-variant hover:bg-surface-container-lowest text-xs font-medium flex items-center justify-center gap-1.5 transition-all';
+        }
+      });
+
+      if (cat === 'satuan') {
+        STATE.booking.pricePerKg = 25000;
+      } else if (cat === 'sepatu') {
+        STATE.booking.pricePerKg = 30000;
+      } else {
+        setPackageSpeed(STATE.booking.speedTier, STATE.booking.speedTier === 'reguler' ? 8000 : (STATE.booking.speedTier === 'flash' ? 18000 : 12000));
+      }
+      recalculatePrice();
+    }
+
+    function setPackageSpeed(tier, price) {
+      STATE.booking.speedTier = tier;
+      STATE.booking.pricePerKg = price;
+      
+      document.querySelectorAll('.package-radio-label').forEach(label => {
+        const radio = label.querySelector('input[type="radio"]');
+        if (radio && radio.value === tier) {
+          radio.checked = true;
+          label.classList.add('active-tier', 'shadow-md', 'ring-2', 'ring-primary', 'bg-surface-container-lowest');
+          label.classList.remove('bg-surface-container-low');
+        } else if (radio) {
+          radio.checked = false;
+          label.classList.remove('active-tier', 'shadow-md', 'ring-2', 'ring-primary', 'bg-surface-container-lowest');
+          label.classList.add('bg-surface-container-low');
+        }
+      });
+      recalculatePrice();
+    }
+
+    function changeWeight(delta) {
+      STATE.booking.weightKg = Math.max(1, Math.min(30, STATE.booking.weightKg + delta));
+      const display = document.getElementById('bookingWeightDisplay');
+      if (display) display.innerText = `${STATE.booking.weightKg} Kg`;
+      recalculatePrice();
+    }
+
+    function selectDate(btn, dateStr) {
+      STATE.booking.date = dateStr;
+      document.querySelectorAll('#pickupDateSelector .date-pill').forEach(b => {
+        b.className = 'date-pill flex-1 min-w-[90px] py-2.5 px-3 rounded-xl bg-surface-container-low text-on-surface flex flex-col items-center justify-center hover:bg-surface-container transition-colors';
+        const topText = b.querySelector('span:first-child');
+        if (topText) topText.className = 'text-[10px] text-on-surface-variant uppercase tracking-wider';
+      });
+      btn.className = 'date-pill flex-1 min-w-[90px] py-2.5 px-3 rounded-xl bg-primary text-on-primary flex flex-col items-center justify-center shadow-sm';
+      const topText = btn.querySelector('span:first-child');
+      if (topText) topText.className = 'text-[10px] uppercase tracking-wider opacity-90';
+    }
+
+    function selectTimeSlot(btn, slotStr) {
+      STATE.booking.timeSlot = slotStr;
+      document.querySelectorAll('#timeSlotContainer .slot-btn').forEach(b => {
+        b.className = 'slot-btn py-2.5 px-3 rounded-xl bg-surface-container-low text-on-surface text-xs flex items-center justify-between hover:bg-surface-container';
+        const icon = b.querySelector('.material-symbols-outlined');
+        if (icon) {
+          icon.innerText = 'schedule';
+          icon.className = 'material-symbols-outlined text-[16px] text-outline';
+        }
+      });
+      btn.className = 'slot-btn py-2.5 px-3 rounded-xl bg-primary-container text-on-primary-container text-xs font-bold flex items-center justify-between shadow-sm ring-2 ring-primary';
+      const icon = btn.querySelector('.material-symbols-outlined');
+      if (icon) {
+        icon.innerText = 'check_circle';
+        icon.className = 'material-symbols-outlined text-[16px] text-on-primary-container';
+      }
+    }
+
+    function recalculatePrice() {
+      const base = STATE.booking.pricePerKg * STATE.booking.weightKg;
+      const chkSoftener = document.getElementById('chkExtraSoftener');
+      const softenerAddon = (chkSoftener && chkSoftener.checked) ? (2000 * STATE.booking.weightKg) : 0;
+      const total = base + softenerAddon;
+
+      const totalDisplay = document.getElementById('bookingTotalPrice');
+      if (totalDisplay) totalDisplay.innerText = `Rp ${total.toLocaleString('id-ID')}`;
+      
+      const weightDisplay = document.getElementById('bookingTotalWeight');
+      if (weightDisplay) weightDisplay.innerText = `~${STATE.booking.weightKg} kg`;
+
+      return { base, softenerAddon, total };
+    }
+
+    function setBookingStep(stepNum) {
+      const stepLine = document.getElementById('bookingStepLine');
+      if (stepLine) {
+        stepLine.style.width = `${(stepNum / 4) * 100}%`;
+      }
+      for (let i = 1; i <= 4; i++) {
+        const badge = document.getElementById(`step-badge-${i}`);
+        if (!badge) continue;
+        if (i <= stepNum) {
+          badge.className = 'w-7 h-7 rounded-full bg-primary text-on-primary flex items-center justify-center text-xs font-bold ring-4 ring-primary-fixed';
+        } else {
+          badge.className = 'w-7 h-7 rounded-full bg-surface-container-highest text-on-surface-variant flex items-center justify-center text-xs font-bold';
+        }
+      }
+    }
+
+    function openCheckoutModal() {
+      const { base, softenerAddon, total } = recalculatePrice();
+      
+      const coService = document.getElementById('coServiceTier');
+      if (coService) coService.innerText = `Paket ${STATE.booking.speedTier.toUpperCase()} (${STATE.booking.weightKg} Kg)`;
+      
+      const coBase = document.getElementById('coBasePrice');
+      if (coBase) coBase.innerText = `Rp ${base.toLocaleString('id-ID')}`;
+
+      const coSoftenerRow = document.getElementById('coSoftenerRow');
+      const coSoftener = document.getElementById('coSoftenerPrice');
+      if (softenerAddon > 0) {
+        if (coSoftenerRow) coSoftenerRow.classList.remove('hidden');
+        if (coSoftener) coSoftener.innerText = `Rp ${softenerAddon.toLocaleString('id-ID')}`;
+      } else {
+        if (coSoftenerRow) coSoftenerRow.classList.add('hidden');
+      }
+
+      const coSchedule = document.getElementById('coSchedule');
+      if (coSchedule) coSchedule.innerText = `${STATE.booking.date} (${STATE.booking.timeSlot})`;
+
+      const coFragrance = document.getElementById('coFragrance');
+      if (coFragrance) coFragrance.innerText = STATE.booking.perfume;
+
+      const coFinal = document.getElementById('coFinalPrice');
+      if (coFinal) coFinal.innerText = `Rp ${total.toLocaleString('id-ID')}`;
+
+      openModal('modalCheckout');
+    }
+
+    function confirmPlaceOrder() {
+      const { total } = recalculatePrice();
+      const payOption = document.querySelector('input[name="pay_option"]:checked')?.value || 'freshpay';
+
+      if (payOption === 'freshpay') {
+        if (STATE.user.balance < total) {
+          showToast('Saldo FreshPay tidak mencukupi! Silakan Top Up terlebih dahulu.', 'error');
+          closeModal('modalCheckout');
+          openTopUpModal();
+          return;
+        }
+        STATE.user.balance -= total;
+        STATE.user.points += 50; // Reward bonus points
+      }
+
+      saveState();
+      updateUIElements();
+      closeModal('modalCheckout');
+
+      // Generate random order code
+      const orderNum = Math.floor(1000 + Math.random() * 9000);
+      const newCode = `#FW-${orderNum}`;
+      
+      // Update tracking with this new order
+      STATE.tracking.orderId = newCode;
+      STATE.tracking.stage = 1; // Stage 1 Penjemputan
+      
+      document.getElementById('trackingOrderCode').innerText = newCode;
+      document.getElementById('homeActiveOrderCode').innerText = newCode;
+      document.getElementById('trackingOfficialWeight').innerText = `${STATE.booking.weightKg}.0 Kg`;
+      document.getElementById('homeActiveOrderDesc').innerText = `Paket ${STATE.booking.speedTier.toUpperCase()} (${STATE.booking.weightKg} kg) • ${STATE.booking.perfume}`;
+
+      showToast(`Pesanan ${newCode} Berhasil Dibuat! Kurir sedang ditugaskan.`, 'success');
+      
+      setTimeout(() => {
+        switchScreen('lacak');
+        updateTrackingTimeline();
+      }, 500);
+    }
+
+    // --- TRACKING INTERACTIONS ---
+    function advanceTrackingStage() {
+      STATE.tracking.stage = (STATE.tracking.stage % STATE.tracking.totalStages) + 1;
+      updateTrackingTimeline();
+      showToast(`Simulasi: Status berpindah ke Tahap ${STATE.tracking.stage}/5`, 'info');
+    }
+
+    function updateTrackingTimeline() {
+      const s = STATE.tracking.stage;
+      const headline = document.getElementById('trackingStatusHeadline');
+      const stageNames = [
+        'Kurir Menuju Lokasi (Tahap 1/5)',
+        'Tiba di Workshop & Ditimbang (Tahap 2/5)',
+        'Sedang Dicuci Higienis (Tahap 3/5)',
+        'Pengeringan & Setrika Uap (Tahap 4/5)',
+        'Pengantaran Kembali ke Rumah (Tahap 5/5)'
+      ];
+      if (headline) headline.innerText = stageNames[s - 1] || 'Dalam Proses';
+
+      for (let i = 1; i <= 5; i++) {
+        const stepEl = document.getElementById(`tl-step-${i}`);
+        if (!stepEl) continue;
+        const circle = stepEl.querySelector('div > div:first-child');
+        if (!circle) continue;
+
+        if (i < s) {
+          // Completed
+          circle.className = 'w-7 h-7 rounded-full bg-primary text-on-primary flex items-center justify-center shadow-sm z-10 flex-shrink-0';
+          circle.innerHTML = '<span class="material-symbols-outlined text-[16px]">check</span>';
+        } else if (i === s) {
+          // Current Active
+          circle.className = 'w-7 h-7 rounded-full bg-secondary-container text-on-secondary-fixed flex items-center justify-center shadow-md z-10 flex-shrink-0 animate-pulse';
+          circle.innerHTML = '<span class="material-symbols-outlined text-[16px]">autorenew</span>';
+        } else {
+          // Pending
+          circle.className = 'w-7 h-7 rounded-full bg-surface-container text-outline flex items-center justify-center z-10 flex-shrink-0';
+          circle.innerHTML = '<span class="material-symbols-outlined text-[16px]">hourglass_empty</span>';
+        }
+      }
+    }
+
+    function shareTrackingStatus() {
+      if (navigator.share) {
+        navigator.share({
+          title: 'Status Cucian FreshWash',
+          text: `Cek cucian saya di FreshWash ${STATE.tracking.orderId}: Sedang diproses!`,
+          url: window.location.href
+        }).catch(() => {});
+      } else {
+        copyPromoVoucher();
+        showToast('Link status cucian berhasil disalin ke clipboard!', 'success');
+      }
+    }
+
+    function openPhotoPreview(type) {
+      const modal = document.getElementById('modalPhoto');
+      const img = document.getElementById('photoModalImg');
+      const title = document.getElementById('photoModalTitle');
+      const cap = document.getElementById('photoModalCaption');
+
+      if (type === 'scale') {
+        title.innerText = 'Verifikasi Timbangan Digital';
+        img.src = 'https://lh3.googleusercontent.com/aida-public/AB6AXuAaw3bOmxkqjSJ53TXUoAn2hzHx7kpK83rFfcunF2PqGtWgqDYxg5Lw1FS2QiCsipNWE0eZnPHcrSepVaTpSG6Ew6lt7eRapAQySXGaxG_Ti5DlktPKNex1Sd0vuNkOcvW7ayLcUh5pMN2cgutqYp2-IfYJ0VzoSuS7Hmd80bksJl2BC2M5jw594kcqfbrQZ78zaeXPLxHJDECFvPtdLWn2aF1DhPvnRUZPi2eHsdDSqaDEHqzHnWulYw';
+        cap.innerText = 'Foto timbangan resmi 5.20 Kg terverifikasi saat kedatangan di outlet Gandaria.';
+      } else {
+        title.innerText = 'Foto Fisik Pakaian Masuk';
+        img.src = 'https://lh3.googleusercontent.com/aida-public/AB6AXuAQEvgaaz9xsWst-yeB0XgIBRUMnFUHlPiny9b-Dqteer5zauxKyvkoWE4irWByEccaROLdmhFc7iWYrb1J04y-nIKN3o3OSai3iQewbILgzrFN-V6FNVH-m4oPFDBmcOZJVSXEHlufQi4FzQq5jKugkpTwJUB3iLFmxu8KUArxHe7liPH5jxxbKQXkNgWKqrn_NmpaKPzrWsn4NC6xipv_s-3l3NwGlgEcUuaR2DOFgWQVujETemSYZQ';
+        cap.innerText = '14 potong pakaian diperiksa dengan teliti oleh tim quality check FreshWash.';
+      }
+      openModal('modalPhoto');
+    }
+
+    function openCourierChatModal() {
+      openModal('modalCourierChat');
+    }
+
+    function sendCourierMessage() {
+      const input = document.getElementById('chatInput');
+      const val = input.value.trim();
+      if (!val) return;
+
+      const list = document.getElementById('chatMessageList');
+      const msg = document.createElement('div');
+      msg.className = 'bg-primary text-white p-2.5 rounded-xl rounded-tr-none ml-auto max-w-[80%] text-xs shadow-xs';
+      msg.innerHTML = `
+        ${val}
+        <span class="block text-[9px] text-primary-fixed-dim text-right mt-1">Baru saja</span>
+      `;
+      list.appendChild(msg);
+      input.value = '';
+      list.scrollTop = list.scrollHeight;
+
+      setTimeout(() => {
+        const reply = document.createElement('div');
+        reply.className = 'bg-surface-container-lowest p-2.5 rounded-xl rounded-tl-none max-w-[80%] text-on-surface shadow-xs';
+        reply.innerHTML = `
+          Siap Kak Sarah, pesan diterima dan segera kami prioritaskan! 🙏
+          <span class="block text-[9px] text-outline text-right mt-1">Baru saja</span>
+        `;
+        list.appendChild(reply);
+        list.scrollTop = list.scrollHeight;
+      }, 1000);
+    }
+
+    function downloadDigitalInvoice() {
+      showToast('Mengunduh Nota Digital PDF...', 'info');
+      setTimeout(() => {
+        window.print();
+      }, 600);
+    }
+
+    function openSupportModal() {
+      showToast('Menghubungkan ke Customer Care WhatsApp (+62 823-3890-3403)...', 'success');
+      window.open('https://wa.me/6282338903403?text=Halo%20FreshWash%20Support%2C%20saya%20butuh%20bantuan%20pesanan%20laundry', '_blank');
+    }
+
+    // --- TOP UP LOGIC ---
+    function openTopUpModal() {
+      openModal('modalTopUp');
+    }
+
+    function selectTopUpAmount(amount) {
+      STATE.selectedTopUp = amount;
+      document.querySelectorAll('.topup-amount-btn').forEach(btn => {
+        btn.classList.remove('ring-1', 'ring-primary');
+      });
+      event.target.classList.add('ring-1', 'ring-primary');
+      const label = document.getElementById('btnConfirmTopUpLabel');
+      if (label) label.innerText = `Isi Saldo Rp ${amount.toLocaleString('id-ID')}`;
+    }
+
+    function executeTopUp() {
+      STATE.user.balance += STATE.selectedTopUp;
+      saveState();
+      updateUIElements();
+      closeModal('modalTopUp');
+      showToast(`Top Up Berhasil! Saldo bertambah Rp ${STATE.selectedTopUp.toLocaleString('id-ID')}`, 'success');
+    }
+
+    // --- AKUN & RIWAYAT LOGIC ---
+    function switchOrderTab(tab) {
+      const prosesBtn = document.getElementById('tab-proses');
+      const selesaiBtn = document.getElementById('tab-selesai');
+      const prosesContent = document.getElementById('content-proses');
+      const selesaiContent = document.getElementById('content-selesai');
+
+      if (tab === 'proses') {
+        prosesBtn.className = 'py-1.5 rounded-lg text-xs bg-surface-container-lowest text-primary font-bold shadow-xs transition-all text-center flex items-center justify-center gap-1.5';
+        selesaiBtn.className = 'py-1.5 rounded-lg text-xs text-on-surface-variant transition-all text-center flex items-center justify-center gap-1.5';
+        prosesContent.classList.remove('hidden');
+        prosesContent.classList.add('flex');
+        selesaiContent.classList.add('hidden');
+        selesaiContent.classList.remove('flex');
+      } else {
+        selesaiBtn.className = 'py-1.5 rounded-lg text-xs bg-surface-container-lowest text-primary font-bold shadow-xs transition-all text-center flex items-center justify-center gap-1.5';
+        prosesBtn.className = 'py-1.5 rounded-lg text-xs text-on-surface-variant transition-all text-center flex items-center justify-center gap-1.5';
+        selesaiContent.classList.remove('hidden');
+        selesaiContent.classList.add('flex');
+        prosesContent.classList.add('hidden');
+        prosesContent.classList.remove('flex');
+      }
+    }
+
+    function reorderService(category, defaultKg) {
+      switchScreen('pesan-antar');
+      setCategoryTab(category);
+      STATE.booking.weightKg = defaultKg;
+      document.getElementById('bookingWeightDisplay').innerText = `${defaultKg} Kg`;
+      recalculatePrice();
+      showToast(`Layanan ${category.toUpperCase()} disiapkan untuk pemesanan ulang!`, 'info');
+    }
+
+    function showReviewModal(code) {
+      showToast(`Terima kasih atas ulasan bintang 5 untuk pesanan ${code}! ⭐⭐⭐⭐⭐`, 'success');
+    }
+
+    function showTransactionHistoryToast() {
+      showToast('Menampilkan mutasi saldo 30 hari terakhir: Semua transaksi berhasil dicatat.', 'info');
+    }
+
+    function openRedeemPointsModal() {
+      if (STATE.user.points >= 400) {
+        STATE.user.points -= 400;
+        STATE.user.balance += 50000;
+        saveState();
+        updateUIElements();
+        showToast('Kupon Berhasil Diklaim! Saldo bonus Rp 50.000 masuk ke FreshPay.', 'success');
+      } else {
+        showToast('Poin Anda belum mencukupi untuk klaim kupon ini.', 'error');
+      }
+    }
+
+    function openLocationModal() {
+      openModal('modalLocation');
+    }
+
+    function selectAddress(label, detail) {
+      STATE.user.address = detail;
+      document.getElementById('selectedAddressText').innerText = detail;
+      const bLabel = document.getElementById('bookingAddrLabel');
+      if (bLabel) bLabel.innerText = label;
+      const bDetail = document.getElementById('bookingAddrDetail');
+      if (bDetail) bDetail.innerText = detail;
+
+      closeModal('modalLocation');
+      showToast(`Alamat diubah ke: ${label}`, 'success');
+    }
+
+    function addNewAddressPrompt() {
+      const newAddr = prompt('Masukkan alamat baru Anda:');
+      if (newAddr && newAddr.trim()) {
+        selectAddress('Alamat Baru', newAddr.trim());
+      }
+    }
+
+    function openPreferencesModal() {
+      showToast('Preferensi Anda tersimpan: Parfum Lavender Bliss, Lipat Rapi, Hypoallergenic.', 'info');
+    }
+
+    function openTermsModal() {
+      showToast('Garansi FreshWash: Ganti rugi 100% atau cuci ulang gratis dalam 24 jam.', 'info');
+    }
+
+    function confirmLogout() {
+      if (confirm('Apakah Anda yakin ingin keluar dari akun?')) {
+        showToast('Berhasil keluar akun. Mengalihkan ke halaman login...', 'info');
+        setTimeout(() => location.reload(), 1000);
+      }
+    }
+
+    function toggleNotifications() {
+      openModal('modalNotifications');
+    }
+
+    // --- PWA INSTALLATION & SERVICE WORKER ---
+    let deferredPrompt = null;
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      
+      // Show in-app banner if not dismissed in session
+      const banner = document.getElementById('pwaInstallBanner');
+      if (banner && !sessionStorage.getItem('pwa_banner_dismissed')) {
+        banner.classList.remove('hidden');
+      }
+    });
+
+    window.addEventListener('appinstalled', () => {
+      deferredPrompt = null;
+      const banner = document.getElementById('pwaInstallBanner');
+      if (banner) banner.classList.add('hidden');
+      showToast('Aplikasi FreshWash berhasil dipasang di perangkat Anda! 📲', 'success');
+    });
+
+    function triggerPWAInstall() {
+      if (deferredPrompt) {
+        deferredPrompt.prompt();
+        deferredPrompt.userChoice.then((choiceResult) => {
+          if (choiceResult.outcome === 'accepted') {
+            showToast('Mengunduh & memasang FreshWash...', 'success');
+          }
+          deferredPrompt = null;
+        });
+      } else {
+        openDownloadModal();
+      }
+    }
+
+    function dismissInstallBanner() {
+      const banner = document.getElementById('pwaInstallBanner');
+      if (banner) banner.classList.add('hidden');
+      sessionStorage.setItem('pwa_banner_dismissed', 'true');
+    }
+
+    function openDownloadModal() {
+      openModal('modalDownloadApp');
+    }
+
+    function switchPWATab(tab) {
+      const btnAndroid = document.getElementById('pwa-tab-android');
+      const btnIos = document.getElementById('pwa-tab-ios');
+      const guideAndroid = document.getElementById('pwa-guide-android');
+      const guideIos = document.getElementById('pwa-guide-ios');
+
+      if (tab === 'android') {
+        btnAndroid.className = 'py-2 rounded-lg text-xs font-bold bg-surface-container-lowest text-primary shadow-xs transition-all flex items-center justify-center gap-1.5';
+        btnIos.className = 'py-2 rounded-lg text-xs font-bold text-on-surface-variant transition-all flex items-center justify-center gap-1.5';
+        guideAndroid.classList.remove('hidden');
+        guideIos.classList.add('hidden');
+      } else {
+        btnIos.className = 'py-2 rounded-lg text-xs font-bold bg-surface-container-lowest text-primary shadow-xs transition-all flex items-center justify-center gap-1.5';
+        btnAndroid.className = 'py-2 rounded-lg text-xs font-bold text-on-surface-variant transition-all flex items-center justify-center gap-1.5';
+        guideIos.classList.remove('hidden');
+        guideAndroid.classList.add('hidden');
+      }
+    }
+
+    function copyLanUrl() {
+      const input = document.getElementById('lanUrlInput');
+      if (input) {
+        if (navigator.clipboard) {
+          navigator.clipboard.writeText(input.value).then(() => {
+            showToast('Link berhasil disalin! Buka di browser HP Anda.', 'success');
+          });
+        } else {
+          input.select();
+          document.execCommand('copy');
+          showToast('Link disalin ke clipboard!', 'success');
+        }
+      }
+    }
+
+    // Register PWA Service Worker
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./service-worker.js')
+          .then((registration) => {
+            console.log('[PWA] Service Worker aktif:', registration.scope);
+          })
+          .catch((error) => {
+            console.log('[PWA] Service Worker gagal didaftarkan:', error);
+          });
+      });
+    }
+
+    // Initialize application on load
+    document.addEventListener('DOMContentLoaded', () => {
+      const initialHash = window.location.hash.replace('#', '');
+      if (['beranda', 'pesan-antar', 'lacak', 'akun'].includes(initialHash)) {
+        switchScreen(initialHash);
+      } else {
+        switchScreen('beranda');
+      }
+      updateUIElements();
+
+      // Show banner automatically on mobile devices after 2 seconds if not standalone
+      const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+      if (!isStandalone && !sessionStorage.getItem('pwa_banner_dismissed')) {
+        setTimeout(() => {
+          const banner = document.getElementById('pwaInstallBanner');
+          if (banner) banner.classList.remove('hidden');
+        }, 1500);
+      }
+    });
+  </script>
+</body>
+</html>
+
