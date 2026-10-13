@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+
+<html lang="id"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_tab" name="shell-type"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{width:100%;margin:0;padding:0;background-color:#faf8ff;}body{overscroll-behavior:none;-webkit-tap-highlight-color:transparent;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: 'class', theme: { extend: { 'colors': { 'on-tertiary-fixed': '#121e1c', 'on-surface': '#131b2e', 'surface-container-high': '#e2e7ff', 'surface-container': '#eaedff', 'on-background': '#131b2e', 'on-primary-fixed': '#00201d', 'primary-container': '#008378', 'primary-fixed': '#89f5e7', 'surface-dim': '#d2d9f4', 'surface-container-highest': '#dae2fd', 'inverse-surface': '#283044', 'on-secondary-fixed': '#001f26', 'tertiary-container': '#6b7775', 'error-container': '#ffdad6', 'outline': '#6d7a77', 'secondary-fixed': '#acedff', 'background': '#faf8ff', 'outline-variant': '#bcc9c6', 'tertiary': '#525e5c', 'on-tertiary': '#ffffff', 'surface-tint': '#006a61', 'on-secondary': '#ffffff', 'surface-container-low': '#f2f3ff', 'on-error': '#ffffff', 'on-secondary-container': '#006172', 'inverse-on-surface': '#eef0ff', 'on-error-container': '#93000a', 'on-primary-fixed-variant': '#005049', 'on-secondary-fixed-variant': '#004e5c', 'secondary': '#00687a', 'surface-bright': '#faf8ff', 'secondary-container': '#57dffe', 'tertiary-fixed-dim': '#bcc9c6', 'on-tertiary-container': '#f3fffc', 'surface-variant': '#dae2fd', 'on-tertiary-fixed-variant': '#3d4947', 'surface': '#faf8ff', 'inverse-primary': '#6bd8cb', 'on-primary-container': '#f4fffc', 'tertiary-fixed': '#d8e5e2', 'primary': '#00685f', 'primary-fixed-dim': '#6bd8cb', 'on-surface-variant': '#3d4947', 'error': '#ba1a1a', 'secondary-fixed-dim': '#4cd7f6', 'surface-container-lowest': '#ffffff', 'on-primary': '#ffffff' }, 'borderRadius': { 'DEFAULT': '0.25rem', 'lg': '0.5rem', 'xl': '0.75rem', 'full': '9999px' }, 'spacing': { 'space-md': '0.75rem', 'margin': '1.25rem', 'space-sm': '0.5rem', 'gutter': '1rem', 'space-xl': '1.75rem', 'space-xs': '0.25rem', 'space-lg': '1.25rem', 'margin-mobile': '1rem', 'gutter-mobile': '0.75rem' }, 'fontFamily': { 'display-lg-mobile': ['Plus Jakarta Sans'], 'label-lg': ['Plus Jakarta Sans'], 'label-sm': ['Plus Jakarta Sans'], 'headline-lg': ['Plus Jakarta Sans'], 'body-sm': ['Plus Jakarta Sans'], 'body-lg': ['Plus Jakarta Sans'], 'label-md': ['Plus Jakarta Sans'], 'body-md': ['Plus Jakarta Sans'], 'display-lg': ['Plus Jakarta Sans'], 'headline-sm': ['Plus Jakarta Sans'], 'headline-md': ['Plus Jakarta Sans'] }, 'fontSize': { 'display-lg-mobile': ['30px', { 'lineHeight': '38px', 'fontWeight': '700' }], 'label-lg': ['14px', { 'lineHeight': '18px', 'fontWeight': '600' }], 'label-sm': ['10px', { 'lineHeight': '14px', 'fontWeight': '700' }], 'headline-lg': ['26px', { 'lineHeight': '34px', 'fontWeight': '700' }], 'body-sm': ['12px', { 'lineHeight': '16px', 'fontWeight': '400' }], 'body-lg': ['16px', { 'lineHeight': '24px', 'fontWeight': '400' }], 'label-md': ['12px', { 'lineHeight': '16px', 'fontWeight': '600' }], 'body-md': ['14px', { 'lineHeight': '20px', 'fontWeight': '400' }], 'display-lg': ['36px', { 'lineHeight': '44px', 'fontWeight': '700' }], 'headline-sm': ['18px', { 'lineHeight': '24px', 'fontWeight': '600' }], 'headline-md': ['22px', { 'lineHeight': '28px', 'fontWeight': '600' }] } } } };</script></head><body class="bg-background font-body-md text-on-surface antialiased flex flex-col min-h-screen"><header class="fixed top-0 inset-x-0 z-50 bg-surface/85 backdrop-blur-xl pt-safe shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-16 px-4 flex items-center justify-between gap-3"><div class="flex items-center gap-2.5 min-w-0"><img alt="FreshWash Logo" class="h-8 w-auto object-contain flex-shrink-0" src="https://lh3.googleusercontent.com/aida/AEtjO1UDzYeGcF9XvPzzVC2gs50bWrH7gjOmCQNkDSZs6Z1_BKUoJP-MaBjIPDI3gdoKX7CDmF1mDoUh_IszZXMy2QbaMjgwkiy0wX6qzdSAdXc4Jyp9L2vvbINT2T5NHpMqOC05Scal6QkPLGhVZYpE95qLYEcVXv-TtPC2ZXVg5SeXB9oEkprZXtSJuoJiqKFK1wsV-CtQM7j1Bck_Xi2EttUSBwNE1p3HZ61uskqY1718ASXfv7bMc4cWG_M"/><div class="flex flex-col min-w-0"><div class="flex items-center gap-1.5"><span class="font-headline-sm text-headline-sm text-primary leading-tight font-bold tracking-tight truncate">FreshWash</span><span class="hidden">Beranda</span></div><button class="flex items-center gap-0.5 text-on-surface-variant hover:text-primary transition-colors text-left -mt-0.5"><span class="material-symbols-outlined text-[13px] text-primary flex-shrink-0">location_on</span><span class="font-label-sm text-label-sm truncate max-w-[140px]">Jl. Anggrek No. 14, Jakarta</span><span class="material-symbols-outlined text-[14px]">keyboard_arrow_down</span></button></div></div><div class="flex items-center gap-1 flex-shrink-0"><button aria-label="Notifications" class="relative w-11 h-11 flex items-center justify-center rounded-full text-on-surface hover:bg-surface-container transition-colors"><span class="material-symbols-outlined text-2xl">notifications</span><span class="absolute top-2 right-2 w-2 h-2 rounded-full bg-error ring-2 ring-surface"></span></button><div class="w-11 h-11 flex items-center justify-center"><img alt="Profile" class="w-8 h-8 rounded-full object-cover ring-2 ring-primary/20" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA42lCx6DYuo72ZYLVSAvPcR3vbv2PFPGDNnGD2YugISmUMr5LizmsD20vCZ3Tf30jhvYNSKCjrOGMfgU6A6ibQa2NjYXJ8zX0dqmLAkl-f37AbmwSTzxBg4NsKelDOkUjJC9AclMUBY76Bh2ro5zN-yyVCsB12NOZrUdE30RP9bnDFLaYQ9CgLUpWFf3KbeIgbmHvhuEUw_PKaDGemnPpVKUt6YN3jogkrRAsAisuiMxDexmrx6HAFgg"/></div></div></div></header><main class="flex-1 flex flex-col relative w-full pt-16 pb-24 bg-background"><div class="flex flex-col w-full px-4 space-y-4 pb-6">
+<!-- 1. Welcome Greeting & FreshPay Bento Banner -->
+<section class="bg-gradient-to-br from-primary via-primary to-primary-container rounded-3xl p-5 text-on-primary shadow-lg shadow-primary/20 relative overflow-hidden">
+<!-- Ambient bubble background accents -->
+<div class="absolute -right-6 -bottom-6 w-32 h-32 rounded-full bg-secondary-container/20 blur-2xl pointer-events-none"></div>
+<div class="absolute right-12 top-2 w-16 h-16 rounded-full bg-primary-fixed/15 blur-xl pointer-events-none"></div>
+<div class="relative z-10 flex flex-col space-y-4">
+<!-- Greeting and Tier -->
+<div class="flex items-center justify-between">
+<div class="min-w-0">
+<div class="flex items-center gap-1.5 mb-0.5">
+<span class="font-body-sm text-body-sm text-primary-fixed font-medium">Selamat Pagi ✨</span>
+</div>
+<h1 class="font-headline-md text-headline-md font-bold tracking-tight text-white truncate">Halo, Sarah!</h1>
+</div>
+<!-- Membership Badge -->
+<div class="flex items-center gap-1.5 bg-on-primary-fixed/25 backdrop-blur-md px-3 py-1.5 rounded-full shadow-sm">
+<span class="material-symbols-outlined text-[16px] text-secondary-container" style="font-variation-settings: 'FILL' 1;">stars</span>
+<div class="text-right">
+<span class="font-label-sm text-label-sm text-white block leading-tight font-bold">Gold Member</span>
+<span class="font-label-sm text-label-sm text-primary-fixed-dim leading-none block">450 Poin</span>
+</div>
+</div>
+</div>
+<!-- Quick Wallet Balance Pill -->
+<div class="bg-surface-container-lowest/15 backdrop-blur-md rounded-2xl p-3 flex items-center justify-between">
+<div class="flex items-center gap-2.5">
+<div class="w-9 h-9 rounded-xl bg-white/20 flex items-center justify-center text-white">
+<span class="material-symbols-outlined text-[20px]">account_balance_wallet</span>
+</div>
+<div>
+<span class="font-label-sm text-label-sm text-primary-fixed uppercase tracking-wider block">FreshPay Saldo</span>
+<span class="font-headline-sm text-headline-sm font-bold text-white tracking-tight">Rp 125.000</span>
+</div>
+</div>
+<button class="bg-secondary-container text-on-secondary-fixed hover:bg-secondary-fixed transition-all active:scale-95 px-3.5 py-1.5 rounded-xl font-label-md text-label-md font-bold flex items-center gap-1 shadow-sm" id="btnTopUp">
+<span class="material-symbols-outlined text-[16px]">add_circle</span>
+<span>Top Up</span>
+</button>
+</div>
+</div>
+</section>
+<!-- 2. Active Order Live Tracker Card -->
+<section class="bg-surface-container-lowest rounded-3xl p-4 shadow-md shadow-primary/5 flex flex-col space-y-3 relative">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="relative flex h-2.5 w-2.5">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-secondary opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-primary"></span>
+</span>
+<span class="font-label-md text-label-md font-bold text-on-surface">Pesanan Aktif <span class="text-primary font-semibold">#FW-8821</span></span>
+</div>
+<span class="bg-primary-fixed/40 text-on-primary-fixed-variant px-2.5 py-0.5 rounded-full font-label-sm text-label-sm font-bold flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">local_laundry_service</span>
+        Sedang Dicuci
+      </span>
+</div>
+<!-- Live Stage Description -->
+<div class="flex items-center gap-3 bg-surface-container-low rounded-2xl p-3">
+<div class="relative w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center flex-shrink-0 text-primary">
+<span class="material-symbols-outlined text-[26px] animate-spin" style="animation-duration: 4s;">sync</span>
+<div class="absolute -top-1 -right-1 w-4 h-4 bg-secondary text-white rounded-full flex items-center justify-center font-label-sm text-[9px] font-bold">2</div>
+</div>
+<div class="min-w-0 flex-1">
+<p class="font-label-md text-label-md font-bold text-on-surface truncate">Cuci Komplit (5.2 kg) • Lavender Bliss</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant flex items-center gap-1 mt-0.5">
+<span class="material-symbols-outlined text-[14px] text-primary">schedule</span>
+          Selesai Besok, 16:00 WIB
+        </p>
+</div>
+</div>
+<!-- Stepper Progress Bar -->
+<div class="space-y-1.5 pt-1">
+<div class="w-full bg-surface-container-high h-2 rounded-full overflow-hidden flex">
+<div class="bg-primary h-full w-1/2 rounded-full transition-all duration-500"></div>
+</div>
+<div class="flex justify-between font-label-sm text-label-sm text-on-surface-variant px-0.5">
+<span class="text-primary font-bold">Diterima</span>
+<span class="text-primary font-bold">Proses Cuci</span>
+<span>Setrika Rapih</span>
+<span>Antar Pulang</span>
+</div>
+</div>
+<div class="flex items-center justify-between pt-1">
+<span class="font-body-sm text-body-sm text-on-surface-variant">Kurir: <strong class="text-on-surface font-semibold">Budi Pratama</strong> (FreshRider)</span>
+<button onclick="location.href='../index.html#lacak'" class="bg-surface-container-high hover:bg-surface-variant active:scale-95 transition-all text-primary font-label-md text-label-md font-bold px-3 py-1.5 rounded-xl flex items-center gap-1">
+<span>Lihat Detail</span>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+</button>
+</div>
+</section>
+<!-- 3. Service Categories (2x2 Grid) -->
+<section class="space-y-3">
+<div class="flex items-center justify-between">
+<div>
+<h2 class="font-headline-sm text-headline-sm font-bold text-on-surface tracking-tight">Layanan FreshWash</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Pilih perawatan higienis untuk pakaianmu</p>
+</div>
+<button class="font-label-md text-label-md font-bold text-primary hover:underline">Semua (8)</button>
+</div>
+<div class="grid grid-cols-2 gap-3">
+<!-- 1. Cuci Komplit Kiloan (Best Seller) -->
+<div class="bg-surface-container-lowest rounded-2xl p-3.5 shadow-sm hover:shadow-md transition-all flex flex-col justify-between relative group cursor-pointer active:scale-[0.98]">
+<span class="absolute top-2.5 right-2.5 bg-secondary-container text-on-secondary-fixed text-[9px] font-bold px-2 py-0.5 rounded-full shadow-xs">
+          Best Seller
+        </span>
+<div class="w-11 h-11 rounded-2xl bg-primary-fixed/40 text-primary flex items-center justify-center mb-2.5 group-hover:scale-105 transition-transform">
+<span class="material-symbols-outlined text-[24px]">dry_cleaning</span>
+</div>
+<div>
+<h3 class="font-label-lg text-label-lg font-bold text-on-surface leading-snug">Cuci Komplit Kiloan</h3>
+<p class="font-body-sm text-[11px] text-on-surface-variant line-clamp-1 mt-0.5">Cuci, kering &amp; setrika wangi</p>
+<div class="mt-2 pt-2 flex items-baseline gap-1 bg-surface-container-low/60 rounded-xl px-2 py-1">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Mulai</span>
+<span class="font-label-md text-label-md font-bold text-primary">Rp 8.000</span>
+<span class="font-label-sm text-[10px] text-on-surface-variant">/kg</span>
+</div>
+</div>
+</div>
+<!-- 2. Dry Cleaning & Satuan -->
+<div class="bg-surface-container-lowest rounded-2xl p-3.5 shadow-sm hover:shadow-md transition-all flex flex-col justify-between cursor-pointer active:scale-[0.98] group">
+<div class="w-11 h-11 rounded-2xl bg-secondary-fixed/40 text-secondary flex items-center justify-center mb-2.5 group-hover:scale-105 transition-transform">
+<span class="material-symbols-outlined text-[24px]">styler</span>
+</div>
+<div>
+<h3 class="font-label-lg text-label-lg font-bold text-on-surface leading-snug">Dry Clean &amp; Satuan</h3>
+<p class="font-body-sm text-[11px] text-on-surface-variant line-clamp-1 mt-0.5">Jas, gaun, kemeja &amp; jaket kulit</p>
+<div class="mt-2 pt-2 flex items-baseline gap-1 bg-surface-container-low/60 rounded-xl px-2 py-1">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Mulai</span>
+<span class="font-label-md text-label-md font-bold text-primary">Rp 25.000</span>
+<span class="font-label-sm text-[10px] text-on-surface-variant">/pcs</span>
+</div>
+</div>
+</div>
+<!-- 3. Cuci Sepatu & Tas -->
+<div class="bg-surface-container-lowest rounded-2xl p-3.5 shadow-sm hover:shadow-md transition-all flex flex-col justify-between cursor-pointer active:scale-[0.98] group">
+<div class="w-11 h-11 rounded-2xl bg-tertiary-fixed text-on-tertiary-fixed-variant flex items-center justify-center mb-2.5 group-hover:scale-105 transition-transform">
+<span class="material-symbols-outlined text-[24px]">roller_skating</span>
+</div>
+<div>
+<h3 class="font-label-lg text-label-lg font-bold text-on-surface leading-snug">Cuci Sepatu &amp; Tas</h3>
+<p class="font-body-sm text-[11px] text-on-surface-variant line-clamp-1 mt-0.5">Deep clean sneakers &amp; ransel</p>
+<div class="mt-2 pt-2 flex items-baseline gap-1 bg-surface-container-low/60 rounded-xl px-2 py-1">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Mulai</span>
+<span class="font-label-md text-label-md font-bold text-primary">Rp 30.000</span>
+<span class="font-label-sm text-[10px] text-on-surface-variant">/psg</span>
+</div>
+</div>
+</div>
+<!-- 4. Bedcover, Selimut & Karpet -->
+<div class="bg-surface-container-lowest rounded-2xl p-3.5 shadow-sm hover:shadow-md transition-all flex flex-col justify-between cursor-pointer active:scale-[0.98] group">
+<div class="w-11 h-11 rounded-2xl bg-surface-container-high text-primary flex items-center justify-center mb-2.5 group-hover:scale-105 transition-transform">
+<span class="material-symbols-outlined text-[24px]">bed</span>
+</div>
+<div>
+<h3 class="font-label-lg text-label-lg font-bold text-on-surface leading-snug">Bedcover &amp; Karpet</h3>
+<p class="font-body-sm text-[11px] text-on-surface-variant line-clamp-1 mt-0.5">Cuci tebal higienis anti-bakteri</p>
+<div class="mt-2 pt-2 flex items-baseline gap-1 bg-surface-container-low/60 rounded-xl px-2 py-1">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Mulai</span>
+<span class="font-label-md text-label-md font-bold text-primary">Rp 35.000</span>
+<span class="font-label-sm text-[10px] text-on-surface-variant">/item</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 4. Express Service Promo Card -->
+<section class="bg-surface-container rounded-3xl p-4 shadow-sm relative overflow-hidden flex items-center justify-between">
+<div class="flex-1 pr-3 z-10">
+<div class="inline-flex items-center gap-1 bg-primary text-white font-label-sm text-[10px] font-bold px-2.5 py-0.5 rounded-full mb-1.5 shadow-xs">
+<span class="material-symbols-outlined text-[12px]">celebration</span>
+        PROMO SPESIAL
+      </div>
+<h3 class="font-headline-sm text-[17px] font-bold text-on-surface leading-tight">Diskon 30% Pengguna Baru!</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1 leading-snug">Bebas repot cuci perdana sepuasnya tanpa minimum order.</p>
+<!-- Copyable Voucher Badge -->
+<div class="mt-3 inline-flex items-center gap-2 bg-surface-container-lowest px-3 py-1.5 rounded-xl shadow-xs">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Kode:</span>
+<span class="font-label-md text-label-md font-bold text-primary tracking-wider font-mono" id="voucherCode">BERSIHSEGAR</span>
+<button class="text-primary hover:text-primary-container active:scale-90 transition-transform" id="btnCopyVoucher" title="Salin Kode Voucher">
+<span class="material-symbols-outlined text-[16px]">content_copy</span>
+</button>
+</div>
+</div>
+<!-- Friendly Visual Decorator -->
+<div class="w-20 h-20 rounded-2xl bg-secondary-container/40 flex items-center justify-center flex-shrink-0 text-secondary relative z-0">
+<span class="material-symbols-outlined text-[44px]">local_mall</span>
+<div class="absolute -bottom-1 -right-1 bg-primary text-white rounded-full p-1 shadow-sm">
+<span class="material-symbols-outlined text-[14px]">bolt</span>
+</div>
+</div>
+</section>
+<!-- 5. Pilihan Pewangi Premium (Aroma Favorit Selector) -->
+<section class="space-y-3">
+<div class="flex items-center justify-between">
+<div>
+<h2 class="font-headline-sm text-headline-sm font-bold text-on-surface tracking-tight">Pewangi Premium Gratis</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Pilih aroma favorit untuk cucian Anda</p>
+</div>
+<span class="material-symbols-outlined text-primary text-[20px]">air</span>
+</div>
+<!-- Fragrance Pills Carousel / Selector -->
+<div class="flex gap-2.5 overflow-x-auto pb-1 scrollbar-none" id="aromaSelector">
+<!-- Lavender Bliss (Selected) -->
+<button class="aroma-pill flex-shrink-0 bg-primary text-on-primary rounded-2xl px-3.5 py-2.5 flex items-center gap-2.5 shadow-sm transition-all" data-aroma="Lavender Bliss">
+<div class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-white">
+<span class="material-symbols-outlined text-[18px]">spa</span>
+</div>
+<div class="text-left">
+<span class="font-label-md text-label-md font-bold block leading-tight">Lavender Bliss</span>
+<span class="font-label-sm text-label-sm text-primary-fixed-dim leading-none">Menenangkan &amp; Soft</span>
+</div>
+<span class="material-symbols-outlined text-[16px] text-secondary-container">check_circle</span>
+</button>
+<!-- Ocean Fresh -->
+<button class="aroma-pill flex-shrink-0 bg-surface-container-lowest text-on-surface rounded-2xl px-3.5 py-2.5 flex items-center gap-2.5 shadow-xs transition-all hover:bg-surface-container-low" data-aroma="Ocean Fresh">
+<div class="w-8 h-8 rounded-full bg-secondary-fixed/50 text-secondary flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px]">waves</span>
+</div>
+<div class="text-left">
+<span class="font-label-md text-label-md font-bold block leading-tight">Ocean Fresh</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant leading-none">Segar Semriwing</span>
+</div>
+</button>
+<!-- Baby Powder -->
+<button class="aroma-pill flex-shrink-0 bg-surface-container-lowest text-on-surface rounded-2xl px-3.5 py-2.5 flex items-center gap-2.5 shadow-xs transition-all hover:bg-surface-container-low" data-aroma="Baby Powder">
+<div class="w-8 h-8 rounded-full bg-surface-container-high text-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px]">child_care</span>
+</div>
+<div class="text-left">
+<span class="font-label-md text-label-md font-bold block leading-tight">Baby Powder</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant leading-none">Lembut Hipoalergenik</span>
+</div>
+</button>
+<!-- Sakura Blossom -->
+<button class="aroma-pill flex-shrink-0 bg-surface-container-lowest text-on-surface rounded-2xl px-3.5 py-2.5 flex items-center gap-2.5 shadow-xs transition-all hover:bg-surface-container-low" data-aroma="Sakura Blossom">
+<div class="w-8 h-8 rounded-full bg-error-container text-on-error-container flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px]">yard</span>
+</div>
+<div class="text-left">
+<span class="font-label-md text-label-md font-bold block leading-tight">Sakura Blossom</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant leading-none">Manis Floral</span>
+</div>
+</button>
+</div>
+</section>
+<!-- 6. Mengapa FreshWash? (Trust Badges Bento Card) -->
+<section class="bg-surface-container-lowest rounded-3xl p-4 shadow-sm space-y-3.5">
+<div class="flex items-center gap-2">
+<div class="w-8 h-8 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[20px]">verified_user</span>
+</div>
+<div>
+<h2 class="font-headline-sm text-headline-sm font-bold text-on-surface">Mengapa FreshWash?</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Standar kebersihan tertinggi di setiap cucian</p>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-2.5">
+<!-- Trust 1 -->
+<div class="bg-surface-container-low rounded-2xl p-3 flex flex-col space-y-1.5">
+<div class="w-7 h-7 rounded-lg bg-surface-container-lowest flex items-center justify-center text-primary shadow-xs">
+<span class="material-symbols-outlined text-[18px]">water_voc</span>
+</div>
+<div>
+<h4 class="font-label-md text-label-md font-bold text-on-surface">1 Mesin 1 Pelanggan</h4>
+<p class="font-body-sm text-[11px] text-on-surface-variant mt-0.5 leading-snug">Tidak dicampur, 100% higienis terjaga.</p>
+</div>
+</div>
+<!-- Trust 2 -->
+<div class="bg-surface-container-low rounded-2xl p-3 flex flex-col space-y-1.5">
+<div class="w-7 h-7 rounded-lg bg-surface-container-lowest flex items-center justify-center text-secondary shadow-xs">
+<span class="material-symbols-outlined text-[18px]">scale</span>
+</div>
+<div>
+<h4 class="font-label-md text-label-md font-bold text-on-surface">Timbangan Transparan</h4>
+<p class="font-body-sm text-[11px] text-on-surface-variant mt-0.5 leading-snug">Foto &amp; bukti kiloan langsung via app.</p>
+</div>
+</div>
+<!-- Trust 3 -->
+<div class="bg-surface-container-low rounded-2xl p-3 flex flex-col space-y-1.5">
+<div class="w-7 h-7 rounded-lg bg-surface-container-lowest flex items-center justify-center text-primary shadow-xs">
+<span class="material-symbols-outlined text-[18px]">auto_awesome</span>
+</div>
+<div>
+<h4 class="font-label-md text-label-md font-bold text-on-surface">Wangi Tahan 14 Hari</h4>
+<p class="font-body-sm text-[11px] text-on-surface-variant mt-0.5 leading-snug">Teknologi microcapsule scent lock.</p>
+</div>
+</div>
+<!-- Trust 4 -->
+<div class="bg-surface-container-low rounded-2xl p-3 flex flex-col space-y-1.5">
+<div class="w-7 h-7 rounded-lg bg-surface-container-lowest flex items-center justify-center text-secondary shadow-xs">
+<span class="material-symbols-outlined text-[18px]">published_with_changes</span>
+</div>
+<div>
+<h4 class="font-label-md text-label-md font-bold text-on-surface">Garansi Cuci Ulang</h4>
+<p class="font-body-sm text-[11px] text-on-surface-variant mt-0.5 leading-snug">Kurang rapi? Kami cuci ulang gratis.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Quick Floating Pickup CTA Button -->
+<div class="pt-2">
+<button onclick="location.href='../index.html#pesan-antar'" class="w-full bg-primary hover:bg-primary-container text-on-primary rounded-2xl py-3.5 px-4 font-headline-sm text-headline-sm font-bold flex items-center justify-center gap-2 shadow-lg shadow-primary/25 active:scale-[0.98] transition-all">
+<span class="material-symbols-outlined text-[22px]">local_shipping</span>
+<span>Pesan Jemput Cucian Sekarang</span>
+</button>
+<p class="text-center font-body-sm text-body-sm text-on-surface-variant mt-2 flex items-center justify-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-primary">schedule</span>
+      Penjemputan terdekat tersedia dalam <span class="text-primary font-bold">25 menit</span>
+</p>
+</div>
+</div>
+<!-- Client-side Interactive Behaviors -->
+<script>
+  // Voucher code copy micro-interaction
+  document.getElementById('btnCopyVoucher')?.addEventListener('click', function() {
+    const code = document.getElementById('voucherCode').innerText;
+    navigator.clipboard?.writeText(code).then(() => {
+      const btn = document.getElementById('btnCopyVoucher');
+      btn.innerHTML = '<span class="material-symbols-outlined text-[16px] text-primary">check</span>';
+      setTimeout(() => {
+        btn.innerHTML = '<span class="material-symbols-outlined text-[16px]">content_copy</span>';
+      }, 2000);
+    });
+  });
+
+  // Top Up feedback
+  document.getElementById('btnTopUp')?.addEventListener('click', function() {
+    this.classList.add('scale-95');
+    setTimeout(() => this.classList.remove('scale-95'), 150);
+  });
+
+  // Aroma selector pill switching
+  const aromaButtons = document.querySelectorAll('.aroma-pill');
+  aromaButtons.forEach(btn => {
+    btn.addEventListener('click', function() {
+      aromaButtons.forEach(b => {
+        b.className = 'aroma-pill flex-shrink-0 bg-surface-container-lowest text-on-surface rounded-2xl px-3.5 py-2.5 flex items-center gap-2.5 shadow-xs transition-all hover:bg-surface-container-low';
+        const iconCheck = b.querySelector('.material-symbols-outlined:last-child');
+        if (iconCheck && iconCheck.innerText === 'check_circle') {
+          iconCheck.remove();
+        }
+      });
+
+      this.className = 'aroma-pill flex-shrink-0 bg-primary text-on-primary rounded-2xl px-3.5 py-2.5 flex items-center gap-2.5 shadow-sm transition-all';
+      if (!this.querySelector('.material-symbols-outlined:last-child')) {
+        const check = document.createElement('span');
+        check.className = 'material-symbols-outlined text-[16px] text-secondary-container';
+        check.innerText = 'check_circle';
+        this.appendChild(check);
+      }
+    });
+  });
+</script></main><nav class="fixed bottom-0 inset-x-0 z-50 pb-safe bg-surface/90 backdrop-blur-xl shadow-[0_-4px_20px_rgba(15,23,42,0.06)]" data-active-classes="text-primary font-bold"><div class="flex items-center justify-around h-16 px-2"><a aria-current="page" class="flex flex-col items-center justify-center gap-0.5 min-w-[56px] h-12 transition-colors text-primary font-bold" data-path="beranda" href="../index.html#beranda"><span class="material-symbols-outlined text-[22px]">local_laundry_service</span><span class="font-label-sm text-label-sm">Beranda</span></a><a class="flex flex-col items-center justify-center gap-0.5 min-w-[56px] h-12 text-on-surface-variant transition-colors" data-path="pesan-antar" href="../index.html#pesan-antar"><span class="material-symbols-outlined text-[22px]">local_shipping</span><span class="font-label-sm text-label-sm">Pesan Antar</span></a><a class="flex flex-col items-center justify-center gap-0.5 min-w-[56px] h-12 text-on-surface-variant transition-colors" data-path="lacak" href="../index.html#lacak"><span class="material-symbols-outlined text-[22px]">radar</span><span class="font-label-sm text-label-sm">Lacak</span></a><a class="flex flex-col items-center justify-center gap-0.5 min-w-[56px] h-12 text-on-surface-variant transition-colors" data-path="akun" href="../index.html#akun"><span class="material-symbols-outlined text-[22px]">account_circle</span><span class="font-label-sm text-label-sm">Akun</span></a></div></nav></body></html>
