@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/>
+  <title>Syarat & Ketentuan Program Member - FreshWash</title>
+  
+  <!-- Favicon & PWA Icons -->
+  <link rel="icon" type="image/svg+xml" href="assets/icon.svg"/>
+  <meta name="theme-color" content="#00685f"/>
+  
+  <!-- Fonts & Icons -->
+  <link href="https://fonts.googleapis.com" rel="preconnect"/>
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            'primary': '#00685f',
+            'primary-hover': '#00534c',
+            'primary-container': '#008378',
+            'on-primary': '#ffffff',
+            'secondary': '#00687a',
+            'surface': '#f8fafc',
+            'surface-container-lowest': '#ffffff',
+            'surface-container-low': '#f1f5f9',
+            'surface-container': '#e2e8f0',
+            'surface-container-high': '#cbd5e1',
+            'on-surface': '#0f172a',
+            'on-surface-variant': '#475569',
+            'outline-variant': '#cbd5e1'
+          },
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif']
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+  </style>
+</head>
+<body class="bg-slate-100 text-on-surface antialiased min-h-screen flex flex-col justify-between selection:bg-teal-500 selection:text-white pb-24 sm:pb-28">
+
+  <!-- ========================================== -->
+  <!-- TOP STICKY APP BAR WITH CLOSE BUTTON -->
+  <!-- ========================================== -->
+  <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-200/80 shadow-xs">
+    <div class="max-w-2xl mx-auto px-4 py-3 flex items-center justify-between gap-3">
+      <div class="flex items-center gap-2.5">
+        <button type="button" onclick="closeOrGoBack()" class="w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 flex items-center justify-center transition-all active:scale-90" title="Kembali ke Aplikasi">
+          <span class="material-symbols-outlined text-[20px]">arrow_back</span>
+        </button>
+        <div>
+          <h1 class="text-sm font-extrabold text-slate-900 leading-tight">Syarat &amp; Ketentuan Member</h1>
+          <p class="text-[11px] text-teal-700 font-semibold flex items-center gap-1">
+            <span class="w-1.5 h-1.5 rounded-full bg-teal-600"></span>
+            FreshWash Official Program
+          </p>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-1.5">
+        <button type="button" onclick="closeOrGoBack()" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-full bg-slate-100 hover:bg-rose-50 text-slate-600 hover:text-rose-600 text-xs font-bold transition-all active:scale-95 border border-slate-200/60" title="Tutup Halaman">
+          <span class="material-symbols-outlined text-[15px]">close</span>
+          <span>Tutup</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ========================================== -->
+  <!-- MAIN TERMS & POLICY CONTENT -->
+  <!-- ========================================== -->
+  <main class="max-w-2xl mx-auto w-full px-4 pt-4 sm:pt-6 space-y-4">
+
+    <!-- Hero Card Overview -->
+    <div class="bg-gradient-to-br from-teal-700 via-primary to-teal-900 rounded-3xl p-5 text-white shadow-md relative overflow-hidden">
+      <div class="absolute -right-10 -bottom-10 w-40 h-40 bg-white/10 rounded-full blur-2xl pointer-events-none"></div>
+      
+      <div class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-white/15 text-white text-[10px] font-bold tracking-wider uppercase mb-2 border border-white/20">
+        <span class="material-symbols-outlined text-[13px]">gavel</span>
+        Kebijakan Resmi
+      </div>
+      <h2 class="text-lg sm:text-xl font-extrabold leading-tight">SYARAT &amp; KETENTUAN PROGRAM MEMBER LAUNDRY</h2>
+      <p class="text-xs text-teal-100 mt-1.5 leading-relaxed">
+        Dengan membeli dan menggunakan program member, pelanggan dianggap telah membaca dan menyetujui ketentuan berikut.
+      </p>
+
+      <!-- 4 Tier Chips -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 mt-4 pt-3 border-t border-white/20 text-center">
+        <div class="bg-white/10 backdrop-blur-xs rounded-xl p-2 border border-white/15">
+          <span class="block text-xs font-bold">🥉 Bronze</span>
+          <span class="block text-[10px] text-teal-200 mt-0.5">Diskon 3%</span>
+          <span class="block text-[11px] font-mono font-bold mt-1">Rp99.000/th</span>
+        </div>
+        <div class="bg-white/10 backdrop-blur-xs rounded-xl p-2 border border-white/15">
+          <span class="block text-xs font-bold">🥈 Silver</span>
+          <span class="block text-[10px] text-teal-200 mt-0.5">Diskon 5% • 3 kg</span>
+          <span class="block text-[11px] font-mono font-bold mt-1">Rp199.000/th</span>
+        </div>
+        <div class="bg-white/10 backdrop-blur-xs rounded-xl p-2 border border-white/15">
+          <span class="block text-xs font-bold">🥇 Gold</span>
+          <span class="block text-[10px] text-teal-200 mt-0.5">Diskon 8% • 5 kg</span>
+          <span class="block text-[11px] font-mono font-bold mt-1">Rp299.000/th</span>
+        </div>
+        <div class="bg-white/10 backdrop-blur-xs rounded-xl p-2 border border-white/15">
+          <span class="block text-xs font-bold">💎 Platinum</span>
+          <span class="block text-[10px] text-teal-200 mt-0.5">Diskon 12% • 7 kg</span>
+          <span class="block text-[11px] font-mono font-bold mt-1">Rp399.000/th</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Info Badge: Gratis Antar-Jemput -->
+    <div class="bg-emerald-50 border border-emerald-200 rounded-2xl p-3.5 flex items-start gap-3 text-emerald-950">
+      <div class="w-8 h-8 rounded-xl bg-emerald-600 text-white flex items-center justify-center flex-shrink-0 shadow-xs mt-0.5">
+        <span class="material-symbols-outlined text-[18px]">local_shipping</span>
+      </div>
+      <div class="text-xs">
+        <strong class="block font-bold text-emerald-900">Fasilitas Seluruh Member: Gratis Antar-Jemput Radius 5 Km</strong>
+        <p class="text-[11px] text-emerald-800 mt-0.5 leading-relaxed">
+          Semua kategori member (Bronze, Silver, Gold, Platinum) berhak atas gratis ongkir penjemputan &amp; pengantaran radius maksimal 5 km dengan minimum transaksi Rp30.000.
+        </p>
+      </div>
+    </div>
+
+    <!-- Sections Container -->
+    <div class="bg-white rounded-3xl p-5 shadow-xs border border-slate-200/80 space-y-6 text-xs sm:text-[13px] text-slate-800 leading-relaxed">
+      
+      <!-- Bagian A -->
+      <section class="space-y-2">
+        <h3 class="font-extrabold text-sm sm:text-base text-primary flex items-center gap-2 border-b border-slate-100 pb-2">
+          <span class="w-6 h-6 rounded-lg bg-teal-50 text-teal-700 flex items-center justify-center text-xs font-bold border border-teal-200/60">A</span>
+          Jenis dan Masa Aktif Keanggotaan
+        </h3>
+        <ol class="list-decimal list-inside space-y-1.5 pl-1 text-slate-600">
+          <li>Program member terdiri atas <strong>Bronze, Silver, Gold, dan Platinum</strong>.</li>
+          <li>Harga keanggotaan ditetapkan sebagai berikut:
+            <ul class="list-disc list-inside pl-4 py-1 space-y-0.5 font-medium text-slate-800">
+              <li><strong>Bronze Member</strong>: Rp99.000 per tahun.</li>
+              <li><strong>Silver Member</strong>: Rp199.000 per tahun.</li>
+              <li><strong>Gold Member</strong>: Rp299.000 per tahun.</li>
+              <li><strong>Platinum Member</strong>: Rp399.000 per tahun.</li>
+            </ul>
+          </li>
+          <li>Setiap keanggotaan berlaku selama <strong>12 bulan (1 tahun)</strong> sejak tanggal aktivasi berhasil.</li>
+          <li>Tanggal mulai dan berakhirnya keanggotaan dapat dilihat melalui halaman Profil atau Beranda aplikasi secara <em>live real-time</em>.</li>
+          <li>Manfaat member hanya berlaku selama status keanggotaan aktif.</li>
+          <li>Setelah masa aktif berakhir, manfaat member dihentikan secara otomatis.</li>
+          <li>Pelanggan dapat membeli kembali keanggotaan setelah masa aktif sebelumnya berakhir.</li>
+        </ol>
+      </section>
+
+      <!-- Bagian B -->
+      <section class="space-y-2">
+        <h3 class="font-extrabold text-sm sm:text-base text-primary flex items-center gap-2 border-b border-slate-100 pb-2">
+          <span class="w-6 h-6 rounded-lg bg-teal-50 text-teal-700 flex items-center justify-center text-xs font-bold border border-teal-200/60">B</span>
+          Ketentuan Diskon Member
+        </h3>
+        <ol class="list-decimal list-inside space-y-1.5 pl-1 text-slate-600">
+          <li><strong>Bronze Member</strong> memperoleh diskon sebesar <strong>3%</strong> untuk setiap transaksi laundry yang memenuhi syarat.</li>
+          <li><strong>Silver Member</strong> memperoleh diskon sebesar <strong>5%</strong> untuk setiap transaksi laundry yang memenuhi syarat.</li>
+          <li><strong>Gold Member</strong> memperoleh diskon sebesar <strong>8%</strong> untuk setiap transaksi laundry yang memenuhi syarat.</li>
+          <li><strong>Platinum Member</strong> memperoleh diskon sebesar <strong>12%</strong> untuk setiap transaksi laundry yang memenuhi syarat.</li>
+          <li>Diskon diterapkan secara otomatis pada transaksi yang memenuhi syarat selama masa keanggotaan aktif.</li>
+          <li>Diskon hanya berlaku untuk layanan laundry yang ditentukan oleh penyedia layanan.</li>
+          <li>Diskon member tidak dapat diuangkan atau dialihkan kepada pelanggan lain.</li>
+          <li>Diskon member tidak dapat digabungkan dengan promo lain apabila ketentuan promo menyatakan bahwa kombinasi tersebut tidak diperbolehkan.</li>
+          <li>Jika pelanggan melakukan upgrade, persentase diskon mengikuti paket baru setelah pembayaran upgrade berhasil dikonfirmasi.</li>
+          <li>Transaksi yang diproses setelah masa keanggotaan berakhir tidak mendapatkan diskon member.</li>
+        </ol>
+      </section>
+
+      <!-- Bagian C -->
+      <section class="space-y-2">
+        <h3 class="font-extrabold text-sm sm:text-base text-primary flex items-center gap-2 border-b border-slate-100 pb-2">
+          <span class="w-6 h-6 rounded-lg bg-teal-50 text-teal-700 flex items-center justify-center text-xs font-bold border border-teal-200/60">C</span>
+          Ketentuan Gratis Antar-Jemput
+        </h3>
+        <ol class="list-decimal list-inside space-y-1.5 pl-1 text-slate-600">
+          <li>Seluruh jenis member mendapatkan fasilitas gratis antar-jemput dengan <strong>radius maksimal 5 km</strong> sesuai ketentuan layanan.</li>
+          <li>Radius dihitung berdasarkan titik lokasi dan metode pengukuran yang ditetapkan oleh penyedia layanan.</li>
+          <li>Fasilitas berlaku untuk alamat yang berada dalam area layanan laundry.</li>
+          <li>Gratis antar-jemput dapat memiliki ketentuan minimum nilai pesanan sesuai kebijakan laundry yang ditampilkan kepada pelanggan sebelum pemesanan (minimal transaksi Rp30.000).</li>
+          <li>Jadwal penjemputan dan pengantaran menyesuaikan ketersediaan layanan kurir FreshWash.</li>
+          <li>Jika alamat pelanggan berada di luar area layanan, biaya tambahan atau penolakan layanan akan diinformasikan sebelum pesanan dikonfirmasi.</li>
+          <li>Fasilitas antar-jemput hanya berlaku selama keanggotaan aktif.</li>
+        </ol>
+      </section>
+
+      <!-- Bagian D -->
+      <section class="space-y-2">
+        <h3 class="font-extrabold text-sm sm:text-base text-primary flex items-center gap-2 border-b border-slate-100 pb-2">
+          <span class="w-6 h-6 rounded-lg bg-teal-50 text-teal-700 flex items-center justify-center text-xs font-bold border border-teal-200/60">D</span>
+          Ketentuan Bonus Cuci Gratis
+        </h3>
+        <p class="text-slate-600">
+          Bonus cuci gratis diberikan kepada member yang telah menyelesaikan <strong>10 transaksi laundry</strong> yang memenuhi syarat.
+        </p>
+
+        <!-- Tabel Ketentuan Bonus Berdasarkan Paket -->
+        <div class="overflow-x-auto rounded-2xl border border-slate-200 my-2.5">
+          <table class="w-full text-xs text-left">
+            <thead class="bg-slate-50 text-slate-900 font-bold border-b border-slate-200">
+              <tr>
+                <th class="p-3">Jenis Member</th>
+                <th class="p-3">Bonus Cuci Gratis</th>
+                <th class="p-3">Maksimal Berat</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100 bg-white">
+              <tr class="hover:bg-slate-50/60 transition-colors">
+                <td class="p-3 font-bold text-amber-800">🥉 Bronze</td>
+                <td class="p-3 text-slate-500">Tidak tersedia</td>
+                <td class="p-3 text-slate-400 font-mono">—</td>
+              </tr>
+              <tr class="hover:bg-slate-50/60 transition-colors">
+                <td class="p-3 font-bold text-slate-700">🥈 Silver</td>
+                <td class="p-3 text-slate-700">1 kali cuci setelah 10 transaksi yang memenuhi syarat</td>
+                <td class="p-3 font-bold text-teal-700 font-mono">3 kg</td>
+              </tr>
+              <tr class="hover:bg-slate-50/60 transition-colors">
+                <td class="p-3 font-bold text-amber-700">🥇 Gold</td>
+                <td class="p-3 text-slate-700">1 kali cuci setelah 10 transaksi yang memenuhi syarat</td>
+                <td class="p-3 font-bold text-teal-700 font-mono">5 kg</td>
+              </tr>
+              <tr class="hover:bg-slate-50/60 transition-colors">
+                <td class="p-3 font-bold text-cyan-800">💎 Platinum</td>
+                <td class="p-3 text-slate-700">1 kali cuci setelah 10 transaksi yang memenuhi syarat</td>
+                <td class="p-3 font-bold text-teal-700 font-mono">7 kg</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p class="font-bold text-slate-800 pt-1">Ketentuan bonus:</p>
+        <ol class="list-decimal list-inside space-y-1.5 pl-1 text-slate-600">
+          <li>Progres bonus dihitung berdasarkan transaksi laundry yang telah selesai dan dibayar.</li>
+          <li>Transaksi yang dibatalkan atau dikembalikan dananya tidak dihitung sebagai progres.</li>
+          <li>Setelah menyelesaikan 10 transaksi yang memenuhi syarat, pelanggan memperoleh hak atas 1 kali cuci gratis sesuai batas berat paket.</li>
+          <li>Bonus hanya berlaku untuk layanan laundry yang ditentukan oleh penyedia layanan.</li>
+          <li>Jika berat cucian melebihi batas bonus, kelebihan berat dikenakan biaya sesuai tarif yang berlaku.</li>
+          <li>Bonus tidak dapat diuangkan, dipindahtangankan, atau ditukar dengan manfaat lain.</li>
+          <li>Bonus tidak berlaku surut untuk transaksi sebelum keanggotaan diaktifkan.</li>
+          <li>Hak atas bonus, termasuk progres dan voucher yang belum digunakan, mengikuti ketentuan masa berlaku yang ditampilkan kepada pelanggan.</li>
+          <li>Ketentuan mengenai masa berlaku voucher bonus akan diinformasikan ketika voucher diterbitkan.</li>
+        </ol>
+      </section>
+
+      <!-- Bagian E -->
+      <section class="space-y-2">
+        <h3 class="font-extrabold text-sm sm:text-base text-primary flex items-center gap-2 border-b border-slate-100 pb-2">
+          <span class="w-6 h-6 rounded-lg bg-teal-50 text-teal-700 flex items-center justify-center text-xs font-bold border border-teal-200/60">E</span>
+          Ketentuan Upgrade Member
+        </h3>
+        <ol class="list-decimal list-inside space-y-1.5 pl-1 text-slate-600">
+          <li>Pelanggan dapat melakukan upgrade melalui halaman Profil atau menu Member di aplikasi.</li>
+          <li>Upgrade tersedia dari <strong>Bronze ke Silver, Gold, atau Platinum; Silver ke Gold atau Platinum; serta Gold ke Platinum</strong>.</li>
+          <li>Untuk upgrade dengan pembayaran selisih harga, <strong>biaya upgrade dihitung berdasarkan selisih harga paket yang berlaku</strong>.</li>
+          <li>Status dan manfaat member baru diaktifkan setelah pembayaran upgrade berhasil dikonfirmasi oleh sistem.</li>
+          <li>Setelah upgrade berhasil, diskon mengikuti persentase paket baru.</li>
+          <li>Pada skema upgrade dengan pembayaran selisih harga, <strong>tanggal kedaluwarsa tetap mengikuti masa aktif keanggotaan sebelumnya</strong>.</li>
+          <li>Progres bonus dan voucher yang belum digunakan mengikuti ketentuan transisi paket yang ditampilkan sebelum pembayaran upgrade.</li>
+          <li>Pelanggan dapat melihat status dan masa aktif paket terbaru melalui halaman Profil atau Beranda.</li>
+        </ol>
+      </section>
+
+      <!-- Bagian F -->
+      <section class="space-y-2">
+        <h3 class="font-extrabold text-sm sm:text-base text-primary flex items-center gap-2 border-b border-slate-100 pb-2">
+          <span class="w-6 h-6 rounded-lg bg-teal-50 text-teal-700 flex items-center justify-center text-xs font-bold border border-teal-200/60">F</span>
+          Ketentuan Pembayaran dan Aktivasi
+        </h3>
+        <ol class="list-decimal list-inside space-y-1.5 pl-1 text-slate-600">
+          <li>Keanggotaan diaktifkan setelah pembayaran berhasil dikonfirmasi oleh sistem.</li>
+          <li>Sebelum aktivasi, pelanggan wajib memastikan jenis paket dan harga yang dipilih sudah benar.</li>
+          <li>Jika pembayaran belum berhasil atau belum terkonfirmasi, manfaat member belum dapat digunakan.</li>
+          <li>Riwayat pembelian dan status pembayaran dapat dilihat melalui aplikasi jika fitur tersebut tersedia.</li>
+          <li>Penanganan transaksi gagal, pembayaran ganda, atau pengembalian dana mengikuti kebijakan transaksi yang berlaku dan diinformasikan kepada pelanggan.</li>
+        </ol>
+      </section>
+
+      <!-- Bagian G -->
+      <section class="space-y-2">
+        <h3 class="font-extrabold text-sm sm:text-base text-primary flex items-center gap-2 border-b border-slate-100 pb-2">
+          <span class="w-6 h-6 rounded-lg bg-teal-50 text-teal-700 flex items-center justify-center text-xs font-bold border border-teal-200/60">G</span>
+          Ketentuan Masa Aktif dan Perpanjangan
+        </h3>
+        <ol class="list-decimal list-inside space-y-1.5 pl-1 text-slate-600">
+          <li>Masa aktif keanggotaan adalah <strong>12 bulan sejak aktivasi</strong>.</li>
+          <li>Aplikasi menampilkan tanggal mulai dan tanggal berakhirnya keanggotaan secara rinci.</li>
+          <li>Ketika masa aktif berakhir, sistem menghentikan diskon dan fasilitas member secara otomatis.</li>
+          <li>Pelanggan akan mendapatkan pemberitahuan mengenai masa aktif yang akan berakhir apabila fitur pemberitahuan tersedia.</li>
+          <li>Pelanggan dapat membeli keanggotaan kembali sesuai harga yang berlaku.</li>
+          <li>Setelah pembelian baru berhasil diaktifkan, sistem menampilkan status member aktif dan informasi masa keanggotaan yang baru.</li>
+          <li>Progres bonus dan voucher yang belum digunakan ditangani sesuai ketentuan yang telah diinformasikan kepada pelanggan.</li>
+        </ol>
+      </section>
+
+      <!-- Bagian H -->
+      <section class="space-y-2">
+        <h3 class="font-extrabold text-sm sm:text-base text-primary flex items-center gap-2 border-b border-slate-100 pb-2">
+          <span class="w-6 h-6 rounded-lg bg-teal-50 text-teal-700 flex items-center justify-center text-xs font-bold border border-teal-200/60">H</span>
+          Ketentuan Umum
+        </h3>
+        <ol class="list-decimal list-inside space-y-1.5 pl-1 text-slate-600">
+          <li>Program member berlaku untuk akun pelanggan yang melakukan pembelian keanggotaan.</li>
+          <li>Setiap akun hanya dapat menggunakan manfaat sesuai paket member yang sedang aktif.</li>
+          <li>Pelanggan dilarang menyalahgunakan promo atau melakukan transaksi yang bertujuan memperoleh manfaat secara tidak wajar.</li>
+          <li>Jika ditemukan indikasi penyalahgunaan, penyedia layanan dapat melakukan pemeriksaan transaksi sesuai kebijakan yang berlaku.</li>
+          <li>Perubahan ketentuan program harus diinformasikan kepada pelanggan secara jelas.</li>
+          <li>Ketentuan baru tidak boleh digunakan untuk mengurangi manfaat keanggotaan yang telah dibeli secara sepihak tanpa dasar dan mekanisme yang sesuai.</li>
+          <li>Jika terdapat pertanyaan mengenai program member, pelanggan dapat menghubungi layanan bantuan melalui aplikasi.</li>
+        </ol>
+      </section>
+
+    </div>
+
+    <!-- Contact Support Card -->
+    <div class="bg-white rounded-3xl p-4 sm:p-5 shadow-xs border border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center flex-shrink-0 border border-emerald-200">
+          <span class="material-symbols-outlined text-[22px]">support_agent</span>
+        </div>
+        <div>
+          <h4 class="text-xs font-bold text-slate-900">Butuh Bantuan Program Member?</h4>
+          <p class="text-[11px] text-slate-500">Hubungi WhatsApp Resmi Owner FreshWash di 0823-3890-3403</p>
+        </div>
+      </div>
+      <a href="https://wa.me/6282338903403?text=Halo%20FreshWash%20Laundry%2C%20saya%20ingin%20tanya%20mengenai%20Syarat%20%26%20Ketentuan%20Program%20Member" target="_blank" class="w-full sm:w-auto px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs flex items-center justify-center gap-1.5 transition-all shadow-xs active:scale-95">
+        <span class="material-symbols-outlined text-[16px]">chat</span>
+        <span>Chat WhatsApp</span>
+      </a>
+    </div>
+
+  </main>
+
+  <!-- ========================================== -->
+  <!-- BOTTOM FIXED ACTION BAR -->
+  <!-- ========================================== -->
+  <footer class="fixed bottom-0 inset-x-0 z-50 bg-white/95 backdrop-blur-md border-t border-slate-200/90 shadow-lg p-3">
+    <div class="max-w-2xl mx-auto flex items-center gap-2.5">
+      <button type="button" onclick="closeOrGoBack()" class="flex-1 py-3 px-4 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold flex items-center justify-center gap-1.5 transition-all active:scale-[0.98]">
+        <span class="material-symbols-outlined text-[18px]">close</span>
+        <span>Tutup &amp; Kembali</span>
+      </button>
+
+      <button type="button" onclick="goToMembershipPage()" class="flex-1 py-3 px-4 rounded-xl bg-gradient-to-r from-primary to-teal-700 hover:from-teal-700 hover:to-teal-800 text-white text-xs font-bold flex items-center justify-center gap-1.5 shadow-md transition-all active:scale-[0.98]">
+        <span class="material-symbols-outlined text-[18px]">stars</span>
+        <span>Beli / Jadi Member</span>
+      </button>
+    </div>
+  </footer>
+
+  <!-- ========================================== -->
+  <!-- JAVASCRIPT NAVIGATION & AUTO-CLOSE LOGIC -->
+  <!-- ========================================== -->
+  <script>
+    function closeOrGoBack() {
+      // 1. Try closing window if opened via window.open()
+      if (window.opener && !window.opener.closed) {
+        window.close();
+        return;
+      }
+      
+      // 2. Try history.back() if there's browsing history from the app
+      if (document.referrer && (document.referrer.includes(window.location.host) || document.referrer.includes('localhost') || document.referrer.includes('index.html'))) {
+        history.back();
+        return;
+      }
+
+      // 3. Fallback direct navigation back to app
+      window.location.href = 'index.html#akun';
+    }
+
+    function goToMembershipPage() {
+      window.location.href = 'index.html#beranda';
+    }
+
+    // Auto-Close / Smooth Return on Keyboard Backspace/Escape
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeOrGoBack();
+      }
+    });
+
+    // Handle Mobile Hardware / Gestural Back Button:
+    // Push dummy state so tapping Back button once will smoothly return to the main app
+    try {
+      history.pushState({ page: 'sk-member' }, document.title, window.location.href);
+      window.addEventListener('popstate', (event) => {
+        // Automatically close/navigate back to index.html when back is pressed
+        window.location.href = 'index.html#akun';
+      });
+    } catch (e) {
+      console.log('Popstate handler initialization:', e);
+    }
+  </script>
+</body>
+</html>
+

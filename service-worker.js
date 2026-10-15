@@ -1,4 +1,4 @@
-const CACHE_NAME = 'freshwash-pwa-v1';
+const CACHE_NAME = 'freshwash-pwa-v5';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
@@ -6,7 +6,8 @@ const ASSETS_TO_CACHE = [
   './assets/icon.svg',
   './assets/icon-192.png',
   './assets/icon-512.png',
-  './assets/apple-touch-icon.png'
+  './assets/apple-touch-icon.png',
+  './assets/qrcode.min.js'
 ];
 
 self.addEventListener('install', (event) => {
