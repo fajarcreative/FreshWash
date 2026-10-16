@@ -23,7 +23,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
   
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src="assets/qrcode.min.js"></script>
   <script id="tailwind-config">
     tailwind.config = {
       darkMode: 'class',
@@ -181,24 +180,11 @@
           <span class="flex items-center gap-2"><span class="material-symbols-outlined text-sm text-teal-400">local_shipping</span> 2. Form Pesan Antar</span>
           <span class="text-[10px] bg-slate-600 px-1.5 py-0.5 rounded">#pesan-antar</span>
         </button>
-        <button onclick="switchScreen('lacak')" class="w-full text-left px-3 py-2 rounded-xl bg-slate-700/50 hover:bg-teal-700/40 text-slate-200 hover:text-white flex items-center justify-between transition-colors">
-          <span class="flex items-center gap-2"><span class="material-symbols-outlined text-sm text-teal-400">radar</span> 3. Lacak Status Pesanan</span>
-          <span class="text-[10px] bg-slate-600 px-1.5 py-0.5 rounded">#lacak</span>
-        </button>
         <button onclick="switchScreen('akun')" class="w-full text-left px-3 py-2 rounded-xl bg-slate-700/50 hover:bg-teal-700/40 text-slate-200 hover:text-white flex items-center justify-between transition-colors">
-          <span class="flex items-center gap-2"><span class="material-symbols-outlined text-sm text-teal-400">account_circle</span> 4. Akun & Riwayat</span>
+          <span class="flex items-center gap-2"><span class="material-symbols-outlined text-sm text-teal-400">account_circle</span> 3. Akun &amp; Riwayat</span>
           <span class="text-[10px] bg-slate-600 px-1.5 py-0.5 rounded">#akun</span>
         </button>
       </div>
-
-      <div class="mt-4 pt-4 border-t border-slate-700 flex items-center justify-between text-xs text-slate-400">
-        <span>Saldo FreshPay:</span>
-        <span class="font-bold text-teal-400" id="desktopBalance">Rp 125.000</span>
-      </div>
-      <button onclick="openTopUpModal()" class="w-full mt-2.5 py-2 px-3 rounded-xl bg-teal-600 hover:bg-teal-500 text-white font-bold text-xs flex items-center justify-center gap-1.5 transition-all shadow-md">
-        <span class="material-symbols-outlined text-sm">add_card</span>
-        <span>Top Up Saldo</span>
-      </button>
 
       <button onclick="openDownloadModal()" class="w-full mt-2 py-2 px-3 rounded-xl bg-gradient-to-r from-teal-400 to-cyan-400 hover:from-teal-300 hover:to-cyan-300 text-slate-950 font-bold text-xs flex items-center justify-center gap-1.5 transition-all shadow-lg active:scale-95">
         <span class="material-symbols-outlined text-sm font-bold">install_mobile</span>
@@ -282,7 +268,7 @@
       <!-- ======================================================== -->
       <section id="screen-beranda" class="screen-panel active px-4 space-y-4 pt-3 pb-6">
         
-        <!-- Welcome Greeting & FreshPay Bento Banner -->
+        <!-- Welcome Greeting & Laundry Service Hero Banner -->
         <div class="bg-gradient-to-br from-primary via-primary to-primary-container rounded-3xl p-5 text-on-primary shadow-lg shadow-primary/20 relative overflow-hidden">
           <div class="absolute -right-6 -bottom-6 w-32 h-32 rounded-full bg-secondary-container/20 blur-2xl pointer-events-none"></div>
           <div class="absolute right-12 top-2 w-16 h-16 rounded-full bg-primary-fixed/15 blur-xl pointer-events-none"></div>
@@ -304,99 +290,27 @@
               </div>
             </div>
 
-            <!-- Quick Wallet Balance Pill -->
-            <div class="bg-surface-container-lowest/15 backdrop-blur-md rounded-2xl p-3 flex items-center justify-between">
-              <div class="flex items-center gap-2.5">
-                <div class="w-9 h-9 rounded-xl bg-white/20 flex items-center justify-center text-white">
-                  <span class="material-symbols-outlined text-[20px]">account_balance_wallet</span>
-                </div>
+            <!-- Quick Service Promo / Action Bar -->
+            <div class="bg-surface-container-lowest/15 backdrop-blur-md rounded-2xl p-3.5 space-y-2.5">
+              <div class="flex items-center justify-between gap-2">
                 <div>
-                  <span class="text-[10px] text-primary-fixed uppercase tracking-wider block font-semibold">FreshPay Saldo</span>
-                  <span class="text-lg font-bold text-white tracking-tight" id="homeBalanceText">Rp 125.000</span>
+                  <span class="text-xs font-bold text-white block">Laundry Bersih, Higienis &amp; Tepat Waktu</span>
+                  <span class="text-[11px] text-primary-fixed">1 Mesin 1 Pelanggan • Air Filter Ozone Steril</span>
                 </div>
+                <span class="text-[9px] bg-secondary-container text-on-secondary-fixed font-bold px-2 py-0.5 rounded-full flex-shrink-0">Antar-Jemput</span>
               </div>
-              <div class="flex items-center gap-1.5">
-                <button onclick="openTopUpModal()" class="bg-secondary-container text-on-secondary-fixed hover:bg-secondary-fixed transition-all active:scale-95 px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1 shadow-sm">
-                  <span class="material-symbols-outlined text-[16px]">add_circle</span>
-                  <span>Top Up</span>
+              <div class="flex items-center gap-2 pt-0.5">
+                <button onclick="switchScreen('pesan-antar')" class="flex-1 py-2.5 px-3 rounded-xl bg-white text-primary hover:bg-white/90 active:scale-95 text-xs font-bold flex items-center justify-center gap-1.5 shadow-sm transition-all">
+                  <span class="material-symbols-outlined text-[16px]">add_shopping_cart</span>
+                  <span>Pesan Laundry Sekarang</span>
                 </button>
-                <button onclick="showTransactionHistoryModal()" aria-label="Riwayat Mutasi Saldo" title="Riwayat Transaksi" class="w-8 h-8 rounded-xl bg-white/20 hover:bg-white/30 text-white flex items-center justify-center transition-all active:scale-95">
-                  <span class="material-symbols-outlined text-[18px]">receipt_long</span>
-                </button>
+                <a href="https://wa.me/6282338903403?text=Halo%20FreshWash%20Laundry%2C%20saya%20mau%20order%20laundry%20antar-jemput" target="_blank" class="py-2.5 px-3 rounded-xl bg-emerald-600/90 hover:bg-emerald-600 text-white active:scale-95 text-xs font-bold flex items-center justify-center gap-1 shadow-sm transition-all">
+                  <span class="material-symbols-outlined text-[16px]">chat</span>
+                  <span>WhatsApp</span>
+                </a>
               </div>
             </div>
           </div>
-        </div>
-
-        <!-- 2. Active Order Live Tracker Card (Tampil jika ada pesanan aktif) -->
-        <div id="homeActiveOrderCard" class="hidden bg-surface-container-lowest rounded-3xl p-4 shadow-md shadow-primary/5 flex-col space-y-3 relative border border-outline-variant/15">
-          <div class="flex items-center justify-between">
-            <div class="flex items-center gap-2">
-              <span class="relative flex h-2.5 w-2.5">
-                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-secondary opacity-75"></span>
-                <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-primary"></span>
-              </span>
-              <span class="text-xs font-bold text-on-surface">Pesanan Aktif <span class="text-primary font-semibold" id="homeActiveOrderCode">#FW-8821</span></span>
-            </div>
-            <span class="bg-primary-fixed/50 text-on-primary-fixed-variant px-2.5 py-0.5 rounded-full text-[11px] font-bold flex items-center gap-1" id="homeActiveStatusBadge">
-              <span class="material-symbols-outlined text-[14px]">local_laundry_service</span>
-              Sedang Dicuci
-            </span>
-          </div>
-
-          <!-- Live Stage Description -->
-          <div class="flex items-center gap-3 bg-surface-container-low rounded-2xl p-3 cursor-pointer hover:bg-surface-container transition-colors" onclick="switchScreen('lacak')">
-            <div class="relative w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center flex-shrink-0 text-primary">
-              <span class="material-symbols-outlined text-[26px] animate-spin" style="animation-duration: 4s;">sync</span>
-              <div class="absolute -top-1 -right-1 w-4 h-4 bg-secondary text-white rounded-full flex items-center justify-center text-[9px] font-bold" id="homeActiveStageNum">1</div>
-            </div>
-            <div class="min-w-0 flex-1">
-              <p class="text-xs font-bold text-on-surface truncate" id="homeActiveOrderDesc">Cuci Komplit (4.0 kg)</p>
-              <p class="text-[11px] text-on-surface-variant flex items-center gap-1 mt-0.5">
-                <span class="material-symbols-outlined text-[14px] text-primary">schedule</span>
-                <span id="homeActiveOrderEstimate">Kurir dijadwalkan menjemput</span>
-              </p>
-            </div>
-            <span class="material-symbols-outlined text-outline">chevron_right</span>
-          </div>
-
-          <!-- Stepper Progress Bar -->
-          <div class="space-y-1.5 pt-1">
-            <div class="w-full bg-surface-container-high h-2 rounded-full overflow-hidden flex">
-              <div class="bg-primary h-full w-1/5 rounded-full transition-all duration-500" id="homeProgressBar"></div>
-            </div>
-            <div class="flex justify-between text-[10px] text-on-surface-variant px-0.5">
-              <span class="text-primary font-bold">Diterima</span>
-              <span id="homeStep2">Proses Cuci</span>
-              <span id="homeStep3">Setrika Rapih</span>
-              <span id="homeStep4">Antar Pulang</span>
-            </div>
-          </div>
-
-          <div class="flex items-center justify-between pt-1">
-            <span class="text-xs text-on-surface-variant">Kurir: <strong class="text-on-surface font-semibold" id="homeCourierName">Kurir FreshWash</strong></span>
-            <button onclick="switchScreen('lacak')" class="bg-surface-container-high hover:bg-surface-variant active:scale-95 transition-all text-primary text-xs font-bold px-3 py-1.5 rounded-xl flex items-center gap-1">
-              <span>Lihat Detail</span>
-              <span class="material-symbols-outlined text-[16px]">chevron_right</span>
-            </button>
-          </div>
-        </div>
-
-        <!-- 2b. Empty Order Banner (Tampil saat belum ada pesanan aktif) -->
-        <div id="homeEmptyOrderCard" class="bg-surface-container-lowest rounded-3xl p-4 shadow-md shadow-primary/5 flex items-center justify-between gap-3 border border-outline-variant/15">
-          <div class="flex items-center gap-3 min-w-0">
-            <div class="w-12 h-12 rounded-2xl bg-teal-500/10 text-teal-700 flex items-center justify-center flex-shrink-0">
-              <span class="material-symbols-outlined text-[26px]">local_laundry_service</span>
-            </div>
-            <div class="min-w-0">
-              <p class="text-xs font-bold text-on-surface">Cucian Bersih &amp; Rapi Tanpa Repot</p>
-              <p class="text-[11px] text-on-surface-variant truncate">Kurir siap jemput cucian langsung ke rumah Anda.</p>
-            </div>
-          </div>
-          <button onclick="switchScreen('pesan-antar')" class="py-2.5 px-3.5 rounded-xl bg-primary hover:bg-primary-container text-on-primary font-bold text-xs flex items-center gap-1 shadow-sm active:scale-95 transition-all flex-shrink-0">
-            <span>Pesan</span>
-            <span class="material-symbols-outlined text-[15px]">arrow_forward</span>
-          </button>
         </div>
 
         <!-- 3. Service Categories (2x2 Grid) -->
@@ -976,321 +890,6 @@
       </section>
 
       <!-- ======================================================== -->
-      <!-- SCREEN 3: LACAK STATUS PESANAN (REAL-TIME TRACKING) -->
-      <!-- ======================================================== -->
-      <section id="screen-lacak" class="screen-panel px-4 space-y-4 pt-3 pb-24">
-        
-        <!-- Empty Tracking State (Tampil jika belum ada pesanan aktif) -->
-        <div id="trackingEmptyContainer" class="bg-surface-container-lowest rounded-3xl p-8 text-center space-y-3 border border-outline-variant/15 shadow-sm">
-          <div class="w-16 h-16 rounded-full bg-primary/10 text-primary flex items-center justify-center mx-auto">
-            <span class="material-symbols-outlined text-3xl">radar</span>
-          </div>
-          <h3 class="text-sm font-bold text-on-surface">Belum Ada Cucian yang Dilacak</h3>
-          <p class="text-xs text-on-surface-variant max-w-xs mx-auto leading-relaxed">
-            Anda belum memiliki pesanan laundry aktif saat ini. Pesan antar-jemput cucian Anda sekarang untuk melacak prosesnya secara real-time.
-          </p>
-          <div class="pt-2">
-            <button onclick="switchScreen('pesan-antar')" class="py-3 px-5 rounded-2xl bg-primary text-on-primary font-bold text-xs flex items-center justify-center gap-1.5 mx-auto shadow-md hover:bg-primary-container active:scale-95 transition-all">
-              <span class="material-symbols-outlined text-[18px]">add_shopping_cart</span>
-              <span>Pesan Laundry Sekarang</span>
-            </button>
-          </div>
-        </div>
-
-        <!-- Active Tracking Content Wrapper (Tampil jika ada pesanan aktif) -->
-        <div id="trackingActiveContainer" class="hidden space-y-4">
-          <!-- Status Highlight Banner -->
-          <div class="relative overflow-hidden bg-primary text-on-primary rounded-2xl p-4 shadow-md flex items-center justify-between">
-          <div class="flex flex-col z-10">
-            <div class="flex items-center gap-1.5 mb-1">
-              <span class="inline-block w-2 h-2 rounded-full bg-secondary-container animate-ping"></span>
-              <span class="text-[10px] uppercase tracking-wider text-secondary-container font-bold">Live Tracking</span>
-            </div>
-            <span class="text-base font-bold leading-tight" id="trackingStatusHeadline">Sedang Dicuci (Tahap 3/5)</span>
-            <span class="text-xs text-on-primary/80 mt-0.5" id="trackingEtaText">Estimasi siap antar: Hari ini, 15:30 WIB</span>
-          </div>
-          <div class="w-12 h-12 rounded-full bg-on-primary/10 flex items-center justify-center flex-shrink-0 z-10">
-            <span class="material-symbols-outlined text-[28px] text-secondary-container animate-spin" style="animation-duration: 6s;">local_laundry_service</span>
-          </div>
-          <div class="absolute -right-6 -bottom-6 w-28 h-28 rounded-full bg-primary-container/40 pointer-events-none"></div>
-        </div>
-
-        <!-- Simulation Toolbar Button -->
-        <div class="bg-secondary-fixed/30 rounded-2xl p-3 flex items-center justify-between gap-2 border border-secondary/20">
-          <div class="flex items-center gap-2">
-            <span class="material-symbols-outlined text-secondary text-[20px]">play_circle</span>
-            <div>
-              <p class="text-xs font-bold text-on-secondary-fixed">Simulasi Status Live</p>
-              <p class="text-[10px] text-on-secondary-fixed-variant">Uji coba perpindahan tahap pengerjaan cucian</p>
-            </div>
-          </div>
-          <button onclick="advanceTrackingStage()" class="bg-secondary hover:bg-secondary/90 text-white text-[11px] font-bold px-3 py-1.5 rounded-xl shadow-xs active:scale-95 transition-transform flex items-center gap-1">
-            <span>Next Stage</span>
-            <span class="material-symbols-outlined text-[14px]">fast_forward</span>
-          </button>
-        </div>
-
-        <!-- Order Header Card -->
-        <div class="bg-surface-container-lowest rounded-2xl p-4 shadow-sm flex flex-col gap-3 border border-outline-variant/15">
-          <div class="flex items-center justify-between pb-3 border-b border-surface-container-high">
-            <div class="flex flex-col">
-              <div class="flex items-center gap-2">
-                <span class="text-sm font-bold text-on-surface" id="trackingOrderCode">#FW-8821</span>
-                <span class="px-2 py-0.5 rounded-full bg-primary-fixed text-on-primary-fixed-variant text-[10px] font-bold" id="trackingPackageBadge">Kilat Express</span>
-              </div>
-              <span class="text-xs text-on-surface-variant mt-0.5" id="trackingOrderDate">Masuk: 24 Okt 2024, 10:15 WIB</span>
-            </div>
-            <button onclick="shareTrackingStatus()" aria-label="Bagikan Status" class="w-9 h-9 rounded-full bg-surface-container flex items-center justify-center text-primary hover:bg-surface-container-high transition-colors">
-              <span class="material-symbols-outlined text-[18px]">share</span>
-            </button>
-          </div>
-
-          <!-- Quick stats strip -->
-          <div class="grid grid-cols-3 gap-2 p-2.5 bg-surface-container-low rounded-xl text-center">
-            <div class="flex flex-col">
-              <span class="text-[10px] text-on-surface-variant">Berat Resmi</span>
-              <span class="text-xs font-bold text-primary mt-0.5" id="trackingOfficialWeight">5.2 Kg</span>
-            </div>
-            <div class="flex flex-col">
-              <span class="text-[10px] text-on-surface-variant">Layanan</span>
-              <span class="text-xs font-bold text-on-surface mt-0.5" id="trackingServiceType">Cuci & Setrika</span>
-            </div>
-            <div class="flex flex-col">
-              <span class="text-[10px] text-on-surface-variant">Status Biaya</span>
-              <span class="text-xs font-bold text-primary-container mt-0.5" id="trackingPaymentStatus">Lunas</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Kurir & Outlet Info Card -->
-        <div class="bg-surface-container-lowest rounded-2xl p-4 shadow-sm flex flex-col gap-3 border border-outline-variant/15">
-          <div class="flex items-center justify-between">
-            <div class="flex items-center gap-2 text-on-surface">
-              <span class="material-symbols-outlined text-[20px] text-primary">store</span>
-              <span class="text-xs font-bold">FreshWash Gandaria</span>
-              <span class="text-[11px] text-on-surface-variant">• 0.8 km</span>
-            </div>
-            <span class="px-2 py-0.5 rounded bg-surface-container text-on-surface-variant text-[10px]">Workshop Utama</span>
-          </div>
-
-          <div class="p-3 bg-surface-container-low rounded-xl flex items-center justify-between gap-3">
-            <div class="flex items-center gap-3 min-w-0">
-              <div class="relative flex-shrink-0">
-                <img class="w-11 h-11 rounded-full object-cover shadow-sm" alt="Kurir Budi" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDwAMSah09grfpUXKM2_9M0mHWcd8Q0ekrSMBZJvS1Q2sI_1b74fcnLN9VLnijqjLO32J6SRcoCR2V-rhwGGmRyh8-1TJXsBJxVIgJA28qVoRFZPXB5qqO6A1eBqXlRFq7uRoyKVbQ2DdYGwx4emNtAIOX8fcQ0-iaVjLd8zJLydgClqrvuBthtcLRg3h5U1fTiRcS0YM3sDT-q2yauJ_9HtLpL-o5_VFm_tKOqkDR3nB4pf1h_W7YJfA"/>
-                <span class="absolute -bottom-1 -right-1 bg-surface-container-lowest rounded-full p-0.5">
-                  <span class="material-symbols-outlined text-[13px] text-primary" style="font-variation-settings: 'FILL' 1;">verified</span>
-                </span>
-              </div>
-              <div class="flex flex-col min-w-0">
-                <div class="flex items-center gap-1.5">
-                  <span class="text-xs font-bold text-on-surface truncate">Budi Santoso</span>
-                  <span class="flex items-center text-primary text-[11px] font-bold">
-                    <span class="material-symbols-outlined text-[12px] text-secondary" style="font-variation-settings: 'FILL' 1;">star</span>
-                    4.9
-                  </span>
-                </div>
-                <span class="text-[11px] text-on-surface-variant truncate">Kurir FreshRider • B 1234 ABC</span>
-              </div>
-            </div>
-            <div class="flex items-center gap-2 flex-shrink-0">
-              <a href="tel:082338903403" class="w-9 h-9 rounded-full bg-primary text-on-primary flex items-center justify-center hover:opacity-90 shadow-sm transition-transform active:scale-95" title="Telepon Kurir / Toko">
-                <span class="material-symbols-outlined text-[18px]">phone</span>
-              </a>
-              <button onclick="openCourierChatModal()" class="w-9 h-9 rounded-full bg-secondary-container text-on-secondary-fixed flex items-center justify-center hover:opacity-90 shadow-sm transition-transform active:scale-95" title="Chat WhatsApp">
-                <span class="material-symbols-outlined text-[18px]">chat</span>
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Foto Verifikasi Cucian & Timbangan (Transparansi) -->
-        <div class="bg-surface-container-lowest rounded-2xl p-4 shadow-sm flex flex-col gap-3 border border-outline-variant/15">
-          <div class="flex items-center justify-between">
-            <div class="flex items-center gap-1.5">
-              <span class="material-symbols-outlined text-[20px] text-primary">scale</span>
-              <span class="text-sm font-bold text-on-surface">Verifikasi Timbangan Digital</span>
-            </div>
-            <span class="text-[10px] text-primary font-bold bg-primary-fixed px-2 py-0.5 rounded-full">Valid & Akurat</span>
-          </div>
-          <p class="text-[11px] text-on-surface-variant">Foto pakaian saat pertama kali tiba di outlet sebelum diproses ke mesin cuci.</p>
-          <div class="grid grid-cols-2 gap-2.5 mt-1">
-            <div onclick="openPhotoPreview('scale')" class="relative rounded-xl overflow-hidden group shadow-sm cursor-pointer">
-              <img class="w-full h-24 object-cover group-hover:scale-105 transition-transform duration-300" alt="Timbangan Digital" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAaw3bOmxkqjSJ53TXUoAn2hzHx7kpK83rFfcunF2PqGtWgqDYxg5Lw1FS2QiCsipNWE0eZnPHcrSepVaTpSG6Ew6lt7eRapAQySXGaxG_Ti5DlktPKNex1Sd0vuNkOcvW7ayLcUh5pMN2cgutqYp2-IfYJ0VzoSuS7Hmd80bksJl2BC2M5jw594kcqfbrQZ78zaeXPLxHJDECFvPtdLWn2aF1DhPvnRUZPi2eHsdDSqaDEHqzHnWulYw"/>
-              <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/80 to-transparent p-1.5 text-white flex items-center justify-between">
-                <span class="text-[10px]">Display Timbangan</span>
-                <span class="text-[10px] font-bold text-secondary-container">5.20 Kg</span>
-              </div>
-            </div>
-            <div onclick="openPhotoPreview('clothes')" class="relative rounded-xl overflow-hidden group shadow-sm cursor-pointer">
-              <img class="w-full h-24 object-cover group-hover:scale-105 transition-transform duration-300" alt="Foto Pakaian" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAQEvgaaz9xsWst-yeB0XgIBRUMnFUHlPiny9b-Dqteer5zauxKyvkoWE4irWByEccaROLdmhFc7iWYrb1J04y-nIKN3o3OSai3iQewbILgzrFN-V6FNVH-m4oPFDBmcOZJVSXEHlufQi4FzQq5jKugkpTwJUB3iLFmxu8KUArxHe7liPH5jxxbKQXkNgWKqrn_NmpaKPzrWsn4NC6xipv_s-3l3NwGlgEcUuaR2DOFgWQVujETemSYZQ"/>
-              <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/80 to-transparent p-1.5 text-white flex items-center justify-between">
-                <span class="text-[10px]">Foto Fisik</span>
-                <span class="text-[10px] font-bold">14 Pcs</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Real-time Status Timeline -->
-        <div class="bg-surface-container-lowest rounded-2xl p-4 shadow-sm flex flex-col gap-4 border border-outline-variant/15">
-          <div class="flex items-center justify-between">
-            <div class="flex items-center gap-1.5">
-              <span class="material-symbols-outlined text-[20px] text-primary">timeline</span>
-              <span class="text-sm font-bold text-on-surface">Proses Pengerjaan</span>
-            </div>
-            <span class="text-[10px] text-primary font-bold bg-primary-fixed/40 px-2 py-0.5 rounded-full">Otomatis Terupdate</span>
-          </div>
-
-          <div class="flex flex-col relative pl-2 space-y-4" id="trackingTimelineContainer">
-            <!-- Step 1 -->
-            <div class="flex gap-3 relative timeline-step" id="tl-step-1">
-              <div class="flex flex-col items-center">
-                <div class="w-7 h-7 rounded-full bg-primary text-on-primary flex items-center justify-center shadow-sm z-10 flex-shrink-0">
-                  <span class="material-symbols-outlined text-[16px]">check</span>
-                </div>
-                <div class="w-0.5 flex-1 bg-primary mt-1"></div>
-              </div>
-              <div class="flex flex-col min-w-0 pt-0.5">
-                <div class="flex items-center justify-between gap-2">
-                  <span class="text-xs font-bold text-on-surface">Penjemputan Selesai</span>
-                  <span class="text-[10px] text-on-surface-variant">10:15 WIB</span>
-                </div>
-                <span class="text-[11px] text-on-surface-variant mt-0.5">Kurir Budi Santoso telah mengambil paket pakaian dari lokasi Anda.</span>
-              </div>
-            </div>
-
-            <!-- Step 2 -->
-            <div class="flex gap-3 relative timeline-step" id="tl-step-2">
-              <div class="flex flex-col items-center">
-                <div class="w-7 h-7 rounded-full bg-primary text-on-primary flex items-center justify-center shadow-sm z-10 flex-shrink-0">
-                  <span class="material-symbols-outlined text-[16px]">check</span>
-                </div>
-                <div class="w-0.5 flex-1 bg-primary mt-1"></div>
-              </div>
-              <div class="flex flex-col min-w-0 pt-0.5">
-                <div class="flex items-center justify-between gap-2">
-                  <span class="text-xs font-bold text-on-surface">Tiba di Workshop & Ditimbang</span>
-                  <span class="text-[10px] text-on-surface-variant">10:50 WIB</span>
-                </div>
-                <span class="text-[11px] text-on-surface-variant mt-0.5">Berat diverifikasi digital: 5.2 Kg. QR Tag dipasang pada keranjang.</span>
-              </div>
-            </div>
-
-            <!-- Step 3 (Active) -->
-            <div class="flex gap-3 relative timeline-step" id="tl-step-3">
-              <div class="flex flex-col items-center">
-                <div class="w-7 h-7 rounded-full bg-secondary-container text-on-secondary-fixed flex items-center justify-center shadow-md z-10 flex-shrink-0 animate-pulse">
-                  <span class="material-symbols-outlined text-[16px]">autorenew</span>
-                </div>
-                <div class="w-0.5 flex-1 bg-surface-container mt-1"></div>
-              </div>
-              <div class="flex flex-col min-w-0 pt-0.5 p-3 rounded-xl bg-surface-container-low flex-1">
-                <div class="flex items-center justify-between gap-2">
-                  <span class="text-xs font-bold text-secondary">Proses Pencucian (Aktif)</span>
-                  <span class="text-[10px] text-secondary font-bold">11:30 WIB</span>
-                </div>
-                <span class="text-[11px] text-on-surface mt-1">Mesin LG Commercial Washer #03 berputar. Menggunakan air ozone ramah lingkungan.</span>
-                <div class="w-full bg-surface-container rounded-full h-1.5 mt-2 overflow-hidden">
-                  <div class="bg-secondary h-1.5 rounded-full w-3/5"></div>
-                </div>
-                <div class="flex justify-between items-center mt-1">
-                  <span class="text-[10px] text-on-surface-variant">Pembilasan 2/3</span>
-                  <span class="text-[10px] text-secondary font-bold">Sisa 18 menit</span>
-                </div>
-              </div>
-            </div>
-
-            <!-- Step 4 -->
-            <div class="flex gap-3 relative timeline-step" id="tl-step-4">
-              <div class="flex flex-col items-center">
-                <div class="w-7 h-7 rounded-full bg-surface-container text-outline flex items-center justify-center z-10 flex-shrink-0">
-                  <span class="material-symbols-outlined text-[16px]">wb_sunny</span>
-                </div>
-                <div class="w-0.5 flex-1 bg-surface-container mt-1"></div>
-              </div>
-              <div class="flex flex-col min-w-0 pt-0.5">
-                <div class="flex items-center justify-between gap-2">
-                  <span class="text-xs font-bold text-outline">Pengeringan & Setrika Uap</span>
-                  <span class="text-[10px] text-outline">Est. 13:30 WIB</span>
-                </div>
-                <span class="text-[11px] text-outline mt-0.5">Dryer High-Heat anti tungau & setrika uap boiler tegak rapi.</span>
-              </div>
-            </div>
-
-            <!-- Step 5 -->
-            <div class="flex gap-3 relative timeline-step" id="tl-step-5">
-              <div class="flex flex-col items-center">
-                <div class="w-7 h-7 rounded-full bg-surface-container text-outline flex items-center justify-center z-10 flex-shrink-0">
-                  <span class="material-symbols-outlined text-[16px]">local_shipping</span>
-                </div>
-              </div>
-              <div class="flex flex-col min-w-0 pt-0.5">
-                <div class="flex items-center justify-between gap-2">
-                  <span class="text-xs font-bold text-outline">Pengantaran Kembali ke Rumah</span>
-                  <span class="text-[10px] text-outline">Est. 15:00 WIB</span>
-                </div>
-                <span class="text-[11px] text-outline mt-0.5">Diantar kembali oleh tim FreshWash langsung ke depan pintu Anda.</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Rincian Nota Digital (Digital Receipt) -->
-        <div class="bg-surface-container-lowest rounded-2xl p-4 shadow-sm flex flex-col gap-3 border border-outline-variant/15">
-          <div class="flex items-center justify-between pb-2 border-b border-surface-container-high">
-            <div class="flex items-center gap-1.5">
-              <span class="material-symbols-outlined text-[20px] text-primary">receipt_long</span>
-              <span class="text-sm font-bold text-on-surface">Rincian Nota Digital</span>
-            </div>
-            <span class="text-[10px] text-primary font-bold bg-primary-fixed px-2 py-0.5 rounded-full">LUNAS</span>
-          </div>
-          <div class="flex flex-col gap-2 pt-1 text-xs text-on-surface-variant">
-            <div class="flex justify-between items-center">
-              <span>Cuci Kilat Express (5.2 Kg @ Rp 12.000)</span>
-              <span class="font-bold text-on-surface">Rp 62.400</span>
-            </div>
-            <div class="flex justify-between items-center">
-              <span>Ekstra Pelembut & Pewangi Khusus</span>
-              <span class="font-bold text-on-surface">Rp 5.000</span>
-            </div>
-            <div class="flex justify-between items-center">
-              <span>Ongkir Antar-Jemput (Radius 2 Km)</span>
-              <span class="text-primary font-bold">Rp 0 (Promo)</span>
-            </div>
-            <div class="flex justify-between items-center text-primary font-medium">
-              <span>Diskon Voucher (BERSIHSEGAR)</span>
-              <span>-Rp 15.000</span>
-            </div>
-            <div class="h-[1px] bg-surface-container-highest my-1"></div>
-            <div class="flex justify-between items-center text-on-surface">
-              <span class="font-bold text-sm">Total Pembayaran</span>
-              <span class="text-base font-bold text-primary">Rp 52.400</span>
-            </div>
-            <div class="flex items-center justify-between text-[11px] text-on-surface-variant">
-              <span>Metode: FreshPay Saldo</span>
-              <span>Ref: FP-99201948</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Bottom Action Buttons -->
-        <div class="grid grid-cols-2 gap-3 pt-1">
-          <button onclick="downloadDigitalInvoice()" class="flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-surface-container-high text-on-surface text-xs font-bold hover:bg-surface-container transition-all active:scale-[0.98]">
-            <span class="material-symbols-outlined text-[18px] text-primary">download</span>
-            <span>Unduh PDF</span>
-          </button>
-          <button onclick="openSupportModal()" class="flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-primary text-on-primary text-xs font-bold hover:bg-primary-container shadow-md transition-all active:scale-[0.98]">
-            <span class="material-symbols-outlined text-[18px]">support_agent</span>
-            <span>Bantuan CS</span>
-          </button>
-        </div>
-
-        <!-- End of trackingActiveContainer -->
-        </div>
-
-      </section>
-
-      <!-- ======================================================== -->
       <!-- SCREEN 4: AKUN & RIWAYAT PESANAN -->
       <!-- ======================================================== -->
       <section id="screen-akun" class="screen-panel px-4 space-y-4 pt-3 pb-24">
@@ -1364,52 +963,21 @@
           </button>
         </div>
 
-        <!-- Saldo & Reward Cards (2 Columns) -->
-        <div class="grid grid-cols-2 gap-3">
-          <!-- FreshPay Card -->
-          <div class="bg-surface-container-lowest rounded-2xl p-3.5 shadow-sm flex flex-col justify-between gap-2.5 border border-outline-variant/15">
-            <div class="flex flex-col gap-1">
-              <div class="flex items-center justify-between text-on-surface-variant">
-                <div class="flex items-center gap-1.5">
-                  <div class="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center text-primary">
-                    <span class="material-symbols-outlined text-[15px]">account_balance_wallet</span>
-                  </div>
-                  <span class="text-xs font-semibold">FreshPay</span>
-                </div>
-              </div>
-              <p class="text-base font-bold text-on-surface mt-1" id="accountBalanceText">Rp 0</p>
+        <!-- Reward Points Card -->
+        <div class="bg-surface-container-lowest rounded-2xl p-4 shadow-sm flex items-center justify-between gap-3 border border-outline-variant/15">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-2xl bg-secondary-container/40 flex items-center justify-center text-secondary flex-shrink-0">
+              <span class="material-symbols-outlined text-[20px]">loyalty</span>
             </div>
-            <div class="flex items-center gap-1.5 pt-1">
-              <button onclick="openTopUpModal()" class="flex-1 py-1.5 px-2 rounded-full bg-primary text-on-primary text-xs font-bold flex items-center justify-center gap-0.5 shadow-xs active:scale-95 transition-transform">
-                <span class="material-symbols-outlined text-[13px]">add</span>
-                Top Up
-              </button>
-              <button onclick="showTransactionHistoryToast()" aria-label="Riwayat Saldo" class="p-1.5 rounded-full bg-surface-container text-on-surface-variant hover:text-primary active:scale-95 transition-transform">
-                <span class="material-symbols-outlined text-[16px]">receipt_long</span>
-              </button>
+            <div>
+              <span class="text-xs font-semibold text-on-surface-variant">FreshPoints Anda</span>
+              <p class="text-lg font-bold text-on-surface" id="accountPointsText">0 <span class="text-xs font-normal text-on-surface-variant">Poin</span></p>
             </div>
           </div>
-
-          <!-- FreshPoints Card -->
-          <div class="bg-surface-container-lowest rounded-2xl p-3.5 shadow-sm flex flex-col justify-between gap-2.5 border border-outline-variant/15">
-            <div class="flex flex-col gap-1">
-              <div class="flex items-center justify-between text-on-surface-variant">
-                <div class="flex items-center gap-1.5">
-                  <div class="w-6 h-6 rounded-full bg-secondary-container/40 flex items-center justify-center text-secondary">
-                    <span class="material-symbols-outlined text-[15px]">loyalty</span>
-                  </div>
-                  <span class="text-xs font-semibold">FreshPoints</span>
-                </div>
-              </div>
-              <p class="text-base font-bold text-on-surface mt-1" id="accountPointsText">0 <span class="text-xs font-normal text-on-surface-variant">Poin</span></p>
-            </div>
-            <div class="flex items-center gap-1.5 pt-1">
-              <button onclick="openRedeemPointsModal()" class="w-full py-1.5 px-2 rounded-full bg-surface-container-high text-on-surface text-xs font-bold flex items-center justify-center gap-1 active:scale-95 transition-transform hover:bg-surface-container-highest">
-                <span>Tukar Kupon</span>
-                <span class="material-symbols-outlined text-[13px] text-primary">arrow_forward</span>
-              </button>
-            </div>
-          </div>
+          <button onclick="openRedeemPointsModal()" class="py-2 px-4 rounded-full bg-surface-container-high text-on-surface text-xs font-bold flex items-center justify-center gap-1 active:scale-95 transition-transform hover:bg-surface-container-highest">
+            <span>Tukar Kupon</span>
+            <span class="material-symbols-outlined text-[14px] text-primary">arrow_forward</span>
+          </button>
         </div>
 
         <!-- Penawaran Jadi Member FreshWash (Pengganti Tukar 1000 Poin) -->
@@ -1600,12 +1168,6 @@
           <span class="text-[11px] font-semibold">Pesan Antar</span>
         </button>
 
-        <!-- Lacak -->
-        <button id="nav-lacak" onclick="switchScreen('lacak')" class="nav-item flex flex-col items-center justify-center gap-0.5 min-w-[56px] h-12 text-on-surface-variant transition-colors hover:text-primary">
-          <span class="material-symbols-outlined text-[22px]">radar</span>
-          <span class="text-[11px] font-semibold">Lacak</span>
-        </button>
-
         <!-- Akun -->
         <button id="nav-akun" onclick="switchScreen('akun')" class="nav-item flex flex-col items-center justify-center gap-0.5 min-w-[56px] h-12 text-on-surface-variant transition-colors hover:text-primary">
           <span class="material-symbols-outlined text-[22px]">account_circle</span>
@@ -1619,124 +1181,6 @@
   <!-- ======================================================== -->
   <!-- MODALS & OVERLAYS -->
   <!-- ======================================================== -->
-
-  <!-- 1. Top Up Saldo Modal (Lengkap & Terintegrasi) -->
-  <div id="modalTopUp" class="fixed inset-0 z-[80] bg-black/60 backdrop-blur-sm hidden flex items-end sm:items-center justify-center p-0 sm:p-4">
-    <div class="bg-surface-container-lowest w-full max-w-[440px] rounded-t-3xl sm:rounded-3xl p-5 shadow-2xl flex flex-col gap-4 animate-in fade-in zoom-in-95 duration-200 border border-outline-variant/20 max-h-[90vh] overflow-y-auto">
-      <div class="flex items-center justify-between border-b border-surface-container-high pb-3">
-        <div class="flex items-center gap-2">
-          <div class="w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center">
-            <span class="material-symbols-outlined text-[18px]">account_balance_wallet</span>
-          </div>
-          <div>
-            <h3 class="text-base font-bold text-on-surface">Top Up Saldo FreshPay</h3>
-            <span class="text-[10px] text-on-surface-variant">Saldo saat ini: <strong class="text-primary" id="topupCurrentBalance">Rp 125.000</strong></span>
-          </div>
-        </div>
-        <button onclick="closeModal('modalTopUp')" class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-outline hover:text-on-surface">
-          <span class="material-symbols-outlined text-[18px]">close</span>
-        </button>
-      </div>
-
-      <div class="space-y-3">
-        <div>
-          <label class="text-xs font-bold text-on-surface block mb-2">Pilih Nominal Isi Saldo:</label>
-          <div class="grid grid-cols-2 gap-2" id="topUpPresetContainer">
-            <button type="button" onclick="selectTopUpAmount(20000, this)" class="topup-amount-btn py-2.5 px-3 rounded-xl bg-surface-container-low border border-transparent hover:border-primary text-xs font-bold text-on-surface text-center transition-all">
-              +Rp 20.000
-            </button>
-            <button type="button" onclick="selectTopUpAmount(50000, this)" class="topup-amount-btn py-2.5 px-3 rounded-xl bg-surface-container-low border border-primary text-xs font-bold text-primary text-center transition-all ring-2 ring-primary">
-              +Rp 50.000
-            </button>
-            <button type="button" onclick="selectTopUpAmount(100000, this)" class="topup-amount-btn py-2.5 px-3 rounded-xl bg-surface-container-low border border-transparent hover:border-primary text-xs font-bold text-on-surface text-center transition-all">
-              +Rp 100.000
-            </button>
-            <button type="button" onclick="selectTopUpAmount(200000, this)" class="topup-amount-btn py-2.5 px-3 rounded-xl bg-surface-container-low border border-transparent hover:border-primary text-xs font-bold text-on-surface text-center transition-all">
-              +Rp 200.000
-            </button>
-          </div>
-        </div>
-
-        <!-- Custom Amount Input -->
-        <div>
-          <label class="text-[11px] font-bold text-on-surface-variant block mb-1">Atau Masukkan Nominal Sendiri:</label>
-          <div class="relative">
-            <span class="absolute left-3 top-1/2 -translate-y-1/2 text-xs font-bold text-on-surface-variant">Rp</span>
-            <input type="number" id="customTopUpInput" oninput="onCustomTopUpInput(this.value)" placeholder="Minimal 10.000" min="10000" step="5000" class="w-full bg-surface-container-low text-on-surface pl-9 pr-3 py-2.5 rounded-xl text-xs font-bold focus:outline-none focus:ring-2 focus:ring-primary border border-outline-variant/30 placeholder:font-normal placeholder:text-outline"/>
-          </div>
-        </div>
-
-        <!-- Payment Method Selection -->
-        <div class="pt-1">
-          <label class="text-[11px] font-bold text-on-surface-variant block mb-1.5 uppercase tracking-wider">Pilih Metode Pembayaran</label>
-          <div class="space-y-2">
-            <!-- QRIS -->
-            <label class="flex items-center justify-between p-2.5 rounded-xl bg-surface-container-low hover:bg-surface-container cursor-pointer border border-primary/20 transition-all">
-              <div class="flex items-center gap-2.5">
-                <div class="w-8 h-8 rounded-lg bg-teal-500/10 text-primary flex items-center justify-center flex-shrink-0">
-                  <span class="material-symbols-outlined text-[18px]">qr_code_scanner</span>
-                </div>
-                <div>
-                  <span class="text-xs font-bold text-on-surface block">QRIS Instan (Semua Pembayaran)</span>
-                  <span class="text-[10px] text-on-surface-variant">GoPay, OVO, Dana, ShopeePay, BCA, Livin'</span>
-                </div>
-              </div>
-              <input checked type="radio" name="topup_method" value="qris" class="accent-primary"/>
-            </label>
-
-            <!-- BCA VA -->
-            <label class="flex items-center justify-between p-2.5 rounded-xl bg-surface-container-low hover:bg-surface-container cursor-pointer transition-all">
-              <div class="flex items-center gap-2.5">
-                <div class="w-8 h-8 rounded-lg bg-blue-500/10 text-blue-600 flex items-center justify-center flex-shrink-0 font-bold text-xs">
-                  BCA
-                </div>
-                <div>
-                  <span class="text-xs font-bold text-on-surface block">BCA Virtual Account</span>
-                  <span class="text-[10px] text-on-surface-variant">Otomatis terverifikasi 24 jam</span>
-                </div>
-              </div>
-              <input type="radio" name="topup_method" value="bca_va" class="accent-primary"/>
-            </label>
-
-            <!-- Mandiri VA -->
-            <label class="flex items-center justify-between p-2.5 rounded-xl bg-surface-container-low hover:bg-surface-container cursor-pointer transition-all">
-              <div class="flex items-center gap-2.5">
-                <div class="w-8 h-8 rounded-lg bg-amber-500/10 text-amber-700 flex items-center justify-center flex-shrink-0 font-bold text-xs">
-                  MDR
-                </div>
-                <div>
-                  <span class="text-xs font-bold text-on-surface block">Mandiri Virtual Account</span>
-                  <span class="text-[10px] text-on-surface-variant">Livin' by Mandiri &amp; ATM</span>
-                </div>
-              </div>
-              <input type="radio" name="topup_method" value="mandiri_va" class="accent-primary"/>
-            </label>
-
-            <!-- BRI VA -->
-            <label class="flex items-center justify-between p-2.5 rounded-xl bg-surface-container-low hover:bg-surface-container cursor-pointer transition-all">
-              <div class="flex items-center gap-2.5">
-                <div class="w-8 h-8 rounded-lg bg-cyan-500/10 text-cyan-700 flex items-center justify-center flex-shrink-0 font-bold text-xs">
-                  BRI
-                </div>
-                <div>
-                  <span class="text-xs font-bold text-on-surface block">BRI Virtual Account (BRIVA)</span>
-                  <span class="text-[10px] text-on-surface-variant">BRImo &amp; ATM BRI</span>
-                </div>
-              </div>
-              <input type="radio" name="topup_method" value="bri_va" class="accent-primary"/>
-            </label>
-          </div>
-        </div>
-      </div>
-
-      <div class="pt-2">
-        <button type="button" onclick="proceedTopUpPayment()" class="w-full py-3.5 rounded-2xl bg-primary text-on-primary font-bold text-xs flex items-center justify-center gap-2 shadow-lg shadow-primary/25 hover:bg-primary-container active:scale-95 transition-all">
-          <span class="material-symbols-outlined text-[18px]">lock_open</span>
-          <span id="btnConfirmTopUpLabel">Lanjutkan Bayar Rp 50.000</span>
-        </button>
-      </div>
-    </div>
-  </div>
 
   <!-- 2. Checkout & Payment Confirmation Modal (Terintegrasi) -->
   <div id="modalCheckout" class="fixed inset-0 z-[80] bg-black/60 backdrop-blur-sm hidden flex items-end sm:items-center justify-center p-0 sm:p-4">
@@ -1811,33 +1255,8 @@
           </div>
 
           <div class="space-y-1.5">
-            <!-- 1. FreshPay Saldo Aplikasi (Rekomendasi / Default Otomatis Lunas) -->
-            <label class="flex items-center justify-between p-2.5 rounded-xl bg-surface-container-low cursor-pointer hover:bg-surface-container border border-primary/30 has-[:checked]:border-primary has-[:checked]:bg-primary/5 transition-all">
-              <div class="flex items-center gap-2.5">
-                <div class="w-8 h-8 rounded-lg bg-primary/15 text-primary flex items-center justify-center flex-shrink-0">
-                  <span class="material-symbols-outlined text-[18px]">account_balance_wallet</span>
-                </div>
-                <div>
-                  <div class="flex items-center gap-1.5">
-                    <span class="text-xs font-bold text-on-surface block">FreshPay Saldo Aplikasi</span>
-                    <span class="text-[9px] bg-primary/10 text-primary font-bold px-1.5 py-0.2 rounded-full">Rekomendasi (Lunas Otomatis)</span>
-                  </div>
-                  <span class="text-[10px] text-primary font-bold" id="coAvailableBalance">Tersedia Rp 1.000.000</span>
-                </div>
-              </div>
-              <input checked type="radio" name="pay_option" value="freshpay" onchange="onPaymentOptionChange('freshpay')" class="accent-primary"/>
-            </label>
-
-            <!-- Saldo Warning / Quick Top Up Alert (Hidden if enough) -->
-            <div id="coBalanceWarning" class="hidden p-2.5 rounded-xl bg-amber-50 border border-amber-200 text-amber-900 text-xs flex items-center justify-between gap-2">
-              <span class="text-[11px]" id="coBalanceWarningText">Saldo tidak cukup.</span>
-              <button type="button" onclick="quickTopUpForOrder()" class="px-2.5 py-1 rounded-lg bg-amber-600 text-white font-bold text-[10px] hover:bg-amber-700">
-                Top Up Cepat
-              </button>
-            </div>
-
-            <!-- 2. QRIS Toko Resmi -->
-            <label class="flex items-center justify-between p-2.5 rounded-xl bg-surface-container-low cursor-pointer hover:bg-surface-container border border-transparent has-[:checked]:border-teal-500 has-[:checked]:bg-teal-500/5 transition-all">
+            <!-- 1. QRIS Toko Resmi (Default Rekomendasi) -->
+            <label class="flex items-center justify-between p-2.5 rounded-xl bg-surface-container-low cursor-pointer hover:bg-surface-container border border-primary/30 has-[:checked]:border-teal-500 has-[:checked]:bg-teal-500/5 transition-all">
               <div class="flex items-center gap-2.5">
                 <div class="w-8 h-8 rounded-lg bg-teal-600 text-white flex items-center justify-center font-black text-[11px] flex-shrink-0">
                   QR
@@ -1845,15 +1264,15 @@
                 <div>
                   <div class="flex items-center gap-1.5">
                     <span class="text-xs font-bold text-on-surface block">QRIS Toko Resmi</span>
-                    <span class="text-[9px] bg-teal-100 text-teal-800 font-bold px-1.5 py-0.2 rounded-full">Instan</span>
+                    <span class="text-[9px] bg-teal-100 text-teal-800 font-bold px-1.5 py-0.2 rounded-full">Instan • Semua Aplikasi</span>
                   </div>
-                  <span class="text-[10px] text-on-surface-variant">BCA, Mandiri, BRI, GoPay, OVO, Dana, ShopeePay</span>
+                  <span class="text-[10px] text-on-surface-variant">BCA, Mandiri, BRI, BSI, GoPay, OVO, Dana, ShopeePay</span>
                 </div>
               </div>
-              <input type="radio" name="pay_option" value="qris" onchange="onPaymentOptionChange('qris')" class="accent-teal-600"/>
+              <input checked type="radio" name="pay_option" value="qris" onchange="onPaymentOptionChange('qris')" class="accent-teal-600"/>
             </label>
 
-            <!-- 3. Bank BCA Toko -->
+            <!-- 2. Bank BCA Toko -->
             <label class="flex items-center justify-between p-2.5 rounded-xl bg-surface-container-low cursor-pointer hover:bg-surface-container border border-transparent has-[:checked]:border-primary has-[:checked]:bg-primary/5 transition-all">
               <div class="flex items-center gap-2.5">
                 <div class="w-8 h-8 rounded-lg bg-blue-600 text-white flex items-center justify-center font-bold text-[10px] flex-shrink-0">
@@ -1867,7 +1286,7 @@
               <input type="radio" name="pay_option" value="bca" onchange="onPaymentOptionChange('bca')" class="accent-primary"/>
             </label>
 
-            <!-- 4. Bank Mandiri Toko -->
+            <!-- 3. Bank Mandiri Toko -->
             <label class="flex items-center justify-between p-2.5 rounded-xl bg-surface-container-low cursor-pointer hover:bg-surface-container border border-transparent has-[:checked]:border-primary has-[:checked]:bg-primary/5 transition-all">
               <div class="flex items-center gap-2.5">
                 <div class="w-8 h-8 rounded-lg bg-amber-600 text-white flex items-center justify-center font-bold text-[9px] flex-shrink-0">
@@ -1881,7 +1300,7 @@
               <input type="radio" name="pay_option" value="mandiri" onchange="onPaymentOptionChange('mandiri')" class="accent-primary"/>
             </label>
 
-            <!-- 5. Bank BRI Toko -->
+            <!-- 4. Bank BRI Toko -->
             <label class="flex items-center justify-between p-2.5 rounded-xl bg-surface-container-low cursor-pointer hover:bg-surface-container border border-transparent has-[:checked]:border-primary has-[:checked]:bg-primary/5 transition-all">
               <div class="flex items-center gap-2.5">
                 <div class="w-8 h-8 rounded-lg bg-sky-600 text-white flex items-center justify-center font-bold text-[10px] flex-shrink-0">
@@ -1895,7 +1314,7 @@
               <input type="radio" name="pay_option" value="bri" onchange="onPaymentOptionChange('bri')" class="accent-primary"/>
             </label>
 
-            <!-- 6. Bank BSI Toko -->
+            <!-- 5. Bank BSI Toko -->
             <label class="flex items-center justify-between p-2.5 rounded-xl bg-surface-container-low cursor-pointer hover:bg-surface-container border border-transparent has-[:checked]:border-primary has-[:checked]:bg-primary/5 transition-all">
               <div class="flex items-center gap-2.5">
                 <div class="w-8 h-8 rounded-lg bg-emerald-700 text-white flex items-center justify-center font-bold text-[10px] flex-shrink-0">
@@ -1907,20 +1326,6 @@
                 </div>
               </div>
               <input type="radio" name="pay_option" value="bsi" onchange="onPaymentOptionChange('bsi')" class="accent-primary"/>
-            </label>
-
-            <!-- 7. Cash on Delivery (COD) -->
-            <label class="flex items-center justify-between p-2.5 rounded-xl bg-surface-container-low cursor-pointer hover:bg-surface-container border border-transparent has-[:checked]:border-primary has-[:checked]:bg-primary/5 transition-all">
-              <div class="flex items-center gap-2.5">
-                <div class="w-8 h-8 rounded-lg bg-surface-container-highest text-outline flex items-center justify-center flex-shrink-0">
-                  <span class="material-symbols-outlined text-[18px]">payments</span>
-                </div>
-                <div>
-                  <span class="text-xs font-bold text-on-surface block">Bayar Tunai ke Kurir (COD)</span>
-                  <span class="text-[10px] text-on-surface-variant">Dibayarkan saat kurir menjemput &amp; menimbang cucian</span>
-                </div>
-              </div>
-              <input type="radio" name="pay_option" value="cash" onchange="onPaymentOptionChange('cash')" class="accent-primary"/>
             </label>
           </div>
         </div>
@@ -2951,22 +2356,8 @@
         <label class="text-[11px] font-bold text-on-surface-variant uppercase tracking-wider block">Pilih Metode Pembayaran Toko</label>
         
         <div class="space-y-1.5">
-          <!-- 1. FreshPay Saldo -->
-          <label class="flex items-center justify-between p-2.5 rounded-xl bg-surface-container-low cursor-pointer hover:bg-surface-container border border-transparent has-[:checked]:border-primary has-[:checked]:bg-primary/5 transition-all">
-            <div class="flex items-center gap-2.5">
-              <div class="w-8 h-8 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
-                <span class="material-symbols-outlined text-[18px]">account_balance_wallet</span>
-              </div>
-              <div>
-                <span class="text-xs font-bold text-on-surface block">FreshPay Saldo Aplikasi</span>
-                <span class="text-[10px] text-on-surface-variant" id="buyMemberFreshPayBalance">Tersedia Rp 0</span>
-              </div>
-            </div>
-            <input checked type="radio" name="member_pay_method" value="freshpay" class="accent-primary"/>
-          </label>
-
-          <!-- 2. QRIS Toko Resmi -->
-          <label class="flex items-center justify-between p-2.5 rounded-xl bg-surface-container-low cursor-pointer hover:bg-surface-container border border-transparent has-[:checked]:border-teal-500 has-[:checked]:bg-teal-500/5 transition-all">
+          <!-- 1. QRIS Toko Resmi -->
+          <label class="flex items-center justify-between p-2.5 rounded-xl bg-surface-container-low cursor-pointer hover:bg-surface-container border border-primary/30 has-[:checked]:border-teal-500 has-[:checked]:bg-teal-500/5 transition-all">
             <div class="flex items-center gap-2.5">
               <div class="w-8 h-8 rounded-lg bg-teal-600 text-white flex items-center justify-center font-black text-[11px]">
                 QR
@@ -2974,15 +2365,15 @@
               <div>
                 <div class="flex items-center gap-1">
                   <span class="text-xs font-bold text-on-surface block">QRIS Toko Resmi</span>
-                  <span class="text-[9px] bg-teal-100 text-teal-800 font-bold px-1.5 py-0.2 rounded-full">Instan</span>
+                  <span class="text-[9px] bg-teal-100 text-teal-800 font-bold px-1.5 py-0.2 rounded-full">Instan • Semua Bank &amp; E-Wallet</span>
                 </div>
-                <span class="text-[10px] text-on-surface-variant">BCA, Mandiri, BRI, GoPay, OVO, Dana, ShopeePay</span>
+                <span class="text-[10px] text-on-surface-variant">BCA, Mandiri, BRI, BSI, GoPay, OVO, Dana, ShopeePay</span>
               </div>
             </div>
-            <input type="radio" name="member_pay_method" value="qris" class="accent-teal-600"/>
+            <input checked type="radio" name="member_pay_method" value="qris" class="accent-teal-600"/>
           </label>
 
-          <!-- 3. Transfer Bank BCA Toko -->
+          <!-- 2. Transfer Bank BCA Toko -->
           <label class="flex items-center justify-between p-2.5 rounded-xl bg-surface-container-low cursor-pointer hover:bg-surface-container border border-transparent has-[:checked]:border-primary has-[:checked]:bg-primary/5 transition-all">
             <div class="flex items-center gap-2.5">
               <div class="w-8 h-8 rounded-lg bg-blue-600 text-white flex items-center justify-center font-bold text-[10px]">
@@ -2994,6 +2385,48 @@
               </div>
             </div>
             <input type="radio" name="member_pay_method" value="bca" class="accent-primary"/>
+          </label>
+
+          <!-- 3. Transfer Bank Mandiri Toko -->
+          <label class="flex items-center justify-between p-2.5 rounded-xl bg-surface-container-low cursor-pointer hover:bg-surface-container border border-transparent has-[:checked]:border-primary has-[:checked]:bg-primary/5 transition-all">
+            <div class="flex items-center gap-2.5">
+              <div class="w-8 h-8 rounded-lg bg-amber-600 text-white flex items-center justify-center font-bold text-[9px]">
+                MDR
+              </div>
+              <div>
+                <span class="text-xs font-bold text-on-surface block">Transfer Bank Mandiri Toko</span>
+                <span class="text-[10px] text-on-surface-variant font-mono">1370 0192 8821 • a/n FAJAR HISBULLOH</span>
+              </div>
+            </div>
+            <input type="radio" name="member_pay_method" value="mandiri" class="accent-primary"/>
+          </label>
+
+          <!-- 4. Transfer Bank BRI Toko -->
+          <label class="flex items-center justify-between p-2.5 rounded-xl bg-surface-container-low cursor-pointer hover:bg-surface-container border border-transparent has-[:checked]:border-primary has-[:checked]:bg-primary/5 transition-all">
+            <div class="flex items-center gap-2.5">
+              <div class="w-8 h-8 rounded-lg bg-sky-600 text-white flex items-center justify-center font-bold text-[10px]">
+                BRI
+              </div>
+              <div>
+                <span class="text-xs font-bold text-on-surface block">Transfer Bank BRI Toko</span>
+                <span class="text-[10px] text-on-surface-variant font-mono">0341 0100 2891 503 • a/n FAJAR HISBULLOH</span>
+              </div>
+            </div>
+            <input type="radio" name="member_pay_method" value="bri" class="accent-primary"/>
+          </label>
+
+          <!-- 5. Transfer Bank BSI Toko -->
+          <label class="flex items-center justify-between p-2.5 rounded-xl bg-surface-container-low cursor-pointer hover:bg-surface-container border border-transparent has-[:checked]:border-primary has-[:checked]:bg-primary/5 transition-all">
+            <div class="flex items-center gap-2.5">
+              <div class="w-8 h-8 rounded-lg bg-emerald-700 text-white flex items-center justify-center font-bold text-[10px]">
+                BSI
+              </div>
+              <div>
+                <span class="text-xs font-bold text-on-surface block">Transfer Bank BSI (Syariah)</span>
+                <span class="text-[10px] text-on-surface-variant font-mono">7182 9901 82 • a/n FAJAR HISBULLOH</span>
+              </div>
+            </div>
+            <input type="radio" name="member_pay_method" value="bsi" class="accent-primary"/>
           </label>
         </div>
       </div>
@@ -3497,6 +2930,9 @@
 
     // --- SCREEN NAVIGATION ---
     function switchScreen(screenName) {
+      if (!['beranda', 'pesan-antar', 'akun'].includes(screenName)) {
+        screenName = 'beranda';
+      }
       STATE.currentScreen = screenName;
       
       // Update panels
@@ -3524,7 +2960,6 @@
       const labelMap = {
         'beranda': 'Home',
         'pesan-antar': 'Pesan Antar',
-        'lacak': 'Live Tracking',
         'akun': 'Akun Saya'
       };
       const headerLabel = document.getElementById('headerScreenLabel');
@@ -3535,37 +2970,28 @@
         history.replaceState(null, '', `#${screenName}`);
       }
 
-      if (screenName === 'lacak') {
-        updateTrackingTimeline();
-      }
-
       updateUIElements();
     }
 
-    function trackSpecificOrder(orderId) {
-      if (!orderId) {
-        switchScreen('lacak');
-        return;
-      }
+    function chatOrderWhatsApp(orderId) {
       const orders = Array.isArray(STATE.orders) ? STATE.orders : [];
       const ord = orders.find(o => o.id === orderId);
-      if (ord) {
-        if (!STATE.tracking) STATE.tracking = {};
-        STATE.tracking.orderId = ord.id;
-        STATE.tracking.serviceName = ord.serviceName || 'Layanan Laundry';
-        STATE.tracking.weight = `${ord.weightKg || 4} ${ord.unitName || 'Kg'}`;
-        STATE.tracking.stage = ord.stage || (ord.status === 'selesai' ? 5 : 1);
-        STATE.tracking.totalStages = 5;
-        saveState();
-      }
-      switchScreen('lacak');
+      const info = ord ? `${ord.serviceName || 'Laundry'} (${ord.id})` : (orderId || 'Pesanan');
+      const msg = `Halo FreshWash (Mas Fajar Hisbulloh), saya ingin menanyakan status pesanan laundry saya: *${info}*. Mohon infonya ya. Terima kasih! 🙏`;
+      window.open(`https://wa.me/6282338903403?text=${encodeURIComponent(msg)}`, '_blank');
+    }
+
+    function trackSpecificOrder(orderId) {
+      chatOrderWhatsApp(orderId);
     }
 
     // Hash change routing
     window.addEventListener('hashchange', () => {
       const hash = window.location.hash.replace('#', '');
-      if (['beranda', 'pesan-antar', 'lacak', 'akun'].includes(hash)) {
+      if (['beranda', 'pesan-antar', 'akun'].includes(hash)) {
         switchScreen(hash);
+      } else {
+        switchScreen('beranda');
       }
     });
 
@@ -4511,16 +3937,15 @@
       const target = MEMBER_TIERS[targetKey];
       if (!target) return;
 
-      const method = document.querySelector('input[name="member_pay_method"]:checked')?.value || 'freshpay';
-
-      if (method === 'freshpay') {
-        if (STATE.user.balance < price) {
-          const def = price - STATE.user.balance;
-          showToast(`Saldo FreshPay tidak mencukupi (kurang Rp ${def.toLocaleString('id-ID')}). Silakan pilih QRIS / Transfer BCA atau Top Up terlebih dahulu.`, 'error');
-          return;
-        }
-        STATE.user.balance -= price;
-      }
+      const method = document.querySelector('input[name="member_pay_method"]:checked')?.value || 'qris';
+      const methodLabels = {
+        'qris': 'QRIS Toko Resmi',
+        'bca': 'Transfer Bank BCA Toko',
+        'mandiri': 'Transfer Bank Mandiri Toko',
+        'bri': 'Transfer Bank BRI Toko',
+        'bsi': 'Transfer Bank BSI (Syariah)'
+      };
+      const methodLabel = methodLabels[method] || 'QRIS Toko Resmi';
 
       const now = new Date();
       if (!isUpgrade || !STATE.user.memberExpiryDate) {
@@ -4538,7 +3963,6 @@
 
       const nowFormatted = formatMemberDate(now);
       const actionTitle = isUpgrade ? `Upgrade: ${target.name}` : `Daftar: ${target.name}`;
-      const methodLabel = method === 'freshpay' ? 'FreshPay Saldo' : (method === 'qris' ? 'QRIS Toko' : 'Transfer BCA');
 
       if (!Array.isArray(STATE.transactions)) STATE.transactions = [];
       STATE.transactions.unshift({
@@ -4806,9 +4230,9 @@ Halo Mas Fajar (Owner), saya telah menyelesaikan pembayaran keanggotaan ${target
                 Cucian sedang dalam tahap pengerjaan. Jika kurir sudah menyerahkan pakaian bersih ke rumah Anda, Anda dapat mengonfirmasi selesai langsung.
               </p>
               <div class="pt-1 flex items-center justify-between gap-2">
-                <button type="button" onclick="closeModal('modalNotifications'); switchScreen('lacak');" class="px-3 py-1.5 rounded-xl bg-primary text-white text-[11px] font-bold hover:bg-primary-container active:scale-95 transition-all shadow-xs flex items-center gap-1">
-                  <span class="material-symbols-outlined text-[14px]">my_location</span>
-                  <span>Lacak Cucian</span>
+                <button type="button" onclick="closeModal('modalNotifications'); chatOrderWhatsApp('${procId}');" class="px-3 py-1.5 rounded-xl bg-emerald-600 text-white text-[11px] font-bold hover:bg-emerald-700 active:scale-95 transition-all shadow-xs flex items-center gap-1">
+                  <span class="material-symbols-outlined text-[14px]">chat</span>
+                  <span>Tanya Kurir (WA)</span>
                 </button>
                 <button type="button" onclick="openConfirmOrderModal('${procId}')" class="px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-[11px] font-bold active:scale-95 transition-all shadow-xs flex items-center gap-1" title="Sudah terima pakaian dari kurir? Konfirmasi sekarang">
                   <span class="material-symbols-outlined text-[14px]">check_circle</span>
@@ -4936,9 +4360,9 @@ Halo Mas Fajar (Owner), saya telah menyelesaikan pembayaran keanggotaan ${target
               ${stageText}
             </p>
             <div class="pt-1 flex items-center justify-between gap-2">
-              <button type="button" onclick="closeModal('modalNotifications'); switchScreen('lacak');" class="px-3 py-1.5 rounded-xl bg-primary text-white text-[11px] font-bold hover:bg-primary-container active:scale-95 transition-all shadow-xs flex items-center gap-1">
-                <span class="material-symbols-outlined text-[14px]">my_location</span>
-                <span>Lacak Status Cucian</span>
+              <button type="button" onclick="closeModal('modalNotifications'); chatOrderWhatsApp('${orderId}');" class="px-3 py-1.5 rounded-xl bg-emerald-600 text-white text-[11px] font-bold hover:bg-emerald-700 active:scale-95 transition-all shadow-xs flex items-center gap-1">
+                <span class="material-symbols-outlined text-[14px]">chat</span>
+                <span>Tanya Kurir (WA)</span>
               </button>
               <button type="button" onclick="openConfirmOrderModal('${orderId}')" class="px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-[11px] font-bold active:scale-95 transition-all shadow-xs flex items-center gap-1" title="Sudah terima pakaian dari kurir? Konfirmasi sekarang">
                 <span class="material-symbols-outlined text-[14px]">check_circle</span>
@@ -5314,9 +4738,9 @@ Halo Mas Fajar (Owner), saya telah menyelesaikan pembayaran keanggotaan ${target
                   <p class="text-[11px] text-on-surface-variant">${o.perfume || 'Lavender Bliss'} • ${o.weightKg || 4} Kg</p>
                   <p class="text-[11px] font-bold text-primary mt-0.5">Rp ${(o.total || 0).toLocaleString('id-ID')}</p>
                 </div>
-                <button onclick="trackSpecificOrder('${o.id}')" class="py-1.5 px-3 rounded-xl bg-primary text-white text-xs font-bold flex items-center gap-1 shadow-xs hover:bg-primary-container transition-all">
-                  <span>Lacak</span>
-                  <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+                <button onclick="chatOrderWhatsApp('${o.id}')" class="py-1.5 px-3 rounded-xl bg-emerald-600 text-white text-xs font-bold flex items-center gap-1 shadow-xs hover:bg-emerald-700 transition-all">
+                  <span class="material-symbols-outlined text-[14px]">chat</span>
+                  <span>Tanya Toko</span>
                 </button>
               </div>
             </div>
@@ -6207,15 +5631,13 @@ Halo Mas Fajar (Owner), saya telah menyelesaikan pembayaran keanggotaan ${target
       const coAvailable = document.getElementById('coAvailableBalance');
       if (coAvailable) coAvailable.innerText = `Tersedia Rp ${STATE.user.balance.toLocaleString('id-ID')}`;
 
-      // Default to FreshPay whenever user has sufficient balance (or maintain selected option)
-      const freshpayRadio = document.querySelector('input[name="pay_option"][value="freshpay"]');
-      let targetOption = 'freshpay';
-      if (STATE.user.balance >= total) {
-        if (freshpayRadio) freshpayRadio.checked = true;
-        targetOption = 'freshpay';
-      } else {
-        const checkedRadio = document.querySelector('input[name="pay_option"]:checked');
-        targetOption = checkedRadio ? checkedRadio.value : 'freshpay';
+      // Default to QRIS Toko Resmi or maintain selected bank option
+      const checkedRadio = document.querySelector('input[name="pay_option"]:checked');
+      let targetOption = checkedRadio ? checkedRadio.value : 'qris';
+      if (!['qris', 'bca', 'mandiri', 'bri', 'bsi'].includes(targetOption)) {
+        targetOption = 'qris';
+        const qrisRadio = document.querySelector('input[name="pay_option"][value="qris"]');
+        if (qrisRadio) qrisRadio.checked = true;
       }
       onPaymentOptionChange(targetOption);
 
@@ -6445,137 +5867,23 @@ Halo Mas Fajar (Owner), saya telah menyelesaikan pembayaran keanggotaan ${target
             <span>⚡ Bayar BSI &amp; Kirim Pesanan ke WhatsApp Owner</span>
           `;
         }
-      } else if (option === 'freshpay') {
-        const isSufficient = STATE.user.balance >= total;
-        if (!isSufficient) {
-          if (warningEl) {
-            warningEl.classList.remove('hidden');
-            const diff = total - STATE.user.balance;
-            const wText = document.getElementById('coBalanceWarningText');
-            if (wText) wText.innerText = `Saldo kurang Rp ${diff.toLocaleString('id-ID')}.`;
-          }
-        } else {
-          if (warningEl) warningEl.classList.add('hidden');
-        }
-
-        if (proofSection) proofSection.classList.add('hidden');
-
-        detailBox.innerHTML = `
-          <div class="flex items-center justify-between pb-2 border-b border-primary/20">
-            <div class="flex items-center gap-2">
-              <span class="material-symbols-outlined text-primary text-[20px]">account_balance_wallet</span>
-              <div>
-                <span class="text-xs font-bold text-on-surface block">FreshPay Saldo Aplikasi</span>
-                <span class="text-[10px] text-on-surface-variant">Dompet Digital Customer</span>
-              </div>
-            </div>
-            <span class="text-[9px] bg-primary/10 text-primary font-bold px-2 py-0.5 rounded-full">Saldo Pelanggan</span>
-          </div>
-          <div class="p-3 bg-surface-container-lowest rounded-xl space-y-1.5 border border-outline-variant/20 shadow-2xs">
-            <div class="flex justify-between items-center text-xs">
-              <span class="text-on-surface-variant">Saldo Tersedia:</span>
-              <span class="font-bold ${isSufficient ? 'text-primary' : 'text-rose-600'}">Rp ${STATE.user.balance.toLocaleString('id-ID')}</span>
-            </div>
-            <div class="flex justify-between items-center text-xs">
-              <span class="text-on-surface-variant">Total Tagihan:</span>
-              <span class="font-bold text-on-surface">Rp ${total.toLocaleString('id-ID')}</span>
-            </div>
-            ${isSufficient ? `
-              <p class="text-[10px] text-emerald-700 font-medium pt-1 flex items-center gap-1">
-                <span class="material-symbols-outlined text-[13px]">check_circle</span>
-                Saldo mencukupi. Saldo akan otomatis terpotong saat pesanan dikirim.
-              </p>
-            ` : `
-              <p class="text-[10px] text-rose-600 font-medium pt-1 flex items-center gap-1">
-                <span class="material-symbols-outlined text-[13px]">warning</span>
-                Saldo tidak cukup (kurang Rp ${(total - STATE.user.balance).toLocaleString('id-ID')}). Silakan klik Top Up Cepat.
-              </p>
-            `}
-          </div>
-        `;
-
-        if (btnSubmit) {
-          if (isSufficient) {
-            btnSubmit.innerHTML = `
-              <span class="material-symbols-outlined text-[18px]">chat</span>
-              <span>⚡ Bayar FreshPay &amp; Kirim Pesanan ke WhatsApp Owner</span>
-            `;
-          } else {
-            btnSubmit.innerHTML = `
-              <span class="material-symbols-outlined text-[18px]">add_card</span>
-              <span>Top Up Cepat (Kurang Rp ${(total - STATE.user.balance).toLocaleString('id-ID')})</span>
-            `;
-          }
-        }
-      } else if (option === 'cash') {
-        if (warningEl) warningEl.classList.add('hidden');
-        if (proofSection) proofSection.classList.add('hidden');
-
-        detailBox.innerHTML = `
-          <div class="flex items-center justify-between pb-2 border-b border-outline-variant/30">
-            <div class="flex items-center gap-2">
-              <span class="material-symbols-outlined text-outline text-[20px]">payments</span>
-              <div>
-                <span class="text-xs font-bold text-on-surface block">Bayar Tunai ke Kurir (COD)</span>
-                <span class="text-[10px] text-on-surface-variant">Bayar saat Kurir Tiba</span>
-              </div>
-            </div>
-            <span class="text-[9px] bg-surface-container-high text-on-surface font-bold px-2 py-0.5 rounded-full">Cash on Delivery</span>
-          </div>
-          <div class="p-3 bg-surface-container-lowest rounded-xl space-y-1.5 border border-outline-variant/20 shadow-2xs">
-            <div class="flex justify-between items-center text-xs">
-              <span class="text-on-surface-variant">Siapkan Uang Pas:</span>
-              <span class="font-bold text-primary text-sm">Rp ${total.toLocaleString('id-ID')}</span>
-            </div>
-            <p class="text-[10px] text-on-surface-variant leading-relaxed">
-              Anda tidak perlu transfer sekarang. Cukup bayar tunai kepada kurir FreshWash saat kurir datang menimbang cucian Anda di lokasi.
-            </p>
-          </div>
-        `;
-
-        if (btnSubmit) {
-          btnSubmit.innerHTML = `
-            <span class="material-symbols-outlined text-[18px]">chat</span>
-            <span>⚡ Jadwalkan COD &amp; Kirim Pesanan ke WhatsApp Owner</span>
-          `;
-        }
       }
     }
 
-    function quickTopUpForOrder() {
-      const { total } = recalculatePrice();
-      const deficit = Math.max(10000, Math.ceil((total - STATE.user.balance) / 10000) * 10000);
-      closeModal('modalCheckout');
-      openTopUpModal();
-      
-      const customInput = document.getElementById('customTopUpInput');
-      if (customInput) {
-        customInput.value = deficit;
-        onCustomTopUpInput(deficit);
-      }
-      showToast(`Nominal Top Up disesuaikan dengan kekurangan pesanan: Rp ${deficit.toLocaleString('id-ID')}`, 'info');
-    }
+    function quickTopUpForOrder() {}
 
     function confirmPlaceOrder() {
       const { base, softenerAddon, discountAmount, memberDiscountAmount, total, isFreePickup } = recalculatePrice();
-      const payOption = document.querySelector('input[name="pay_option"]:checked')?.value || 'freshpay';
+      let payOption = document.querySelector('input[name="pay_option"]:checked')?.value || 'qris';
+      if (!['qris', 'bca', 'mandiri', 'bri', 'bsi'].includes(payOption)) {
+        payOption = 'qris';
+      }
       const orderNum = Math.floor(1000 + Math.random() * 9000);
       const newCode = `#FW-${orderNum}`;
 
-      // Handle FreshPay Insufficient balance
-      if (payOption === 'freshpay') {
-        if (STATE.user.balance < total) {
-          showToast('Saldo FreshPay tidak mencukupi! Silakan Top Up terlebih dahulu.', 'error');
-          quickTopUpForOrder();
-          return;
-        }
-        STATE.user.balance -= total;
-        STATE.user.points += 100; // 100 Poin tiap mencuci
-      } else {
-        STATE.user.points += 100; // 100 Poin tiap mencuci
-      }
+      STATE.user.points += 100; // 100 Poin tiap mencuci
 
-      // Map Payment Method Details
+      // Map Payment Method Details (Hanya Bank atau QRIS Toko)
       let methodTitle = 'QRIS Toko Resmi';
       let methodDetail = 'QRIS Toko Resmi (ID1024392819230 - FreshWash Bening Laundry)';
       let targetAccount = 'QRIS Toko a/n FAJAR HISBULLOH';
@@ -6596,14 +5904,6 @@ Halo Mas Fajar (Owner), saya telah menyelesaikan pembayaran keanggotaan ${target
         methodTitle = 'Transfer Bank BSI Toko';
         methodDetail = 'Bank BSI Syariah (7182 9901 82 a/n FAJAR HISBULLOH)';
         targetAccount = 'BSI: 7182 9901 82 a/n FAJAR HISBULLOH';
-      } else if (payOption === 'freshpay') {
-        methodTitle = 'FreshPay Saldo';
-        methodDetail = 'Saldo FreshPay Aplikasi (Otomatis Lunas)';
-        targetAccount = 'Potong Saldo FreshPay Pelanggan';
-      } else if (payOption === 'cash') {
-        methodTitle = 'Tunai COD';
-        methodDetail = 'Bayar Tunai ke Kurir (COD saat Penjemputan)';
-        targetAccount = 'Bayar Cash ke Kurir';
       }
 
       // Record in Transactions
@@ -6645,13 +5945,9 @@ Halo Mas Fajar (Owner), saya telah menyelesaikan pembayaran keanggotaan ${target
 
       let proofText = '';
       if (uploadedPaymentProof) {
-        proofText = `📸 *BUKTI PEMBAYARAN:* File struk transfer (${uploadedPaymentProof.name}) sudah di-upload di aplikasi dan dilampirkan bersama pesan ini.`;
-      } else if (payOption === 'cash') {
-        proofText = `💵 *BUKTI PEMBAYARAN:* Pembayaran tunai (COD) langsung dibayarkan saat kurir tiba menjemput cucian.`;
-      } else if (payOption === 'freshpay') {
-        proofText = `✅ *BUKTI PEMBAYARAN:* Saldo FreshPay telah terpotong otomatis via aplikasi (Lunas).`;
+        proofText = `📸 *BUKTI PEMBAYARAN:* File struk transfer / QRIS (${uploadedPaymentProof.name}) sudah di-upload di aplikasi dan dilampirkan bersama pesan ini.`;
       } else {
-        proofText = `📎 *BUKTI PEMBAYARAN:* Foto struk transfer saya lampirkan di chat WhatsApp ini.`;
+        proofText = `📎 *BUKTI PEMBAYARAN:* Foto struk transfer / screenshot QRIS saya lampirkan di chat WhatsApp ini.`;
       }
 
       const memberBadgeText = (STATE.user && STATE.user.isMember) ? `✨ *MEMBER AKTIF:* ${STATE.user.tier}\n` : '';
@@ -6676,7 +5972,7 @@ ${deliveryText}• Catatan Khusus: ${notes}
 ${discountText}${memberDiscountText}• Total Tagihan: *Rp ${total.toLocaleString('id-ID')}*
 • Metode: *${methodDetail}*
 • Rekening Tujuan: *${targetAccount}*
-• Status: *${payOption === 'cash' ? 'COD (Bayar Tunai ke Kurir)' : 'Sudah Ditransfer / Lunas'}*
+• Status: *Sudah Ditransfer / Scan QRIS Toko*
 
 ${proofText}
 
@@ -6691,9 +5987,7 @@ Halo Mas Fajar (Owner), pesanan sudah saya buat via aplikasi. Mohon segera dicek
         console.warn('Could not open WhatsApp window', e);
       }
 
-      const paymentNote = payOption === 'cash' 
-        ? `COD Tunai Rp ${total.toLocaleString('id-ID')}` 
-        : `Lunas via ${methodTitle} (Rp ${total.toLocaleString('id-ID')})`;
+      const paymentNote = `Lunas via ${methodTitle} (Rp ${total.toLocaleString('id-ID')})`;
 
       // Add to Order History
       if (!Array.isArray(STATE.orders)) STATE.orders = [];
@@ -6751,310 +6045,13 @@ Halo Mas Fajar (Owner), pesanan sudah saya buat via aplikasi. Mohon segera dicek
       showToast(`Pesanan ${newCode} Berhasil Dibuat! ${paymentNote}`, 'success');
       
       setTimeout(() => {
-        switchScreen('lacak');
+        switchScreen('akun');
       }, 500);
     }
 
-    // --- TRACKING INTERACTIONS ---
-    function advanceTrackingStage() {
-      if (!STATE.tracking.orderId) return;
-      STATE.tracking.stage = (STATE.tracking.stage % STATE.tracking.totalStages) + 1;
-      if (STATE.tracking.stage === 5) {
-        if (!Array.isArray(STATE.orders)) STATE.orders = [];
-        let ord = STATE.orders.find(o => o.id === STATE.tracking.orderId);
-        if (ord) {
-          ord.status = 'selesai';
-          ord.customerConfirmed = false;
-        } else if (STATE.tracking.orderId) {
-          const cat = LAUNDRY_CATALOG[STATE.booking.category] || LAUNDRY_CATALOG.kiloan;
-          const pkg = cat.packages.find(p => p.id === STATE.booking.packageId) || cat.packages[0];
-          const qty = STATE.booking.weightKg || cat.defaultQty;
-          ord = {
-            id: STATE.tracking.orderId,
-            category: STATE.booking.category,
-            serviceName: `${cat.title} - ${pkg.shortName} (${qty} ${cat.unit})`,
-            weightKg: qty,
-            unitName: cat.unit,
-            perfume: STATE.booking.perfume || 'Lavender Bliss',
-            total: 32000,
-            paymentMethod: 'Lunas',
-            status: 'selesai',
-            stage: 5,
-            date: 'Hari ini',
-            customerConfirmed: false
-          };
-          STATE.orders.unshift(ord);
-        }
-        STATE.unreadFinishedNotif = true; // Tampilkan titik merah di ikon notifikasi
-
-        // Progres Bonus Cuci Gratis Member (1x gratis tiap 10 transaksi untuk Silver, Gold, Platinum)
-        if (STATE.user && STATE.user.isMember && STATE.user.memberTier) {
-          const tierCfg = MEMBER_TIERS[STATE.user.memberTier];
-          if (tierCfg && tierCfg.freeWashBonusWeight > 0) {
-            STATE.user.memberTxCount = (STATE.user.memberTxCount || 0) + 1;
-            if (STATE.user.memberTxCount % 10 === 0) {
-              STATE.user.freeWashCoupons = (STATE.user.freeWashCoupons || 0) + 1;
-              showToast(`🎁 Selamat! Anda telah menyelesaikan 10 transaksi member dan mendapatkan 1x Cuci Gratis (Maks ${tierCfg.freeWashBonusWeight} kg)!`, 'success');
-            }
-          }
-        }
-      }
-      saveState();
-      updateTrackingTimeline();
-      updateHomeActiveOrderUI();
-      renderOrderHistoryUI();
-      updateTierProgressUI();
-      renderHomeMembershipUI();
-      updateProfileMembershipCardUI();
-      updateNotificationBellUI();
-      if (STATE.tracking.stage === 5) {
-        showToast('🎉 Cucian telah selesai! Siap diambil di outlet atau segera diantar kurir ke lokasi Anda.', 'success');
-      } else {
-        showToast(`Simulasi: Status berpindah ke Tahap ${STATE.tracking.stage}/5`, 'info');
-      }
-    }
-
-    function updateTrackingTimeline() {
-      const emptyContainer = document.getElementById('trackingEmptyContainer');
-      const activeContainer = document.getElementById('trackingActiveContainer');
-      
-      // Auto-recover active order from STATE.orders if STATE.tracking.orderId is not set
-      if (!STATE.tracking || !STATE.tracking.orderId) {
-        const orders = Array.isArray(STATE.orders) ? STATE.orders : [];
-        const inProcess = orders.find(o => o.status === 'proses');
-        const latestOrder = inProcess || (orders.length > 0 ? orders[0] : null);
-        if (latestOrder) {
-          if (!STATE.tracking) STATE.tracking = {};
-          STATE.tracking.orderId = latestOrder.id;
-          STATE.tracking.serviceName = latestOrder.serviceName || 'Layanan Laundry';
-          STATE.tracking.weight = `${latestOrder.weightKg || 4} ${latestOrder.unitName || 'Kg'}`;
-          STATE.tracking.stage = latestOrder.stage || (latestOrder.status === 'selesai' ? 5 : 1);
-          STATE.tracking.totalStages = 5;
-        }
-      }
-
-      const hasActive = Boolean(STATE.tracking && STATE.tracking.orderId);
-
-      if (!hasActive) {
-        if (emptyContainer) emptyContainer.classList.remove('hidden');
-        if (activeContainer) activeContainer.classList.add('hidden');
-        return;
-      }
-
-      if (emptyContainer) emptyContainer.classList.add('hidden');
-      if (activeContainer) activeContainer.classList.remove('hidden');
-
-      const s = STATE.tracking.stage || 1;
-      const orders = Array.isArray(STATE.orders) ? STATE.orders : [];
-      const currentOrder = orders.find(o => o.id === STATE.tracking.orderId) || {};
-
-      // 1. Headline & Subtitle ETA
-      const headline = document.getElementById('trackingStatusHeadline');
-      const etaText = document.getElementById('trackingEtaText');
-      const stageHeadlines = [
-        'Kurir Menuju Lokasi (Tahap 1/5)',
-        'Tiba di Workshop & Ditimbang (Tahap 2/5)',
-        'Sedang Dicuci Higienis (Tahap 3/5)',
-        'Pengeringan & Setrika Uap (Tahap 4/5)',
-        'Pengantaran Kembali ke Rumah (Tahap 5/5)'
-      ];
-      const stageEtas = [
-        'Estimasi kurir tiba di lokasi: 15-30 menit lagi',
-        'Estimasi verifikasi timbangan & antre cuci: 20 menit',
-        'Estimasi selesai cuci & masuk dryer: 45 menit lagi',
-        'Estimasi setrika uap rapi: 30 menit lagi',
-        'Kurir sedang mengantar kembali ke alamat Anda'
-      ];
-      if (headline) headline.innerText = stageHeadlines[s - 1] || 'Dalam Proses';
-      if (etaText) etaText.innerText = stageEtas[s - 1] || 'Sedang dikerjakan oleh tim FreshWash';
-
-      // 2. Order Header Card
-      const trkCode = document.getElementById('trackingOrderCode');
-      if (trkCode) trkCode.innerText = STATE.tracking.orderId;
-
-      const pkgBadge = document.getElementById('trackingPackageBadge');
-      if (pkgBadge) {
-        let badgeLabel = 'Paket Laundry';
-        if (currentOrder.serviceName) {
-          const parts = currentOrder.serviceName.split('-');
-          badgeLabel = parts.length > 1 ? parts[1].split('(')[0].trim() : parts[0].split('(')[0].trim();
-        } else if (STATE.tracking.serviceName) {
-          badgeLabel = STATE.tracking.serviceName.split('(')[0].trim();
-        }
-        pkgBadge.innerText = badgeLabel;
-      }
-
-      const trkDate = document.getElementById('trackingOrderDate');
-      if (trkDate) {
-        trkDate.innerText = currentOrder.date ? `Masuk: ${currentOrder.date}` : (currentOrder.schedule ? `Jadwal: ${currentOrder.schedule}` : 'Masuk: Hari ini');
-      }
-
-      const trkWeight = document.getElementById('trackingOfficialWeight');
-      if (trkWeight) {
-        trkWeight.innerText = STATE.tracking.weight || (currentOrder.weightKg ? `${currentOrder.weightKg} ${currentOrder.unitName || 'Kg'}` : '4.0 Kg');
-      }
-
-      const trkService = document.getElementById('trackingServiceType');
-      if (trkService) {
-        trkService.innerText = currentOrder.serviceName ? currentOrder.serviceName.split('(')[0].trim() : (STATE.tracking.serviceName ? STATE.tracking.serviceName.split('(')[0].trim() : 'Cuci Komplit');
-      }
-
-      const payStatus = document.getElementById('trackingPaymentStatus');
-      if (payStatus) {
-        if (currentOrder.paymentMethod) {
-          if (currentOrder.paymentMethod.includes('FreshPay')) {
-            payStatus.innerText = 'Lunas (FreshPay)';
-            payStatus.className = 'text-xs font-bold text-teal-700 mt-0.5';
-          } else if (currentOrder.paymentMethod.includes('COD')) {
-            payStatus.innerText = 'COD (Bayar Tunai)';
-            payStatus.className = 'text-xs font-bold text-amber-700 mt-0.5';
-          } else {
-            payStatus.innerText = `Lunas (${currentOrder.paymentMethod})`;
-            payStatus.className = 'text-xs font-bold text-teal-700 mt-0.5';
-          }
-        } else {
-          payStatus.innerText = 'Lunas';
-          payStatus.className = 'text-xs font-bold text-primary-container mt-0.5';
-        }
-      }
-
-      // 3. Render Dynamic Timeline Steps
-      const timelineContainer = document.getElementById('trackingTimelineContainer');
-      if (timelineContainer) {
-        const stagesConfig = [
-          {
-            num: 1,
-            icon: 'directions_bike',
-            title: 'Penjemputan Cucian ke Alamat',
-            completedText: 'Kurir FreshRider telah berhasil menjemput cucian dari alamat Anda.',
-            activeText: 'Kurir FreshRider sedang dalam perjalanan menuju alamat Anda untuk menjemput dan memeriksa cucian.',
-            pendingText: 'Kurir dijadwalkan menuju alamat Anda untuk penjemputan awal.',
-            timeEst: currentOrder.schedule || '10:00 - 12:00 WIB'
-          },
-          {
-            num: 2,
-            icon: 'scale',
-            title: 'Tiba di Workshop & Ditimbang Digital',
-            completedText: `Pakaian tiba di outlet Gandaria. Berat resmi diverifikasi timbangan digital (${STATE.tracking.weight || '4.0 Kg'}) & dipasangi QR tag anti-tertukar.`,
-            activeText: 'Pakaian telah tiba di workshop. Tim sedang menimbang dengan timbangan digital terkalibrasi & memilah serat kain.',
-            pendingText: 'Verifikasi berat cucian resmi dan pemilahan pakaian di workshop.',
-            timeEst: '+30 Menit'
-          },
-          {
-            num: 3,
-            icon: 'local_laundry_service',
-            title: 'Pencucian Higienis Mesin Commercial',
-            completedText: 'Cucian telah dicuci bersih dengan air ozone higienis antibakteri & deterjen ramah serat kain (1 mesin 1 pelanggan).',
-            activeText: 'Mesin LG Commercial Washer sedang berputar. Air ozone ramah lingkungan memastikan cucian steril dari kuman.',
-            pendingText: 'Proses pencucian mesin commercial higienis terpisah per pelanggan.',
-            timeEst: '+60 Menit'
-          },
-          {
-            num: 4,
-            icon: 'iron',
-            title: 'Pengeringan & Setrika Uap Boiler',
-            completedText: `Pakaian telah 100% kering sempurna, disetrika uap boiler tegak rapi dan diberi aroma ${currentOrder.perfume || 'Lavender Bliss'}.`,
-            activeText: 'Proses pengeringan mesin dryer anti tungau & penyetrikaan uap boiler bergaris halus sedang berlangsung.',
-            pendingText: 'Pengeringan suhu terukur & setrika uap rapi bebas lecek.',
-            timeEst: '+45 Menit'
-          },
-          {
-            num: 5,
-            icon: 'local_shipping',
-            title: 'Quality Check & Pengantaran ke Rumah',
-            completedText: 'Cucian telah dipacking plastik tebal kedap udara & berhasil diantar ke rumah Anda. Pesanan Selesai!',
-            activeText: 'Quality control lolos! Kurir sedang dalam perjalanan mengantarkan cucian wangi & rapi kembali ke rumah Anda.',
-            pendingText: 'Quality control terakhir dan pengantaran paket kembali ke rumah Anda.',
-            timeEst: 'Siap Antar'
-          }
-        ];
-
-        timelineContainer.innerHTML = stagesConfig.map((stage, idx) => {
-          const isDone = stage.num < s;
-          const isActive = stage.num === s;
-          const isLast = idx === stagesConfig.length - 1;
-
-          let circleHtml = '';
-          let lineHtml = isLast ? '' : `<div class="w-0.5 flex-1 ${isDone ? 'bg-primary' : 'bg-surface-container'} mt-1"></div>`;
-
-          if (isDone) {
-            circleHtml = `
-              <div class="w-7 h-7 rounded-full bg-primary text-on-primary flex items-center justify-center shadow-sm z-10 flex-shrink-0">
-                <span class="material-symbols-outlined text-[16px]">check</span>
-              </div>
-            `;
-          } else if (isActive) {
-            circleHtml = `
-              <div class="w-7 h-7 rounded-full bg-secondary-container text-on-secondary-fixed flex items-center justify-center shadow-md z-10 flex-shrink-0 animate-pulse">
-                <span class="material-symbols-outlined text-[16px] animate-spin" style="animation-duration: 4s;">autorenew</span>
-              </div>
-            `;
-          } else {
-            circleHtml = `
-              <div class="w-7 h-7 rounded-full bg-surface-container text-outline flex items-center justify-center z-10 flex-shrink-0">
-                <span class="material-symbols-outlined text-[15px]">${stage.icon}</span>
-              </div>
-            `;
-          }
-
-          let contentHtml = '';
-          if (isActive) {
-            contentHtml = `
-              <div class="flex flex-col min-w-0 pt-0.5 p-3 rounded-2xl bg-secondary-fixed/20 border border-secondary/30 flex-1 space-y-1.5 shadow-xs">
-                <div class="flex items-center justify-between gap-2">
-                  <span class="text-xs font-bold text-on-secondary-fixed flex items-center gap-1.5">
-                    <span class="w-2 h-2 rounded-full bg-secondary animate-ping"></span>
-                    <span>${stage.title} (Aktif)</span>
-                  </span>
-                  <span class="text-[9px] font-bold px-2 py-0.5 rounded-full bg-secondary text-white">Sedang Berjalan</span>
-                </div>
-                <p class="text-[11px] text-on-surface leading-relaxed">${stage.activeText}</p>
-                <div class="w-full bg-surface-container-high rounded-full h-1.5 mt-1 overflow-hidden">
-                  <div class="bg-secondary h-1.5 rounded-full w-3/4 animate-pulse"></div>
-                </div>
-                <div class="flex items-center justify-between text-[10px] text-on-secondary-fixed-variant pt-0.5">
-                  <span class="flex items-center gap-1"><span class="material-symbols-outlined text-[12px]">schedule</span> Tahap ${stage.num} dari 5</span>
-                  <span class="font-bold text-secondary">${stage.timeEst}</span>
-                </div>
-              </div>
-            `;
-          } else if (isDone) {
-            contentHtml = `
-              <div class="flex flex-col min-w-0 pt-0.5 flex-1">
-                <div class="flex items-center justify-between gap-2">
-                  <span class="text-xs font-bold text-on-surface">${stage.title}</span>
-                  <span class="text-[10px] font-semibold text-primary flex items-center gap-0.5">
-                    <span class="material-symbols-outlined text-[12px]">done_all</span> Selesai
-                  </span>
-                </div>
-                <span class="text-[11px] text-on-surface-variant mt-0.5 leading-relaxed">${stage.completedText}</span>
-              </div>
-            `;
-          } else {
-            contentHtml = `
-              <div class="flex flex-col min-w-0 pt-0.5 flex-1">
-                <div class="flex items-center justify-between gap-2">
-                  <span class="text-xs font-medium text-outline">${stage.title}</span>
-                  <span class="text-[10px] text-outline font-mono">${stage.timeEst}</span>
-                </div>
-                <span class="text-[11px] text-outline mt-0.5 leading-relaxed">${stage.pendingText}</span>
-              </div>
-            `;
-          }
-
-          return `
-            <div class="flex gap-3 relative timeline-step" id="tl-step-${stage.num}">
-              <div class="flex flex-col items-center">
-                ${circleHtml}
-                ${lineHtml}
-              </div>
-              ${contentHtml}
-            </div>
-          `;
-        }).join('');
-      }
-    }
-
+    // --- TRACKING INTERACTIONS (Clean No-Ops) ---
+    function advanceTrackingStage() {}
+    function updateTrackingTimeline() {}
     function shareTrackingStatus() {
       if (navigator.share) {
         navigator.share({
@@ -7134,71 +6131,11 @@ Halo Mas Fajar (Owner), pesanan sudah saya buat via aplikasi. Mohon segera dicek
     // --- TOP UP LOGIC & PAYMENT GATEWAY CONTROLLER ---
     let gatewayTimerInterval = null;
 
-    function openTopUpModal() {
-      const topupBal = document.getElementById('topupCurrentBalance');
-      if (topupBal) topupBal.innerText = `Rp ${STATE.user.balance.toLocaleString('id-ID')}`;
-      openModal('modalTopUp');
-    }
-
-    function selectTopUpAmount(amount, btnElement) {
-      STATE.selectedTopUp = amount;
-      
-      // Clear custom input
-      const customInput = document.getElementById('customTopUpInput');
-      if (customInput) customInput.value = '';
-
-      // Highlight button
-      document.querySelectorAll('#topUpPresetContainer .topup-amount-btn').forEach(btn => {
-        btn.className = 'topup-amount-btn py-2.5 px-3 rounded-xl bg-surface-container-low border border-transparent hover:border-primary text-xs font-bold text-on-surface text-center transition-all';
-      });
-      if (btnElement) {
-        btnElement.className = 'topup-amount-btn py-2.5 px-3 rounded-xl bg-surface-container-low border border-primary text-xs font-bold text-primary text-center transition-all ring-2 ring-primary';
-      }
-
-      const label = document.getElementById('btnConfirmTopUpLabel');
-      if (label) label.innerText = `Lanjutkan Bayar Rp ${amount.toLocaleString('id-ID')}`;
-    }
-
-    function onCustomTopUpInput(val) {
-      const num = parseInt(val, 10);
-      
-      // Reset preset button highlights
-      document.querySelectorAll('#topUpPresetContainer .topup-amount-btn').forEach(btn => {
-        btn.className = 'topup-amount-btn py-2.5 px-3 rounded-xl bg-surface-container-low border border-transparent hover:border-primary text-xs font-bold text-on-surface text-center transition-all';
-      });
-
-      const label = document.getElementById('btnConfirmTopUpLabel');
-      if (!isNaN(num) && num >= 10000) {
-        STATE.selectedTopUp = num;
-        if (label) label.innerText = `Lanjutkan Bayar Rp ${num.toLocaleString('id-ID')}`;
-      } else if (!isNaN(num) && num > 0) {
-        STATE.selectedTopUp = num;
-        if (label) label.innerText = `Minimal Rp 10.000 (Rp ${num.toLocaleString('id-ID')})`;
-      } else {
-        STATE.selectedTopUp = 50000;
-        if (label) label.innerText = 'Lanjutkan Bayar Rp 50.000';
-      }
-    }
-
-    function proceedTopUpPayment() {
-      if (STATE.selectedTopUp < 10000) {
-        showToast('Minimal pengisian saldo adalah Rp 10.000', 'error');
-        return;
-      }
-
-      const method = document.querySelector('input[name="topup_method"]:checked')?.value || 'qris';
-      closeModal('modalTopUp');
-
-      openPaymentGateway({
-        type: 'topup',
-        amount: STATE.selectedTopUp,
-        method: method
-      });
-    }
-
-    function executeTopUp() {
-      proceedTopUpPayment();
-    }
+    function openTopUpModal() {}
+    function selectTopUpAmount() {}
+    function onCustomTopUpInput() {}
+    function proceedTopUpPayment() {}
+    function executeTopUp() {}
 
     function openPaymentGateway(data) {
       STATE.activePayment = data;
@@ -8016,17 +6953,11 @@ Halo Mas Fajar (Owner), pesanan sudah saya buat via aplikasi. Mohon segera dicek
     }
 
     function openAuthModal(defaultTab = 'login', isMandatory = false) {
-      const isBlocked = isMandatory || (!STATE.user.isLoggedIn || !STATE.user.email);
       const closeBtn = document.getElementById('authModalCloseBtn');
       const subtitle = document.getElementById('authModalSubtitle');
 
-      if (isBlocked) {
-        if (closeBtn) closeBtn.classList.add('hidden');
-        if (subtitle) subtitle.innerText = 'Wajib masuk atau daftar dengan email Anda';
-      } else {
-        if (closeBtn) closeBtn.classList.remove('hidden');
-        if (subtitle) subtitle.innerText = 'Akses penuh saldo & pesanan laundry';
-      }
+      if (closeBtn) closeBtn.classList.remove('hidden');
+      if (subtitle) subtitle.innerText = 'Masuk atau daftar untuk kemudahan pemesanan';
 
       switchAuthTab(defaultTab);
       openModal('modalAuth');
@@ -8242,7 +7173,7 @@ Halo Mas Fajar (Owner), pesanan sudah saya buat via aplikasi. Mohon segera dicek
         updateTrackingTimeline();
         renderOrderHistoryUI();
         showToast('Anda telah keluar dari akun. Silakan masuk kembali dengan email Anda.', 'info');
-        openAuthModal('login', true);
+        openAuthModal('login');
       }
     }
 
@@ -8402,7 +7333,7 @@ Halo Mas Fajar (Owner), pesanan sudah saya buat via aplikasi. Mohon segera dicek
     // Initialize application on load
     document.addEventListener('DOMContentLoaded', () => {
       const initialHash = window.location.hash.replace('#', '');
-      if (['beranda', 'pesan-antar', 'lacak', 'akun'].includes(initialHash)) {
+      if (['beranda', 'pesan-antar', 'akun'].includes(initialHash)) {
         switchScreen(initialHash);
       } else {
         switchScreen('beranda');
@@ -8411,11 +7342,6 @@ Halo Mas Fajar (Owner), pesanan sudah saya buat via aplikasi. Mohon segera dicek
 
       // Real-time live countdown timer updater every second
       setInterval(updateMemberCountdownDisplay, 1000);
-
-      // Enforce mandatory email login or registration if not logged in
-      if (!STATE.user.isLoggedIn || !STATE.user.email) {
-        openAuthModal('login', true);
-      }
 
       // Check install status & hide install buttons if already installed
       updatePWAInstallUI();
