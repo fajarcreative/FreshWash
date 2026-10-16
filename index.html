@@ -528,27 +528,68 @@
       <!-- ======================================================== -->
       <section id="screen-pesan-antar" class="screen-panel px-4 space-y-4 pt-3 pb-24">
         
-        <!-- Step Progress Bar -->
-        <div class="bg-surface-container-lowest p-3.5 rounded-2xl shadow-sm border border-outline-variant/15">
-          <div class="flex items-center justify-between relative">
-            <div class="absolute left-6 right-6 top-3.5 h-0.5 bg-surface-container-high -z-0"></div>
-            <div id="bookingStepLine" class="absolute left-6 w-1/4 top-3.5 h-0.5 bg-primary -z-0 transition-all duration-300"></div>
+        <!-- Step Progress Bar & Panduan Rinci Layanan -->
+        <div class="bg-surface-container-lowest p-3.5 rounded-2xl shadow-sm border border-outline-variant/15 space-y-3">
+          <div class="flex items-center justify-between pb-1 border-b border-surface-container-high/60">
+            <span class="text-xs font-bold text-on-surface flex items-center gap-1.5">
+              <span class="material-symbols-outlined text-[17px] text-primary">route</span>
+              <span>Tahapan Pemesanan Laundry</span>
+            </span>
+            <span id="bookingStepStatusBadge" class="text-[10px] font-bold text-primary bg-primary/10 px-2.5 py-0.5 rounded-full">Langkah 1 dari 4</span>
+          </div>
 
-            <div class="flex flex-col items-center z-10 cursor-pointer" onclick="setBookingStep(1)">
-              <div id="step-badge-1" class="w-7 h-7 rounded-full bg-primary text-on-primary flex items-center justify-center text-xs font-bold ring-4 ring-primary-fixed">1</div>
-              <span class="text-[10px] font-bold text-primary mt-1">Layanan</span>
+          <!-- 4 Step Cards with Detailed Badges & Subtitles -->
+          <div class="grid grid-cols-4 gap-1.5 relative">
+            <!-- Step 1 -->
+            <button type="button" onclick="setBookingStep(1)" class="flex flex-col items-center text-center p-1.5 rounded-xl transition-all cursor-pointer bg-primary/10 ring-1 ring-primary/30" id="bookingStepCol1">
+              <div id="step-badge-1" class="w-8 h-8 rounded-full bg-primary text-on-primary flex items-center justify-center text-xs font-bold ring-4 ring-primary-fixed shadow-xs transition-all scale-105">
+                <span class="material-symbols-outlined text-[16px]">dry_cleaning</span>
+              </div>
+              <span id="step-label-1" class="text-[11px] font-bold text-primary mt-1.5 line-clamp-1">1. Layanan</span>
+              <span class="text-[9px] text-on-surface-variant line-clamp-1 leading-tight">Paket &amp; Rincian</span>
+            </button>
+
+            <!-- Step 2 -->
+            <button type="button" onclick="setBookingStep(2)" class="flex flex-col items-center text-center p-1.5 rounded-xl transition-all cursor-pointer hover:bg-surface-container" id="bookingStepCol2">
+              <div id="step-badge-2" class="w-8 h-8 rounded-full bg-surface-container-highest text-on-surface-variant flex items-center justify-center text-xs font-bold transition-all">
+                <span class="material-symbols-outlined text-[16px]">calendar_month</span>
+              </div>
+              <span id="step-label-2" class="text-[11px] font-medium text-on-surface-variant mt-1.5 line-clamp-1">2. Jadwal</span>
+              <span class="text-[9px] text-outline line-clamp-1 leading-tight">Waktu Kurir</span>
+            </button>
+
+            <!-- Step 3 -->
+            <button type="button" onclick="setBookingStep(3)" class="flex flex-col items-center text-center p-1.5 rounded-xl transition-all cursor-pointer hover:bg-surface-container" id="bookingStepCol3">
+              <div id="step-badge-3" class="w-8 h-8 rounded-full bg-surface-container-highest text-on-surface-variant flex items-center justify-center text-xs font-bold transition-all">
+                <span class="material-symbols-outlined text-[16px]">pin_drop</span>
+              </div>
+              <span id="step-label-3" class="text-[11px] font-medium text-on-surface-variant mt-1.5 line-clamp-1">3. Lokasi</span>
+              <span class="text-[9px] text-outline line-clamp-1 leading-tight">Alamat &amp; Wangi</span>
+            </button>
+
+            <!-- Step 4 -->
+            <button type="button" onclick="setBookingStep(4)" class="flex flex-col items-center text-center p-1.5 rounded-xl transition-all cursor-pointer hover:bg-surface-container" id="bookingStepCol4">
+              <div id="step-badge-4" class="w-8 h-8 rounded-full bg-surface-container-highest text-on-surface-variant flex items-center justify-center text-xs font-bold transition-all">
+                <span class="material-symbols-outlined text-[16px]">payments</span>
+              </div>
+              <span id="step-label-4" class="text-[11px] font-medium text-on-surface-variant mt-1.5 line-clamp-1">4. Bayar</span>
+              <span class="text-[9px] text-outline line-clamp-1 leading-tight">Bank/QRIS &amp; WA</span>
+            </button>
+          </div>
+
+          <!-- Active Step Explanation Card (Panduan Customer Rinci) -->
+          <div id="bookingStepDetailBox" class="p-3 rounded-xl bg-primary/5 border border-primary/20 flex items-start gap-3 transition-all">
+            <div id="bookingStepDetailIcon" class="w-8 h-8 rounded-xl bg-primary text-white flex items-center justify-center flex-shrink-0 text-sm shadow-xs">
+              <span class="material-symbols-outlined text-[18px]">dry_cleaning</span>
             </div>
-            <div class="flex flex-col items-center z-10 cursor-pointer" onclick="setBookingStep(2)">
-              <div id="step-badge-2" class="w-7 h-7 rounded-full bg-surface-container-highest text-on-surface-variant flex items-center justify-center text-xs font-bold">2</div>
-              <span class="text-[10px] text-on-surface-variant mt-1">Jadwal</span>
-            </div>
-            <div class="flex flex-col items-center z-10 cursor-pointer" onclick="setBookingStep(3)">
-              <div id="step-badge-3" class="w-7 h-7 rounded-full bg-surface-container-highest text-on-surface-variant flex items-center justify-center text-xs font-bold">3</div>
-              <span class="text-[10px] text-on-surface-variant mt-1">Preferensi</span>
-            </div>
-            <div class="flex flex-col items-center z-10 cursor-pointer" onclick="setBookingStep(4)">
-              <div id="step-badge-4" class="w-7 h-7 rounded-full bg-surface-container-highest text-on-surface-variant flex items-center justify-center text-xs font-bold">4</div>
-              <span class="text-[10px] text-on-surface-variant mt-1">Bayar</span>
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center justify-between">
+                <span id="bookingStepDetailTitle" class="text-xs font-bold text-primary">Tahap 1: Pilih Layanan &amp; Rincian Pakaian</span>
+                <span class="text-[9px] text-primary/80 font-mono font-bold">Langkah 1/4</span>
+              </div>
+              <p id="bookingStepDetailDesc" class="text-[11px] text-on-surface-variant mt-0.5 leading-snug">
+                Pilih kategori laundry (Kiloan, Satuan, Sepatu &amp; Tas, Bedcover), atur perkiraan berat/jumlah, dan catat rincian pakaian (misal: 10 kaos, 3 kemeja) agar tertata rapi &amp; tidak tertukar.
+              </p>
             </div>
           </div>
         </div>
@@ -574,7 +615,7 @@
         </div>
 
         <!-- 2. Address Selection Card -->
-        <div class="bg-surface-container-lowest p-4 rounded-2xl shadow-sm flex flex-col gap-3 border border-outline-variant/15">
+        <div id="bookingAddressSection" class="bg-surface-container-lowest p-4 rounded-2xl shadow-sm flex flex-col gap-3 border border-outline-variant/15">
           <div class="flex items-center justify-between">
             <div class="flex items-center gap-2">
               <span class="material-symbols-outlined text-primary text-[20px]" style="font-variation-settings: 'FILL' 1;">home_pin</span>
@@ -719,7 +760,7 @@
         </div>
 
         <!-- 4. Pickup Schedule (Date & Time Selector) -->
-        <div class="bg-surface-container-lowest p-4 rounded-2xl shadow-sm flex flex-col gap-3 border border-outline-variant/15">
+        <div id="pickupScheduleSection" class="bg-surface-container-lowest p-4 rounded-2xl shadow-sm flex flex-col gap-3 border border-outline-variant/15">
           <div class="flex items-center justify-between">
             <div class="flex items-center gap-2">
               <span class="material-symbols-outlined text-primary text-[20px]">calendar_clock</span>
@@ -2021,17 +2062,17 @@
     </div>
   </div>
 
-  <!-- 6. Notifications Drawer / Modal -->
+  <!-- 6. Notifications Drawer / Modal - Khusus Promo & Member -->
   <div id="modalNotifications" class="fixed inset-0 z-[80] bg-black/60 backdrop-blur-sm hidden flex items-end sm:items-center justify-center p-0 sm:p-4">
     <div class="bg-surface-container-lowest w-full max-w-[460px] rounded-t-3xl sm:rounded-3xl p-5 shadow-2xl flex flex-col gap-3 max-h-[85vh]">
       <div class="flex items-center justify-between border-b border-surface-container-high pb-3">
         <div class="flex items-center gap-2.5">
-          <div class="w-9 h-9 rounded-2xl bg-primary/10 text-primary flex items-center justify-center">
-            <span class="material-symbols-outlined text-[20px]">notifications_active</span>
+          <div class="w-9 h-9 rounded-2xl bg-amber-500/10 text-amber-600 flex items-center justify-center">
+            <span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">stars</span>
           </div>
           <div>
-            <h3 class="text-base font-bold text-on-surface">Pemberitahuan &amp; Konfirmasi</h3>
-            <p class="text-[10px] text-on-surface-variant">Update pesanan &amp; konfirmasi cucian selesai</p>
+            <h3 class="text-base font-bold text-on-surface">Promo &amp; Keuntungan Member</h3>
+            <p class="text-[10px] text-on-surface-variant">Diskon spesial, kupon &amp; reward eksklusif member</p>
           </div>
         </div>
         <button onclick="closeModal('modalNotifications')" class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-outline hover:text-on-surface">
@@ -2039,16 +2080,16 @@
         </button>
       </div>
 
-      <!-- Quick Filter Pills: Semua / Konfirmasi Pesanan -->
+      <!-- Quick Filter Pills: Promo Spesial / Keuntungan Tier Member -->
       <div class="flex items-center gap-2 bg-surface-container-low p-1 rounded-xl">
-        <button type="button" id="notifTabAll" onclick="switchNotifFilter('all')" class="flex-1 py-1.5 px-3 rounded-lg text-xs font-bold transition-all text-center flex items-center justify-center gap-1.5 bg-surface-container-lowest text-primary shadow-xs">
-          <span>Semua</span>
-          <span id="notifCountAll" class="px-1.5 py-0.2 bg-primary/10 text-primary rounded-full text-[10px]">0</span>
+        <button type="button" id="notifTabPromo" onclick="switchNotifFilter('promo')" class="flex-1 py-1.5 px-3 rounded-lg text-xs font-bold transition-all text-center flex items-center justify-center gap-1.5 bg-surface-container-lowest text-primary shadow-xs">
+          <span class="material-symbols-outlined text-[15px] text-amber-500">local_offer</span>
+          <span>Promo Spesial</span>
+          <span id="notifCountPromo" class="px-1.5 py-0.2 bg-amber-500/15 text-amber-700 rounded-full text-[10px] font-bold">4</span>
         </button>
-        <button type="button" id="notifTabConfirm" onclick="switchNotifFilter('confirm')" class="flex-1 py-1.5 px-3 rounded-lg text-xs font-bold transition-all text-center flex items-center justify-center gap-1.5 text-on-surface-variant hover:text-primary">
-          <span class="material-symbols-outlined text-[15px] text-amber-500">task_alt</span>
-          <span>Konfirmasi Pesanan</span>
-          <span id="notifCountConfirm" class="px-1.5 py-0.2 bg-amber-500/15 text-amber-700 rounded-full text-[10px] font-bold">0</span>
+        <button type="button" id="notifTabMember" onclick="switchNotifFilter('member')" class="flex-1 py-1.5 px-3 rounded-lg text-xs font-bold transition-all text-center flex items-center justify-center gap-1.5 text-on-surface-variant hover:text-primary">
+          <span class="material-symbols-outlined text-[15px] text-primary">workspace_premium</span>
+          <span>Benefit Member</span>
         </button>
       </div>
 
@@ -3126,6 +3167,9 @@
       appliedNewUserPromo: false
     };
 
+    // Check if session is actively authenticated in this browser tab/session
+    const isSessionActive = sessionStorage.getItem('freshwash_session_active') === '1';
+
     // Purge old cached dummy state on first run / new download
     if (!localStorage.getItem('freshwash_v5_clean_address')) {
       localStorage.removeItem('freshwash_state');
@@ -3133,45 +3177,75 @@
       localStorage.setItem('freshwash_v5_clean_address', '1');
     }
 
-    // Load persisted state if exists
+    // Load persisted state ONLY if session is active
+    // If not active (fresh link open / reinstalled / new session), reset from scratch and require login/register
+    if (isSessionActive) {
+      try {
+        const saved = localStorage.getItem('freshwash_state');
+        if (saved) {
+          const parsed = JSON.parse(saved);
+          if (parsed.user) {
+            STATE.user = Object.assign(STATE.user, parsed.user);
+            if (!Array.isArray(STATE.user.addresses)) {
+              STATE.user.addresses = [];
+            }
+            if (STATE.user.address && STATE.user.address.includes('Anggrek')) {
+              STATE.user.address = '';
+              STATE.user.addresses = [];
+              STATE.user.selectedAddressId = null;
+            }
+          }
+          if (parsed.tracking) {
+            STATE.tracking = Object.assign(STATE.tracking, parsed.tracking);
+          }
+          if (Array.isArray(parsed.orders)) {
+            STATE.orders = parsed.orders;
+          }
+          if (typeof parsed.unreadFinishedNotif === 'boolean') {
+            STATE.unreadFinishedNotif = parsed.unreadFinishedNotif;
+          }
+          if (typeof parsed.appliedNewUserPromo === 'boolean') {
+            STATE.appliedNewUserPromo = parsed.appliedNewUserPromo;
+          }
+        }
+        const savedTrx = localStorage.getItem('freshwash_transactions');
+        if (savedTrx) {
+          STATE.transactions = JSON.parse(savedTrx);
+        }
+      } catch(e) {}
+    } else {
+      // RESET DARI AWAL: Wajib masuk atau buat akun baru
+      STATE.user.isLoggedIn = false;
+      STATE.user.name = '';
+      STATE.user.email = '';
+      STATE.user.phone = '';
+      STATE.user.avatar = 'https://api.dicebear.com/7.x/identicon/svg?seed=FreshWashGuest';
+      STATE.user.address = '';
+      STATE.user.addresses = [];
+      STATE.user.selectedAddressId = null;
+      STATE.user.isMember = false;
+      STATE.user.tier = 'Non-Member';
+      STATE.user.memberDiscount = 0;
+      STATE.user.points = 0;
+      STATE.orders = [];
+      STATE.tracking = {
+        orderId: null,
+        serviceName: '',
+        weight: '',
+        stage: 1,
+        totalStages: 5
+      };
+      localStorage.removeItem('freshwash_state');
+      localStorage.removeItem('freshwash_transactions');
+    }
+
     try {
-      const saved = localStorage.getItem('freshwash_state');
-      if (saved) {
-        const parsed = JSON.parse(saved);
-        if (parsed.user) {
-          STATE.user = Object.assign(STATE.user, parsed.user);
-          if (!Array.isArray(STATE.user.addresses)) {
-            STATE.user.addresses = [];
-          }
-          if (STATE.user.address && STATE.user.address.includes('Anggrek')) {
-            STATE.user.address = '';
-            STATE.user.addresses = [];
-            STATE.user.selectedAddressId = null;
-          }
-        }
-        if (parsed.tracking) {
-          STATE.tracking = Object.assign(STATE.tracking, parsed.tracking);
-        }
-        if (Array.isArray(parsed.orders)) {
-          STATE.orders = parsed.orders;
-        }
-        if (typeof parsed.unreadFinishedNotif === 'boolean') {
-          STATE.unreadFinishedNotif = parsed.unreadFinishedNotif;
-        }
-        if (typeof parsed.appliedNewUserPromo === 'boolean') {
-          STATE.appliedNewUserPromo = parsed.appliedNewUserPromo;
-        }
-      }
       const savedMerchant = localStorage.getItem('freshwash_merchant_payment');
       if (savedMerchant) {
         const parsedM = JSON.parse(savedMerchant);
         if (parsedM) {
           STATE.merchant = Object.assign(STATE.merchant, parsedM);
         }
-      }
-      const savedTrx = localStorage.getItem('freshwash_transactions');
-      if (savedTrx) {
-        STATE.transactions = JSON.parse(savedTrx);
       }
     } catch(e) {}
 
@@ -3227,6 +3301,9 @@
       if (targetPanel) {
         targetPanel.classList.add('active');
         window.scrollTo({ top: 0, behavior: 'smooth' });
+        if (screenName === 'pesan-antar') {
+          setBookingStep(1, false);
+        }
       }
 
       // Update Nav Bar active states
@@ -4118,12 +4195,9 @@
     // --- MODAL PEMBELIAN & UPGRADE MEMBERSHIP ---
     function openBuyMembershipModal(targetKey, isUpgrade = false) {
       if (!STATE.user.isLoggedIn || !STATE.user.email) {
-        STATE.user.isLoggedIn = true;
-        STATE.user.name = STATE.user.name || 'Pelanggan FreshWash';
-        STATE.user.email = STATE.user.email || 'pelanggan@freshwash.id';
-        STATE.user.phone = STATE.user.phone || '082338903403';
-        saveState();
-        updateUIElements();
+        showToast('Silakan masuk atau buat akun baru terlebih dahulu untuk mendaftar member.', 'info');
+        openAuthModal('login');
+        return;
       }
 
       const target = MEMBER_TIERS[targetKey];
@@ -4322,22 +4396,34 @@ Halo Mas Fajar (Owner), saya telah menyelesaikan pembayaran keanggotaan ${target
     }
 
 
-    // --- NOTIFICATION BELL & ORDER COMPLETION CONFIRMATION CONTROLLERS ---
-    let currentNotifFilter = 'all'; // 'all' or 'confirm'
+    // --- NOTIFICATION BELL (KHUSUS PROMO MEMBER & BENEFIT - TANPA PROGRES LAUNDRY) ---
+    let currentNotifFilter = 'promo'; // 'promo' or 'member'
     let currentConfirmingOrderId = null;
     let currentConfirmRating = 5;
 
+    function copyPromoCode(code) {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(code).then(() => {
+          showToast(`Kode promo "${code}" berhasil disalin! Masukkan di kolom promo saat pemesanan. ✨`, 'success');
+        }).catch(() => {
+          showToast(`Kupon Promo: ${code}`, 'info');
+        });
+      } else {
+        showToast(`Kupon Promo: ${code}`, 'info');
+      }
+    }
+
     function switchNotifFilter(filter) {
       currentNotifFilter = filter;
-      const tabAll = document.getElementById('notifTabAll');
-      const tabConfirm = document.getElementById('notifTabConfirm');
-      if (tabAll && tabConfirm) {
-        if (filter === 'all') {
-          tabAll.className = 'flex-1 py-1.5 px-3 rounded-lg text-xs font-bold transition-all text-center flex items-center justify-center gap-1.5 bg-surface-container-lowest text-primary shadow-xs';
-          tabConfirm.className = 'flex-1 py-1.5 px-3 rounded-lg text-xs font-bold transition-all text-center flex items-center justify-center gap-1.5 text-on-surface-variant hover:text-primary';
+      const tabPromo = document.getElementById('notifTabPromo');
+      const tabMember = document.getElementById('notifTabMember');
+      if (tabPromo && tabMember) {
+        if (filter === 'promo') {
+          tabPromo.className = 'flex-1 py-1.5 px-3 rounded-lg text-xs font-bold transition-all text-center flex items-center justify-center gap-1.5 bg-surface-container-lowest text-primary shadow-xs';
+          tabMember.className = 'flex-1 py-1.5 px-3 rounded-lg text-xs font-bold transition-all text-center flex items-center justify-center gap-1.5 text-on-surface-variant hover:text-primary';
         } else {
-          tabConfirm.className = 'flex-1 py-1.5 px-3 rounded-lg text-xs font-bold transition-all text-center flex items-center justify-center gap-1.5 bg-surface-container-lowest text-primary shadow-xs';
-          tabAll.className = 'flex-1 py-1.5 px-3 rounded-lg text-xs font-bold transition-all text-center flex items-center justify-center gap-1.5 text-on-surface-variant hover:text-primary';
+          tabMember.className = 'flex-1 py-1.5 px-3 rounded-lg text-xs font-bold transition-all text-center flex items-center justify-center gap-1.5 bg-surface-container-lowest text-primary shadow-xs';
+          tabPromo.className = 'flex-1 py-1.5 px-3 rounded-lg text-xs font-bold transition-all text-center flex items-center justify-center gap-1.5 text-on-surface-variant hover:text-primary';
         }
       }
       renderNotificationsList();
@@ -4347,384 +4433,258 @@ Halo Mas Fajar (Owner), saya telah menyelesaikan pembayaran keanggotaan ${target
       const redDot = document.getElementById('notifRedDot');
       const processDot = document.getElementById('notifProcessDot');
       
-      const orders = Array.isArray(STATE.orders) ? STATE.orders : [];
-      const pendingConfirmOrders = orders.filter(o => o.status === 'selesai' && !o.customerConfirmed);
-      const hasUnreadFinished = Boolean(STATE.unreadFinishedNotif || pendingConfirmOrders.length > 0);
-      const activeProcess = Boolean((STATE.tracking && STATE.tracking.orderId && STATE.tracking.stage < 5) || 
-                            orders.some(o => o.status === 'proses'));
+      // Sesuai permintaan: JANGAN menampilkan progres laundry di lonceng notifikasi
+      if (processDot) processDot.classList.add('hidden');
 
-      if (hasUnreadFinished) {
-        if (redDot) redDot.classList.remove('hidden');
-        if (processDot) processDot.classList.add('hidden');
-      } else if (activeProcess) {
-        if (redDot) redDot.classList.add('hidden');
-        if (processDot) processDot.classList.remove('hidden');
-      } else {
-        if (redDot) redDot.classList.add('hidden');
-        if (processDot) processDot.classList.add('hidden');
+      // Tampilkan notifikasi titik merah hanya jika user belum menjadi member atau ada promo aktif yang belum dilihat
+      const showPromoIndicator = !STATE.user.isMember || (STATE.user.hasNewUserPromo && !STATE.appliedNewUserPromo);
+      if (redDot) {
+        if (showPromoIndicator && !localStorage.getItem('freshwash_promo_notif_seen')) {
+          redDot.classList.remove('hidden');
+        } else {
+          redDot.classList.add('hidden');
+        }
       }
 
-      // Update badge counts in notifications modal tabs
-      const countConfirmEl = document.getElementById('notifCountConfirm');
-      const countAllEl = document.getElementById('notifCountAll');
-      if (countConfirmEl) countConfirmEl.innerText = pendingConfirmOrders.length;
-      if (countAllEl) {
-        const totalNotifs = orders.length + (STATE.tracking && STATE.tracking.orderId ? 1 : 0) + (!STATE.user.isMember ? 1 : 0);
-        countAllEl.innerText = totalNotifs;
-      }
+      const countPromoEl = document.getElementById('notifCountPromo');
+      if (countPromoEl) countPromoEl.innerText = '4';
     }
 
     function renderNotificationsList() {
       const container = document.getElementById('notificationListContainer');
       if (!container) return;
 
-      const orders = Array.isArray(STATE.orders) ? STATE.orders : [];
-      const pendingConfirmOrders = orders.filter(o => o.status === 'selesai' && !o.customerConfirmed);
-      const confirmedFinishedOrders = orders.filter(o => o.status === 'selesai' && o.customerConfirmed);
-      const inProcessOrders = orders.filter(o => o.status === 'proses');
-
-      const activeTrackOrder = (STATE.tracking && STATE.tracking.orderId && STATE.tracking.stage < 5)
-        ? STATE.tracking
-        : null;
-
-      // Update badge counts on tabs
-      const countConfirmEl = document.getElementById('notifCountConfirm');
-      const countAllEl = document.getElementById('notifCountAll');
-      if (countConfirmEl) countConfirmEl.innerText = pendingConfirmOrders.length;
-      if (countAllEl) {
-        const totalItems = pendingConfirmOrders.length + confirmedFinishedOrders.length + inProcessOrders.length + (!STATE.user.isMember ? 1 : 0);
-        countAllEl.innerText = totalItems;
-      }
-
       let html = '';
 
-      // ==========================================
-      // VIEW MODE: FILTER 'confirm' (KONFIRMASI PESANAN)
-      // ==========================================
-      if (currentNotifFilter === 'confirm') {
-        if (pendingConfirmOrders.length === 0 && confirmedFinishedOrders.length === 0 && inProcessOrders.length === 0 && !activeTrackOrder) {
-          // Empty State in Confirmation Tab with simulation action
-          html = `
-            <div class="p-5 text-center space-y-3 bg-surface-container-low rounded-2xl border border-outline-variant/15 my-1">
-              <div class="w-12 h-12 mx-auto rounded-full bg-emerald-500/10 text-emerald-600 flex items-center justify-center shadow-inner">
-                <span class="material-symbols-outlined text-[26px]">task_alt</span>
-              </div>
-              <div>
-                <h4 class="text-xs font-bold text-on-surface">Menu Konfirmasi Pesanan Selesai</h4>
-                <p class="text-[11px] text-on-surface-variant mt-1 leading-relaxed max-w-[290px] mx-auto">
-                  Saat kurir mengantarkan pakaian Anda atau pesanan telah selesai dikerjakan, Anda dapat mengonfirmasi penerimaan cucian di menu ini untuk mendapatkan <strong>+50 Poin FreshWash</strong>.
-                </p>
-              </div>
-              <div class="flex flex-col sm:flex-row items-center justify-center gap-2 pt-1">
-                <button type="button" onclick="closeModal('modalNotifications'); switchScreen('pesan-antar');" class="w-full sm:w-auto py-2 px-3.5 rounded-xl bg-primary text-white text-xs font-bold flex items-center justify-center gap-1.5 shadow-xs hover:bg-primary/90 transition-all">
-                  <span class="material-symbols-outlined text-[15px]">add</span>
-                  <span>Pesan Laundry Sekarang</span>
-                </button>
-                <button type="button" onclick="simulateTestCompletedOrder()" class="w-full sm:w-auto py-2 px-3 rounded-xl bg-surface-container-high hover:bg-surface-container-highest text-on-surface text-xs font-bold flex items-center justify-center gap-1 border border-outline-variant/20 transition-all" title="Uji coba menu konfirmasi pesanan selesai">
-                  <span class="material-symbols-outlined text-[15px] text-amber-600">science</span>
-                  <span>Uji Simulasi Pesanan Selesai</span>
-                </button>
-              </div>
-            </div>
-          `;
-          container.innerHTML = html;
-          return;
-        }
+      if (currentNotifFilter === 'member') {
+        // ==========================================
+        // TAB 2: KEUNTUNGAN & TIER MEMBERSHIP
+        // ==========================================
+        const isMember = Boolean(STATE.user && STATE.user.isMember);
+        const userTier = STATE.user.tier || 'Non-Member';
+        const userDiscount = STATE.user.memberDiscount || 10;
 
-        // 1. Pending Confirmation Orders (Highest Priority)
-        if (pendingConfirmOrders.length > 0) {
+        if (isMember) {
           html += `
-            <div class="flex items-center justify-between pb-1">
-              <div class="flex items-center gap-1.5">
-                <span class="w-2 h-2 rounded-full bg-amber-500 animate-ping"></span>
-                <span class="text-xs font-bold text-amber-800">Menunggu Konfirmasi Anda (${pendingConfirmOrders.length})</span>
-              </div>
-              <span class="text-[10px] text-on-surface-variant">Klik untuk konfirmasi penerimaan</span>
-            </div>
-          `;
-
-          pendingConfirmOrders.forEach(o => {
-            html += `
-              <div class="p-3.5 rounded-2xl bg-gradient-to-br from-amber-500/10 via-emerald-500/10 to-surface-container-lowest border-2 border-emerald-500/40 shadow-sm space-y-2.5 mb-2.5">
-                <div class="flex items-start justify-between gap-2">
-                  <div class="flex items-center gap-2.5">
-                    <div class="w-9 h-9 rounded-xl bg-emerald-600 text-white flex items-center justify-center flex-shrink-0 shadow-sm animate-bounce">
-                      <span class="material-symbols-outlined text-[20px]">task_alt</span>
-                    </div>
-                    <div>
-                      <h4 class="text-xs font-bold text-on-surface">Cucian Anda Telah Selesai! 🎉</h4>
-                      <span class="text-[10px] text-emerald-700 font-bold font-mono">${o.id} • ${o.date || 'Hari ini'}</span>
-                    </div>
-                  </div>
-                  <span class="text-[9px] font-bold bg-amber-100 text-amber-800 px-2 py-0.5 rounded-full flex items-center gap-1 shadow-2xs">
-                    <span class="w-1.5 h-1.5 rounded-full bg-amber-500 animate-ping"></span>
-                    <span>Butuh Konfirmasi</span>
-                  </span>
-                </div>
-
-                <div class="p-2.5 rounded-xl bg-surface-container-lowest border border-outline-variant/15 text-xs text-on-surface space-y-1">
-                  <div class="flex items-center justify-between font-bold">
-                    <span class="truncate">${o.serviceName || 'Layanan Laundry'}</span>
-                    <span class="text-primary font-mono font-bold flex-shrink-0">Rp ${(o.total || 0).toLocaleString('id-ID')}</span>
-                  </div>
-                  <div class="flex items-center gap-2 text-[10px] text-on-surface-variant flex-wrap">
-                    <span>🌸 Parfum: ${o.perfume || 'Lavender Bliss'}</span>
-                    <span>•</span>
-                    <span>Metode: ${o.paymentMethod || 'Lunas'}</span>
-                  </div>
-                  <p class="text-[11px] text-on-surface-variant leading-relaxed pt-1 border-t border-surface-container-high mt-1">
-                    Cucian telah selesai, bersih &amp; wangi. <strong>Sudah diterima di rumah atau diambil di outlet?</strong> Silakan konfirmasi selesai untuk mendapatkan poin reward.
-                  </p>
-                </div>
-
-                <div class="flex items-center gap-2 pt-0.5">
-                  <button type="button" onclick="openConfirmOrderModal('${o.id}')" class="flex-1 py-2 px-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold shadow-sm shadow-emerald-600/30 flex items-center justify-center gap-1.5 active:scale-95 transition-all">
-                    <span class="material-symbols-outlined text-[16px]">check_circle</span>
-                    <span>Konfirmasi Pesanan Selesai</span>
-                  </button>
-                  <a href="https://wa.me/6282338903403?text=${encodeURIComponent(`Halo Mas Fajar FreshWash (Owner), mengenai cucian pesanan ${o.id}: `)}" target="_blank" class="py-2 px-2.5 rounded-xl bg-surface-container text-on-surface hover:text-emerald-700 text-xs font-bold flex items-center justify-center gap-1 border border-outline-variant/20 hover:bg-surface-container-high transition-all" title="Bantuan / Komplain via WhatsApp">
-                    <span class="material-symbols-outlined text-[15px] text-emerald-600">chat</span>
-                    <span class="text-[11px]">Bantuan</span>
-                  </a>
-                </div>
-              </div>
-            `;
-          });
-        }
-
-        // 2. In-Process Orders (Allow quick early confirmation if kurir has arrived)
-        if (inProcessOrders.length > 0 || activeTrackOrder) {
-          const currentInProcess = activeTrackOrder || inProcessOrders[0];
-          const procId = currentInProcess.id || currentInProcess.orderId || '#FW-ORDER';
-          const stageNum = currentInProcess.stage || 1;
-
-          html += `
-            <div class="p-3.5 rounded-2xl bg-teal-500/10 border border-teal-500/25 shadow-xs space-y-2 mb-2.5">
-              <div class="flex items-start justify-between gap-2">
+            <div class="p-4 rounded-2xl bg-gradient-to-br from-amber-500/15 via-primary/10 to-surface-container-lowest border-2 border-amber-500/30 shadow-sm space-y-2.5">
+              <div class="flex items-center justify-between">
                 <div class="flex items-center gap-2">
-                  <div class="w-8 h-8 rounded-xl bg-teal-600 text-white flex items-center justify-center flex-shrink-0 animate-pulse">
-                    <span class="material-symbols-outlined text-[18px]">local_laundry_service</span>
+                  <div class="w-9 h-9 rounded-xl bg-amber-500 text-white flex items-center justify-center shadow-xs">
+                    <span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">workspace_premium</span>
                   </div>
                   <div>
-                    <h4 class="text-xs font-bold text-on-surface">Pesanan Sedang Diproses</h4>
-                    <span class="text-[10px] text-teal-700 font-semibold font-mono">${procId} • Tahap ${stageNum}/5</span>
+                    <h4 class="text-xs font-bold text-on-surface">Status: ${userTier} Aktif ✨</h4>
+                    <span class="text-[10px] text-amber-800 font-bold">Diskon ${userDiscount}% Otomatis di Setiap Pesanan</span>
                   </div>
                 </div>
-                <span class="text-[9px] font-bold bg-teal-100 text-teal-800 px-2 py-0.5 rounded-full">Dalam Proses</span>
+                <span class="text-[9px] font-bold bg-amber-100 text-amber-800 px-2.5 py-0.5 rounded-full border border-amber-300">VIP Member</span>
               </div>
-              <p class="text-xs text-on-surface-variant leading-relaxed">
-                Cucian sedang dalam tahap pengerjaan. Jika kurir sudah menyerahkan pakaian bersih ke rumah Anda, Anda dapat mengonfirmasi selesai langsung.
-              </p>
-              <div class="pt-1 flex items-center justify-between gap-2">
-                <button type="button" onclick="closeModal('modalNotifications'); chatOrderWhatsApp('${procId}');" class="px-3 py-1.5 rounded-xl bg-emerald-600 text-white text-[11px] font-bold hover:bg-emerald-700 active:scale-95 transition-all shadow-xs flex items-center gap-1">
-                  <span class="material-symbols-outlined text-[14px]">chat</span>
-                  <span>Tanya Kurir (WA)</span>
-                </button>
-                <button type="button" onclick="openConfirmOrderModal('${procId}')" class="px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-[11px] font-bold active:scale-95 transition-all shadow-xs flex items-center gap-1" title="Sudah terima pakaian dari kurir? Konfirmasi sekarang">
-                  <span class="material-symbols-outlined text-[14px]">check_circle</span>
-                  <span>Cucian Sudah Diterima</span>
-                </button>
-              </div>
-            </div>
-          `;
-        }
-
-        // 3. Already Confirmed Orders History in Confirm Tab
-        if (confirmedFinishedOrders.length > 0) {
-          html += `
-            <div class="flex items-center justify-between pt-1 pb-1">
-              <span class="text-xs font-bold text-on-surface-variant">Telah Dikonfirmasi Selesai</span>
-              <span class="text-[10px] text-emerald-700 font-bold">${confirmedFinishedOrders.length} Pesanan</span>
-            </div>
-          `;
-
-          confirmedFinishedOrders.forEach(o => {
-            html += `
-              <div class="p-3 rounded-2xl bg-surface-container-low border border-emerald-500/25 shadow-2xs space-y-1.5 mb-2">
-                <div class="flex items-start justify-between gap-2">
-                  <div class="flex items-center gap-2 min-w-0">
-                    <div class="w-7 h-7 rounded-lg bg-emerald-600/15 text-emerald-700 flex items-center justify-center flex-shrink-0">
-                      <span class="material-symbols-outlined text-[16px]">verified</span>
-                    </div>
-                    <div class="min-w-0">
-                      <h4 class="text-xs font-bold text-on-surface truncate">${o.serviceName || 'Layanan Laundry'}</h4>
-                      <span class="text-[10px] text-on-surface-variant font-mono">${o.id} • Dikonfirmasi ${o.confirmedAt || 'oleh Anda'}</span>
-                    </div>
-                  </div>
-                  <span class="text-[9px] font-bold bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full flex items-center gap-0.5 flex-shrink-0">
-                    <span class="material-symbols-outlined text-[11px]">check</span> Selesai
-                  </span>
-                </div>
-                <div class="flex items-center justify-between pt-0.5 text-[11px]">
-                  <div class="flex items-center gap-1 text-amber-500">
-                    <span>${'★'.repeat(o.rating || 5)}${'☆'.repeat(5 - (o.rating || 5))}</span>
-                    <span class="text-on-surface-variant text-[10px]">(${o.rating || 5}.0)</span>
-                  </div>
-                  <button type="button" onclick="closeModal('modalNotifications'); reorderService('${o.category || 'kiloan'}', ${o.weightKg || 4});" class="text-xs font-bold text-primary hover:underline flex items-center gap-1">
-                    <span>Pesan Lagi</span> &rarr;
-                  </button>
-                </div>
-              </div>
-            `;
-          });
-        }
-
-        container.innerHTML = html;
-        return;
-      }
-
-      // ==========================================
-      // VIEW MODE: FILTER 'all' (SEMUA PEMBERITAHUAN)
-      // ==========================================
-
-      // 1. Pending Confirmation Orders (Highest Priority)
-      if (pendingConfirmOrders.length > 0) {
-        pendingConfirmOrders.forEach(o => {
-          html += `
-            <div class="p-3.5 rounded-2xl bg-gradient-to-br from-amber-500/10 via-emerald-500/10 to-surface-container-lowest border-2 border-emerald-500/40 shadow-sm space-y-2.5">
-              <div class="flex items-start justify-between gap-2">
-                <div class="flex items-center gap-2">
-                  <div class="w-8 h-8 rounded-xl bg-emerald-600 text-white flex items-center justify-center flex-shrink-0 shadow-xs animate-bounce">
-                    <span class="material-symbols-outlined text-[18px]">task_alt</span>
-                  </div>
-                  <div>
-                    <h4 class="text-xs font-bold text-on-surface">Cucian Anda Telah Selesai! 🎉</h4>
-                    <span class="text-[10px] text-emerald-700 font-bold font-mono">${o.id} • Siap Dikonfirmasi</span>
-                  </div>
-                </div>
-                <span class="text-[9px] font-bold bg-amber-100 text-amber-800 px-2 py-0.5 rounded-full flex items-center gap-1">
-                  <span class="w-1.5 h-1.5 rounded-full bg-amber-500 animate-ping"></span>
-                  <span>Butuh Konfirmasi</span>
-                </span>
-              </div>
-              <p class="text-xs text-on-surface leading-relaxed">
-                Cucian <strong>${o.serviceName || 'Laundry'}</strong> telah selesai, bersih &amp; wangi. Silakan konfirmasi bahwa pakaian telah diterima dengan baik.
+              <p class="text-[11px] text-on-surface-variant leading-relaxed">
+                Anda berhak menikmati potongan harga <strong>${userDiscount}%</strong>, prioritas antrean pengerjaan, dan <strong>Gratis Antar-Jemput Radius 5 Km</strong> di semua pesanan.
               </p>
               <div class="pt-1 flex items-center gap-2">
-                <button type="button" onclick="openConfirmOrderModal('${o.id}')" class="flex-1 py-1.5 px-3 rounded-xl bg-emerald-600 text-white text-[11px] font-bold hover:bg-emerald-700 active:scale-95 transition-all shadow-xs flex items-center justify-center gap-1">
-                  <span class="material-symbols-outlined text-[14px]">check_circle</span>
-                  <span>Konfirmasi Pesanan Selesai</span>
-                </button>
-                <button type="button" onclick="closeModal('modalNotifications'); switchScreen('akun'); filterHistory('selesai');" class="py-1.5 px-3 rounded-xl bg-surface-container text-on-surface text-[11px] font-bold hover:bg-surface-container-high transition-all">
-                  Riwayat
+                <button type="button" onclick="closeModal('modalNotifications'); openBuyMembershipModal('platinum', true);" class="flex-1 py-2 px-3 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold flex items-center justify-center gap-1 shadow-xs active:scale-95 transition-all">
+                  <span class="material-symbols-outlined text-[15px]">upgrade</span>
+                  <span>Tingkatkan ke Platinum (12%)</span>
                 </button>
               </div>
+            </div>
+          `;
+        } else {
+          html += `
+            <div class="p-4 rounded-2xl bg-gradient-to-br from-amber-500/15 via-surface-container-low to-surface-container-lowest border-2 border-amber-500/40 shadow-sm space-y-2.5">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                  <div class="w-9 h-9 rounded-xl bg-amber-500 text-white flex items-center justify-center shadow-xs">
+                    <span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">stars</span>
+                  </div>
+                  <div>
+                    <h4 class="text-xs font-bold text-on-surface">Gabung VIP Member FreshWash</h4>
+                    <span class="text-[10px] text-amber-700 font-bold">Mulai Rp 99.000 / Bulan</span>
+                  </div>
+                </div>
+                <span class="text-[9px] font-bold bg-amber-200 text-amber-900 px-2 py-0.5 rounded-full">Hemat s/d 12%</span>
+              </div>
+              <p class="text-[11px] text-on-surface-variant leading-relaxed">
+                Berlangganan member untuk mendapatkan diskon tetap di setiap kali mencuci, gratis ongkir kurir 5 km, dan 1x cuci kiloan gratis setiap kelipatan 10 order!
+              </p>
+              <button type="button" onclick="closeModal('modalNotifications'); openModal('modalMembership');" class="w-full py-2.5 px-3 rounded-xl bg-primary hover:bg-primary/90 text-white text-xs font-bold flex items-center justify-center gap-1.5 shadow-md active:scale-95 transition-all">
+                <span class="material-symbols-outlined text-[16px]">card_membership</span>
+                <span>Pilih Paket Member (Mulai Rp99rb)</span>
+              </button>
+            </div>
+          `;
+        }
+
+        // 4 Tier Packages Comparison Cards
+        const tiers = [
+          {
+            name: 'Bronze Member',
+            price: 'Rp 99.000 / bln',
+            discount: 'Diskon 5%',
+            color: 'amber-600',
+            bg: 'bg-amber-500/10',
+            border: 'border-amber-500/20',
+            benefits: ['Diskon 5% laundry kiloan & satuan', 'Prioritas pengerjaan reguler', 'Dukungan CS WhatsApp 24 jam']
+          },
+          {
+            name: 'Silver Member',
+            price: 'Rp 179.000 / bln',
+            discount: 'Diskon 8%',
+            color: 'slate-600',
+            bg: 'bg-slate-500/10',
+            border: 'border-slate-400/30',
+            benefits: ['Diskon 8% semua jenis cucian', 'Gratis ongkir antar-jemput 3 km', 'Garansi cuci ulang 100% jika kurang rapi']
+          },
+          {
+            name: 'Gold Member',
+            price: 'Rp 249.000 / bln',
+            discount: 'Diskon 10%',
+            color: 'yellow-600',
+            bg: 'bg-yellow-500/10',
+            border: 'border-yellow-500/30',
+            benefits: ['Diskon 10% di setiap transaksi', 'Gratis ongkir antar-jemput radius 5 km', 'Bonus 1x cuci gratis kiloan (5 kg)', 'Bebas pilih varian parfum premium']
+          },
+          {
+            name: 'Platinum Member',
+            price: 'Rp 349.000 / bln',
+            discount: 'Diskon 12%',
+            color: 'purple-600',
+            bg: 'bg-purple-500/10',
+            border: 'border-purple-500/30',
+            benefits: ['Diskon 12% maksimal tanpa syarat', 'Express Queue (Cucian diprioritaskan utama)', 'Gratis antar-jemput tanpa batas radius outlet', 'Voucher spesial ulang tahun Rp 50.000']
+          }
+        ];
+
+        tiers.forEach(t => {
+          html += `
+            <div class="p-3.5 rounded-2xl ${t.bg} border ${t.border} shadow-2xs space-y-2">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                  <span class="material-symbols-outlined text-[18px] text-${t.color}" style="font-variation-settings: 'FILL' 1;">stars</span>
+                  <div>
+                    <h5 class="text-xs font-bold text-on-surface">${t.name}</h5>
+                    <span class="text-[10px] text-on-surface-variant font-mono">${t.price}</span>
+                  </div>
+                </div>
+                <span class="text-[9px] font-bold px-2 py-0.5 rounded-full bg-surface-container text-primary border border-primary/20">${t.discount}</span>
+              </div>
+              <ul class="text-[10px] text-on-surface-variant space-y-1 pl-1">
+                ${t.benefits.map(b => `<li class="flex items-center gap-1.5"><span class="material-symbols-outlined text-[13px] text-emerald-600">check_circle</span><span>${b}</span></li>`).join('')}
+              </ul>
             </div>
           `;
         });
-      }
 
-      // 2. Active order in process notification
-      if (activeTrackOrder || inProcessOrders.length > 0) {
-        const activeOrder = activeTrackOrder || inProcessOrders[0];
-        const orderId = activeOrder.orderId || activeOrder.id || '#FW-ORDER';
-        const stageNum = activeOrder.stage || 1;
-        const stageDescriptions = [
-          'Kurir sedang menuju ke lokasi Anda untuk penjemputan cucian.',
-          'Cucian telah tiba di workshop FreshWash dan sedang ditimbang akurat.',
-          'Cucian sedang dicuci higienis dengan sabun premium & pelembut khusus.',
-          'Cucian sedang dikeringkan dan disetrika uap rapi bergaransi.',
-          'Cucian siap dan sedang dalam perjalanan diantar kurir ke lokasi Anda.'
-        ];
-        const stageText = stageDescriptions[stageNum - 1] || 'Pesanan cucian Anda sedang dalam proses pengerjaan.';
+      } else {
+        // ==========================================
+        // TAB 1: PROMO SPESIAL MEMBER & KUPON
+        // ==========================================
 
+        // 1. Promo Diskon 30% Pengguna Baru (BERSIHSEGAR)
         html += `
-          <div class="p-3.5 rounded-2xl bg-teal-500/10 border border-teal-500/25 shadow-xs space-y-2">
+          <div class="p-3.5 rounded-2xl bg-gradient-to-br from-emerald-500/15 via-surface-container-low to-surface-container-lowest border-2 border-emerald-500/30 shadow-xs space-y-2.5">
             <div class="flex items-start justify-between gap-2">
-              <div class="flex items-center gap-2">
-                <div class="w-8 h-8 rounded-xl bg-teal-600 text-white flex items-center justify-center flex-shrink-0 animate-pulse">
-                  <span class="material-symbols-outlined text-[18px]">local_laundry_service</span>
+              <div class="flex items-center gap-2.5">
+                <div class="w-9 h-9 rounded-xl bg-emerald-600 text-white flex items-center justify-center flex-shrink-0 shadow-xs">
+                  <span class="material-symbols-outlined text-[20px]">celebration</span>
                 </div>
                 <div>
-                  <h4 class="text-xs font-bold text-on-surface">Pesanan Sedang Diproses</h4>
-                  <span class="text-[10px] text-teal-700 font-semibold font-mono">${orderId} • Tahap ${stageNum}/5</span>
+                  <h4 class="text-xs font-bold text-on-surface">Diskon 30% Pengguna Baru! 🎉</h4>
+                  <span class="text-[10px] text-emerald-700 font-bold">Kupon: BERSIHSEGAR</span>
                 </div>
               </div>
-              <span class="text-[9px] font-bold bg-teal-100 text-teal-800 px-2 py-0.5 rounded-full">Dalam Proses</span>
-            </div>
-            <p class="text-xs text-on-surface-variant leading-relaxed">
-              ${stageText}
-            </p>
-            <div class="pt-1 flex items-center justify-between gap-2">
-              <button type="button" onclick="closeModal('modalNotifications'); chatOrderWhatsApp('${orderId}');" class="px-3 py-1.5 rounded-xl bg-emerald-600 text-white text-[11px] font-bold hover:bg-emerald-700 active:scale-95 transition-all shadow-xs flex items-center gap-1">
-                <span class="material-symbols-outlined text-[14px]">chat</span>
-                <span>Tanya Kurir (WA)</span>
-              </button>
-              <button type="button" onclick="openConfirmOrderModal('${orderId}')" class="px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-[11px] font-bold active:scale-95 transition-all shadow-xs flex items-center gap-1" title="Sudah terima pakaian dari kurir? Konfirmasi sekarang">
-                <span class="material-symbols-outlined text-[14px]">check_circle</span>
-                <span>Konfirmasi Selesai</span>
-              </button>
-            </div>
-          </div>
-        `;
-      }
-
-      // 3. Confirmed Finished Orders
-      if (confirmedFinishedOrders.length > 0 && pendingConfirmOrders.length === 0) {
-        const latestConfirmed = confirmedFinishedOrders[0];
-        html += `
-          <div class="p-3.5 rounded-2xl bg-surface-container-low border border-emerald-500/25 shadow-2xs space-y-2">
-            <div class="flex items-start justify-between gap-2">
-              <div class="flex items-center gap-2">
-                <div class="w-8 h-8 rounded-xl bg-emerald-600/15 text-emerald-700 flex items-center justify-center flex-shrink-0">
-                  <span class="material-symbols-outlined text-[18px]">verified</span>
-                </div>
-                <div>
-                  <h4 class="text-xs font-bold text-on-surface">Pesanan Selesai &amp; Dikonfirmasi</h4>
-                  <span class="text-[10px] text-on-surface-variant font-mono font-medium">${latestConfirmed.id || '#FW-ORDER'}</span>
-                </div>
-              </div>
-              <span class="text-[9px] font-bold bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full flex items-center gap-0.5">
-                <span class="material-symbols-outlined text-[11px]">check</span> Dikonfirmasi
-              </span>
-            </div>
-            <p class="text-xs text-on-surface-variant leading-relaxed">
-              Cucian <strong>${latestConfirmed.serviceName || 'Laundry'}</strong> telah selesai dan dikonfirmasi diterima dengan baik.
-            </p>
-            <div class="pt-1 flex items-center gap-2">
-              <button type="button" onclick="closeModal('modalNotifications'); switchScreen('akun'); filterHistory('selesai');" class="px-3 py-1.5 rounded-xl bg-surface-container text-on-surface text-[11px] font-bold hover:bg-surface-container-high active:scale-95 transition-all shadow-xs flex items-center gap-1">
-                <span class="material-symbols-outlined text-[14px]">receipt_long</span>
-                <span>Lihat Riwayat Selesai</span>
-              </button>
-            </div>
-          </div>
-        `;
-      }
-
-      // 4. Welcome / Info Notification if not member
-      if (!STATE.user.isMember) {
-        html += `
-          <div class="p-3 rounded-2xl bg-amber-500/10 border border-amber-500/20 shadow-2xs space-y-1.5">
-            <div class="flex items-center gap-2">
-              <span class="material-symbols-outlined text-amber-600 text-[18px]">workspace_premium</span>
-              <h4 class="text-xs font-bold text-on-surface">Gabung Member FreshWash (Diskon s/d 12%)</h4>
+              <span class="text-[9px] font-bold bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full shadow-2xs">Diskon 30%</span>
             </div>
             <p class="text-[11px] text-on-surface-variant leading-relaxed">
-              Pilih paket Bronze, Silver, Gold, atau Platinum untuk diskon s/d 12%, gratis antar-jemput 5 km, dan bonus cuci gratis!
+              Nikmati potongan 30% langsung untuk pemesanan pertama Anda di FreshWash. Berlaku untuk cuci komplit kiloan, satuan, bedcover &amp; cuci sepatu.
             </p>
-            <button type="button" onclick="closeModal('modalNotifications'); handleMemberOfferBannerClick();" class="text-[11px] font-bold text-amber-700 hover:underline flex items-center gap-0.5 pt-0.5">
-              <span>Pilih Paket Member (Mulai Rp99rb)</span>
-              <span class="material-symbols-outlined text-[13px]">arrow_forward</span>
-            </button>
+            <div class="flex items-center justify-between gap-2 pt-0.5">
+              <button type="button" onclick="copyPromoCode('BERSIHSEGAR');" class="py-1.5 px-3 rounded-xl bg-surface-container-lowest hover:bg-surface-container text-emerald-800 text-xs font-bold flex items-center gap-1 border border-emerald-500/30 transition-all">
+                <span class="material-symbols-outlined text-[14px]">content_copy</span>
+                <span>Salin: BERSIHSEGAR</span>
+              </button>
+              <button type="button" onclick="closeModal('modalNotifications'); switchScreen('pesan-antar');" class="py-1.5 px-3 rounded-xl bg-emerald-600 text-white text-xs font-bold hover:bg-emerald-700 active:scale-95 transition-all shadow-xs flex items-center gap-1">
+                <span>Pakai Sekarang</span>
+                <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+              </button>
+            </div>
           </div>
         `;
-      }
 
-      // 5. Empty State if no finished orders and no active orders
-      if (pendingConfirmOrders.length === 0 && confirmedFinishedOrders.length === 0 && !activeTrackOrder && inProcessOrders.length === 0) {
-        html = `
-          <div class="py-8 px-4 text-center space-y-2">
-            <div class="w-12 h-12 mx-auto rounded-full bg-surface-container flex items-center justify-center text-outline">
-              <span class="material-symbols-outlined text-[24px]">notifications_none</span>
+        // 2. Promo Member: Gratis Ongkir Antar-Jemput Radius 5 KM
+        html += `
+          <div class="p-3.5 rounded-2xl bg-gradient-to-br from-teal-500/15 via-surface-container-low to-surface-container-lowest border border-teal-500/25 shadow-xs space-y-2">
+            <div class="flex items-start justify-between gap-2">
+              <div class="flex items-center gap-2.5">
+                <div class="w-8 h-8 rounded-xl bg-teal-600 text-white flex items-center justify-center flex-shrink-0 shadow-xs">
+                  <span class="material-symbols-outlined text-[18px]">local_shipping</span>
+                </div>
+                <div>
+                  <h4 class="text-xs font-bold text-on-surface">Gratis Ongkir Antar-Jemput 5 KM</h4>
+                  <span class="text-[10px] text-teal-700 font-bold">Khusus Member Aktif</span>
+                </div>
+              </div>
+              <span class="text-[9px] font-bold bg-teal-100 text-teal-800 px-2 py-0.5 rounded-full">Gratis Ongkir</span>
             </div>
-            <h4 class="text-xs font-bold text-on-surface">Tidak Ada Pemberitahuan Baru</h4>
-            <p class="text-[11px] text-on-surface-variant max-w-[260px] mx-auto">
-              Saat pesanan Anda sedang diproses atau cucian Anda telah selesai, informasinya akan otomatis ditampilkan di sini.
+            <p class="text-[11px] text-on-surface-variant leading-relaxed">
+              Driver FreshWash siap jemput pakaian kotor dan antar pakaian bersih wangi ke rumah Anda tanpa biaya ongkir sepeser pun.
             </p>
-            <div class="pt-2">
-              <button type="button" onclick="simulateTestCompletedOrder()" class="py-1.5 px-3 rounded-xl bg-surface-container-high hover:bg-surface-container-highest text-on-surface text-xs font-bold inline-flex items-center gap-1 border border-outline-variant/20 transition-all">
-                <span class="material-symbols-outlined text-[14px] text-amber-600">science</span>
-                <span>Uji Simulasi Pesanan Selesai</span>
+            <div class="pt-0.5 flex items-center justify-between">
+              <span class="text-[10px] text-teal-800 font-semibold flex items-center gap-1">
+                <span class="material-symbols-outlined text-[13px]">check_circle</span>
+                Tersedia untuk semua member
+              </span>
+              <button type="button" onclick="closeModal('modalNotifications'); switchScreen('pesan-antar');" class="text-xs font-bold text-teal-700 hover:underline flex items-center gap-0.5">
+                <span>Pesan Kurir</span> &rarr;
+              </button>
+            </div>
+          </div>
+        `;
+
+        // 3. Promo Loyalitas: Bonus Cuci Gratis ke-10
+        html += `
+          <div class="p-3.5 rounded-2xl bg-gradient-to-br from-amber-500/15 via-surface-container-low to-surface-container-lowest border border-amber-500/25 shadow-xs space-y-2">
+            <div class="flex items-start justify-between gap-2">
+              <div class="flex items-center gap-2.5">
+                <div class="w-8 h-8 rounded-xl bg-amber-500 text-white flex items-center justify-center flex-shrink-0 shadow-xs">
+                  <span class="material-symbols-outlined text-[18px]">card_giftcard</span>
+                </div>
+                <div>
+                  <h4 class="text-xs font-bold text-on-surface">Bonus 1x Cuci Gratis ke-10</h4>
+                  <span class="text-[10px] text-amber-700 font-bold">Loyalty Stamp Card</span>
+                </div>
+              </div>
+              <span class="text-[9px] font-bold bg-amber-100 text-amber-800 px-2 py-0.5 rounded-full">Reward</span>
+            </div>
+            <p class="text-[11px] text-on-surface-variant leading-relaxed">
+              Setiap kali Anda mencuci di FreshWash, kumpulkan cap transaksi. Di transaksi ke-10, nikmati <strong>1x Cuci Komplit Kiloan (5 Kg) 100% GRATIS</strong>!
+            </p>
+          </div>
+        `;
+
+        // 4. Promo Parfum Bebas Pilih Tanpa Biaya Tambahan
+        html += `
+          <div class="p-3.5 rounded-2xl bg-gradient-to-br from-purple-500/15 via-surface-container-low to-surface-container-lowest border border-purple-500/25 shadow-xs space-y-2">
+            <div class="flex items-start justify-between gap-2">
+              <div class="flex items-center gap-2.5">
+                <div class="w-8 h-8 rounded-xl bg-purple-600 text-white flex items-center justify-center flex-shrink-0 shadow-xs">
+                  <span class="material-symbols-outlined text-[18px]">air</span>
+                </div>
+                <div>
+                  <h4 class="text-xs font-bold text-on-surface">Bebas Pilih Aroma Parfum Mewah</h4>
+                  <span class="text-[10px] text-purple-700 font-bold">Lavender, Ocean, Baby Powder, Vanilla</span>
+                </div>
+              </div>
+              <span class="text-[9px] font-bold bg-purple-100 text-purple-800 px-2 py-0.5 rounded-full">Gratis</span>
+            </div>
+            <p class="text-[11px] text-on-surface-variant leading-relaxed">
+              Semua paket cucian bebas memilih aroma parfum favorit tanpa tambahan biaya. Pakaian wangi tahan hingga 14 hari di lemari!
+            </p>
+            <div class="pt-0.5 flex items-center justify-end">
+              <button type="button" onclick="closeModal('modalNotifications'); switchScreen('pesan-antar');" class="py-1.5 px-3 rounded-xl bg-primary text-white text-xs font-bold hover:bg-primary/90 flex items-center gap-1 shadow-xs transition-all">
+                <span class="material-symbols-outlined text-[14px]">local_laundry_service</span>
+                <span>Pesan Laundry Sekarang</span>
               </button>
             </div>
           </div>
@@ -4908,12 +4868,11 @@ Halo Mas Fajar (Owner), saya telah menyelesaikan pembayaran keanggotaan ${target
 
       saveState();
       updateUIElements();
-      currentNotifFilter = 'confirm';
-      switchNotifFilter('confirm');
-      updateNotificationBellUI();
       renderOrderHistoryUI();
+      switchScreen('akun');
+      filterHistory('selesai');
 
-      showToast(`🎉 Simulasi berhasil! Pesanan ${testCode} telah selesai & siap dikonfirmasi di lonceng notifikasi.`, 'success');
+      showToast(`🎉 Simulasi berhasil! Pesanan ${testCode} telah selesai & siap dikonfirmasi di Riwayat Pesanan.`, 'success');
     }
 
     function updateMerchantCardUI() {
@@ -5125,8 +5084,7 @@ Halo Mas Fajar (Owner), saya telah menyelesaikan pembayaran keanggotaan ${target
     }
     function closeModal(id) {
       if (id === 'modalAuth' && (!STATE.user.isLoggedIn || !STATE.user.email)) {
-        showToast('Wajib masuk atau daftar dengan email Anda terlebih dahulu!', 'error');
-        return;
+        showToast('Anda menjelajahi FreshWash sebagai Tamu. Masuk atau buat akun baru dapat dilakukan kapan saja saat akan memesan.', 'info');
       }
       const modal = document.getElementById(id);
       if (modal) modal.classList.add('hidden');
@@ -6422,18 +6380,90 @@ Halo Mas Fajar (Owner), saya telah menyelesaikan pembayaran keanggotaan ${target
       return { base, softenerAddon, discountAmount, memberDiscountAmount, total, isFreePickup };
     }
 
-    function setBookingStep(stepNum) {
-      const stepLine = document.getElementById('bookingStepLine');
-      if (stepLine) {
-        stepLine.style.width = `${(stepNum / 4) * 100}%`;
+    const BOOKING_STEPS_GUIDE = {
+      1: {
+        title: 'Tahap 1: Pilih Layanan & Rincian Cucian',
+        stepText: 'Langkah 1 dari 4',
+        icon: 'dry_cleaning',
+        desc: 'Tentukan kategori cucian (Kiloan, Satuan, Sepatu & Tas, Bedcover). Masukkan estimasi berat/jumlah dan rincian jenis pakaian (misal: 10 kaos, 3 kemeja) agar rapi & tidak tertukar.',
+        targetId: 'bookingPackageSection'
+      },
+      2: {
+        title: 'Tahap 2: Jadwal Penjemputan Driver',
+        stepText: 'Langkah 2 dari 4',
+        icon: 'calendar_month',
+        desc: 'Pilih hari dan slot waktu penjemputan cucian yang nyaman bagi Anda. Driver FreshWash akan datang tepat waktu ke lokasi penjemputan.',
+        targetId: 'pickupScheduleSection'
+      },
+      3: {
+        title: 'Tahap 3: Alamat Penjemputan & Aroma Parfum',
+        stepText: 'Langkah 3 dari 4',
+        icon: 'pin_drop',
+        desc: 'Pastikan titik jemput utama & patokan alamat sudah benar. Pilih aroma parfum premium FreshWash (Lavender Bliss, Ocean Fresh, dll) & instruksi khusus cucian.',
+        targetId: 'bookingAddressSection'
+      },
+      4: {
+        title: 'Tahap 4: Pembayaran & Kirim Pesanan ke WA',
+        stepText: 'Langkah 4 dari 4',
+        icon: 'payments',
+        desc: 'Pilih metode pembayaran (Transfer BCA, Mandiri, BRI, BSI, atau QRIS Toko), upload bukti bayar jika ada, lalu pesanan & gambar langsung terkirim otomatis ke WhatsApp Owner.',
+        targetId: 'bookingLiveCalculatorCard'
       }
+    };
+
+    function setBookingStep(stepNum, shouldScroll = true) {
+      stepNum = Math.max(1, Math.min(4, stepNum));
+      const info = BOOKING_STEPS_GUIDE[stepNum] || BOOKING_STEPS_GUIDE[1];
+
       for (let i = 1; i <= 4; i++) {
         const badge = document.getElementById(`step-badge-${i}`);
+        const label = document.getElementById(`step-label-${i}`);
+        const col = document.getElementById(`bookingStepCol${i}`);
         if (!badge) continue;
-        if (i <= stepNum) {
-          badge.className = 'w-7 h-7 rounded-full bg-primary text-on-primary flex items-center justify-center text-xs font-bold ring-4 ring-primary-fixed';
+
+        if (i === stepNum) {
+          badge.className = 'w-8 h-8 rounded-full bg-primary text-on-primary flex items-center justify-center text-xs font-bold ring-4 ring-primary-fixed shadow-xs transition-all scale-105';
+          if (label) {
+            label.className = 'text-[11px] font-bold text-primary mt-1.5 line-clamp-1';
+          }
+          if (col) {
+            col.className = 'flex flex-col items-center text-center p-1.5 rounded-xl transition-all cursor-pointer bg-primary/10 ring-1 ring-primary/30';
+          }
+        } else if (i < stepNum) {
+          badge.className = 'w-8 h-8 rounded-full bg-emerald-600 text-white flex items-center justify-center text-xs font-bold transition-all';
+          if (label) {
+            label.className = 'text-[11px] font-semibold text-emerald-700 mt-1.5 line-clamp-1';
+          }
+          if (col) {
+            col.className = 'flex flex-col items-center text-center p-1.5 rounded-xl transition-all cursor-pointer hover:bg-surface-container';
+          }
         } else {
-          badge.className = 'w-7 h-7 rounded-full bg-surface-container-highest text-on-surface-variant flex items-center justify-center text-xs font-bold';
+          badge.className = 'w-8 h-8 rounded-full bg-surface-container-highest text-on-surface-variant flex items-center justify-center text-xs font-bold transition-all';
+          if (label) {
+            label.className = 'text-[11px] font-medium text-on-surface-variant mt-1.5 line-clamp-1';
+          }
+          if (col) {
+            col.className = 'flex flex-col items-center text-center p-1.5 rounded-xl transition-all cursor-pointer hover:bg-surface-container';
+          }
+        }
+      }
+
+      // Update Guidance Box
+      const titleEl = document.getElementById('bookingStepDetailTitle');
+      const badgeEl = document.getElementById('bookingStepStatusBadge');
+      const descEl = document.getElementById('bookingStepDetailDesc');
+      const iconEl = document.getElementById('bookingStepDetailIcon');
+
+      if (titleEl) titleEl.innerText = info.title;
+      if (badgeEl) badgeEl.innerText = info.stepText;
+      if (descEl) descEl.innerText = info.desc;
+      if (iconEl) iconEl.innerHTML = `<span class="material-symbols-outlined text-[18px]">${info.icon}</span>`;
+
+      // Smooth scroll to relevant section
+      if (shouldScroll && info.targetId) {
+        const targetEl = document.getElementById(info.targetId);
+        if (targetEl) {
+          targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
       }
     }
@@ -6458,6 +6488,7 @@ Halo Mas Fajar (Owner), saya telah menyelesaikan pembayaran keanggotaan ${target
       const reader = new FileReader();
       reader.onload = function(e) {
         uploadedPaymentProof = {
+          file: file,
           name: file.name,
           size: (file.size / 1024).toFixed(1) + ' KB',
           dataUrl: e.target.result
@@ -6478,7 +6509,7 @@ Halo Mas Fajar (Owner), saya telah menyelesaikan pembayaran keanggotaan ${target
         if (fileNameEl) fileNameEl.innerText = file.name;
         if (fileSizeEl) fileSizeEl.innerText = `${(file.size / 1024).toFixed(1)} KB`;
 
-        showToast('Foto struk berhasil dilampirkan! Siap dikirim ke WA Owner. 📸', 'success');
+        showToast('Foto struk berhasil dilampirkan! Siap dikirim bersama format pesanan ke WhatsApp. 📸', 'success');
       };
       reader.readAsDataURL(file);
     }
@@ -6499,6 +6530,13 @@ Halo Mas Fajar (Owner), saya telah menyelesaikan pembayaran keanggotaan ${target
     }
 
     function openCheckoutModal() {
+      // Wajib masuk atau buat akun baru sebelum checkout
+      if (!STATE.user.isLoggedIn || !STATE.user.email) {
+        showToast('Silakan masuk atau buat akun baru terlebih dahulu untuk melanjutkan pemesanan.', 'info');
+        openAuthModal('login');
+        return;
+      }
+
       // First order / empty address guard
       if (!Array.isArray(STATE.user.addresses) || STATE.user.addresses.length === 0 || !STATE.user.address) {
         showToast('Silakan isi alamat pengiriman utama terlebih dahulu sebelum melanjutkan pesanan.', 'info');
@@ -6507,6 +6545,8 @@ Halo Mas Fajar (Owner), saya telah menyelesaikan pembayaran keanggotaan ${target
         });
         return;
       }
+
+      setBookingStep(4, false);
 
       const { base, softenerAddon, total } = recalculatePrice();
       
@@ -6828,7 +6868,7 @@ Halo Mas Fajar (Owner), saya telah menyelesaikan pembayaran keanggotaan ${target
 
     function quickTopUpForOrder() {}
 
-    function confirmPlaceOrder() {
+    async function confirmPlaceOrder() {
       const { base, softenerAddon, discountAmount, memberDiscountAmount, total, isFreePickup } = recalculatePrice();
       let payOption = document.querySelector('input[name="pay_option"]:checked')?.value || 'qris';
       if (!['qris', 'bca', 'mandiri', 'bri', 'bsi'].includes(payOption)) {
@@ -6967,12 +7007,50 @@ ${proofText}
 ----------------------------------------
 Halo Mas Fajar (Owner), pesanan sudah saya buat via aplikasi. Mohon segera dicek & kurir dijadwalkan ya. Terima kasih! 🙏`;
 
-      // Direct WhatsApp Chat Link to Owner
-      const waUrl = `https://wa.me/${ownerPhone}?text=${encodeURIComponent(waMessage)}`;
-      try {
-        window.open(waUrl, '_blank');
-      } catch (e) {
-        console.warn('Could not open WhatsApp window', e);
+      // Kirim pesanan ke WhatsApp beserta foto bukti bayar langsung
+      let sharedDirectly = false;
+
+      // 1. Jika pengguna melampirkan foto struk, kirim gambar langsung bersama template via Web Share API (HP Android & iOS)
+      if (uploadedPaymentProof && uploadedPaymentProof.file && navigator.share && navigator.canShare) {
+        const shareData = {
+          title: `Pesanan FreshWash ${newCode}`,
+          text: waMessage,
+          files: [uploadedPaymentProof.file]
+        };
+
+        if (navigator.canShare({ files: [uploadedPaymentProof.file] })) {
+          try {
+            await navigator.share(shareData);
+            sharedDirectly = true;
+          } catch (shareErr) {
+            if (shareErr.name === 'AbortError') {
+              sharedDirectly = true; // User menekan batal di sheet share
+            } else {
+              console.warn('Web Share API error:', shareErr);
+            }
+          }
+        }
+      }
+
+      // 2. Jika Web Share file tidak didukung / gagal, salin foto ke clipboard otomatis jika didukung lalu buka link WhatsApp
+      if (!sharedDirectly) {
+        if (uploadedPaymentProof && uploadedPaymentProof.file && navigator.clipboard && window.ClipboardItem) {
+          try {
+            await navigator.clipboard.write([
+              new ClipboardItem({ [uploadedPaymentProof.file.type]: uploadedPaymentProof.file })
+            ]);
+            showToast('Foto bukti transfer telah otomatis disalin ke clipboard! Tempel (Paste) di chat WhatsApp. 📸', 'info');
+          } catch (clipErr) {
+            console.warn('Clipboard write error:', clipErr);
+          }
+        }
+
+        const waUrl = `https://wa.me/${ownerPhone}?text=${encodeURIComponent(waMessage)}`;
+        try {
+          window.open(waUrl, '_blank');
+        } catch (e) {
+          console.warn('Could not open WhatsApp window', e);
+        }
       }
 
       const paymentNote = `Lunas via ${methodTitle} (Rp ${total.toLocaleString('id-ID')})`;
@@ -8019,6 +8097,7 @@ Halo Mas Fajar (Owner), pesanan sudah saya buat via aplikasi. Mohon segera dicek
         STATE.user.name = email.split('@')[0].replace(/[._-]/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
       }
       STATE.user.isLoggedIn = true;
+      sessionStorage.setItem('freshwash_session_active', '1');
       if (!STATE.user.isMember) {
         STATE.user.tier = 'Non-Member';
       }
@@ -8070,6 +8149,7 @@ Halo Mas Fajar (Owner), pesanan sudah saya buat via aplikasi. Mohon segera dicek
       STATE.user.email = email;
       if (phone) STATE.user.phone = phone;
       STATE.user.isLoggedIn = true;
+      sessionStorage.setItem('freshwash_session_active', '1');
       STATE.user.isMember = false;
       STATE.user.tier = 'Non-Member';
       STATE.user.balance = 1000000; // Saldo awal uji coba 1 Juta Rupiah
@@ -8159,6 +8239,9 @@ Halo Mas Fajar (Owner), pesanan sudah saya buat via aplikasi. Mohon segera dicek
 
     function confirmLogout() {
       if (confirm('Apakah Anda yakin ingin keluar dari akun?')) {
+        sessionStorage.removeItem('freshwash_session_active');
+        localStorage.removeItem('freshwash_state');
+        localStorage.removeItem('freshwash_transactions');
         STATE.user.isLoggedIn = false;
         STATE.user.email = '';
         STATE.user.name = '';
@@ -8187,18 +8270,9 @@ Halo Mas Fajar (Owner), pesanan sudah saya buat via aplikasi. Mohon segera dicek
     }
 
     function toggleNotifications() {
-      // Clear red dot on customer opening notifications
-      if (STATE.unreadFinishedNotif) {
-        STATE.unreadFinishedNotif = false;
-        saveState();
-        updateNotificationBellUI();
-      }
-      const pendingCount = (STATE.orders || []).filter(o => o.status === 'selesai' && !o.customerConfirmed).length;
-      if (pendingCount > 0) {
-        switchNotifFilter('confirm');
-      } else {
-        switchNotifFilter(currentNotifFilter || 'all');
-      }
+      localStorage.setItem('freshwash_promo_notif_seen', '1');
+      updateNotificationBellUI();
+      switchNotifFilter(currentNotifFilter || 'promo');
       openModal('modalNotifications');
     }
 
@@ -8356,6 +8430,15 @@ Halo Mas Fajar (Owner), pesanan sudah saya buat via aplikasi. Mohon segera dicek
         switchScreen('beranda');
       }
       updateUIElements();
+
+      // Jika belum masuk akun (sesi baru / setelah uninstall / buka link), munculkan dialog login / daftar akun baru
+      if (!STATE.user.isLoggedIn || !STATE.user.email) {
+        setTimeout(() => {
+          if (!STATE.user.isLoggedIn || !STATE.user.email) {
+            openAuthModal('login');
+          }
+        }, 500);
+      }
 
       // Real-time live countdown timer updater every second
       setInterval(updateMemberCountdownDisplay, 1000);
