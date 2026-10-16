@@ -670,6 +670,30 @@
           </div>
         </div>
 
+        <!-- 3b. Rincian Banyaknya & Jenis Pakaian (Itemized Clothes Breakdown) -->
+        <div class="bg-surface-container-lowest p-4 rounded-2xl shadow-sm flex flex-col gap-3.5 border border-outline-variant/15" id="clothesBreakdownCard">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <span class="material-symbols-outlined text-primary text-[20px]">checkroom</span>
+              <div>
+                <h2 class="text-sm font-bold text-on-surface">Rincian Banyaknya &amp; Jenis Pakaian</h2>
+                <p class="text-[11px] text-on-surface-variant">Catat jenis pakaian (kaos, kemeja, celana, dll.) agar rapi &amp; tidak tertukar</p>
+              </div>
+            </div>
+            <span class="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-surface-container-high text-on-surface-variant" id="clothesBreakdownBadge">Opsional</span>
+          </div>
+
+          <!-- Preview Container (Filled dynamically by updateClothesPreviewUI()) -->
+          <div id="clothesBreakdownPreviewContainer" class="p-3 bg-surface-container-low rounded-xl">
+            <!-- Rendered by updateClothesPreviewUI() -->
+          </div>
+
+          <button type="button" onclick="openClothesBreakdownModal()" class="w-full py-2.5 px-3 rounded-xl bg-primary/10 hover:bg-primary/20 text-primary text-xs font-bold flex items-center justify-center gap-2 transition-all active:scale-95 border border-primary/20">
+            <span class="material-symbols-outlined text-[18px]">playlist_add_check</span>
+            <span id="btnClothesBreakdownLabel">Buka Menu Pilihan Jenis Pakaian</span>
+          </button>
+        </div>
+
         <!-- 4. Pickup Schedule (Date & Time Selector) -->
         <div class="bg-surface-container-lowest p-4 rounded-2xl shadow-sm flex flex-col gap-3 border border-outline-variant/15">
           <div class="flex items-center justify-between">
@@ -680,20 +704,9 @@
             <span class="text-[11px] bg-surface-container-high text-on-surface-variant px-2 py-0.5 rounded-full font-medium" id="currentMonthBadge">Hari Ini</span>
           </div>
 
-          <!-- Date Pills -->
+          <!-- Date Pills (Rendered dynamically by initPickupDateSelector()) -->
           <div class="flex gap-2 overflow-x-auto pb-1" id="pickupDateSelector">
-            <button onclick="selectDate(this, 'Hari Ini, 24 Okt')" class="date-pill flex-1 min-w-[90px] py-2.5 px-3 rounded-xl bg-primary text-on-primary flex flex-col items-center justify-center shadow-sm">
-              <span class="text-[10px] uppercase tracking-wider opacity-90">Hari Ini</span>
-              <span class="text-sm font-bold">24 Okt</span>
-            </button>
-            <button onclick="selectDate(this, 'Besok, 25 Okt')" class="date-pill flex-1 min-w-[90px] py-2.5 px-3 rounded-xl bg-surface-container-low text-on-surface flex flex-col items-center justify-center hover:bg-surface-container transition-colors">
-              <span class="text-[10px] text-on-surface-variant uppercase tracking-wider">Besok</span>
-              <span class="text-sm font-bold">25 Okt</span>
-            </button>
-            <button onclick="selectDate(this, 'Lusa, 26 Okt')" class="date-pill flex-1 min-w-[90px] py-2.5 px-3 rounded-xl bg-surface-container-low text-on-surface flex flex-col items-center justify-center hover:bg-surface-container transition-colors">
-              <span class="text-[10px] text-on-surface-variant uppercase tracking-wider">Lusa</span>
-              <span class="text-sm font-bold">26 Okt</span>
-            </button>
+            <!-- Will be populated dynamically based on current date -->
           </div>
 
           <!-- Time Slot Selector -->
@@ -1182,6 +1195,94 @@
   <!-- MODALS & OVERLAYS -->
   <!-- ======================================================== -->
 
+  <!-- Modal Rincian Banyaknya & Jenis Pakaian (Menu Terpisah dengan Tombol Closing) -->
+  <div id="modalClothesBreakdown" class="fixed inset-0 z-[85] bg-black/60 backdrop-blur-sm hidden flex items-end sm:items-center justify-center p-0 sm:p-4">
+    <div class="bg-surface-container-lowest w-full max-w-[460px] rounded-t-3xl sm:rounded-3xl shadow-2xl flex flex-col border border-outline-variant/20 max-h-[92vh] animate-in fade-in zoom-in-95 duration-200 overflow-hidden">
+      
+      <!-- Sticky Modal Header dengan Tombol Closing -->
+      <div class="flex items-center justify-between px-5 py-4 border-b border-surface-container-high bg-surface-container-lowest z-10 flex-shrink-0">
+        <div class="flex items-center gap-2.5 min-w-0">
+          <div class="w-9 h-9 rounded-full bg-primary/10 text-primary flex items-center justify-center flex-shrink-0">
+            <span class="material-symbols-outlined text-[20px]">checkroom</span>
+          </div>
+          <div class="min-w-0">
+            <h3 class="text-sm font-bold text-on-surface truncate">Rincian Banyak &amp; Jenis Pakaian</h3>
+            <p class="text-[10px] text-on-surface-variant truncate">Pilih banyaknya pakaian per jenis</p>
+          </div>
+        </div>
+        <!-- Tombol Closing yang Jelas dan Mudah Ditekan -->
+        <button type="button" onclick="closeModal('modalClothesBreakdown')" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-surface-container text-on-surface hover:bg-surface-container-high active:scale-95 transition-all text-xs font-bold border border-outline-variant/20 shadow-2xs" title="Tutup Menu">
+          <span>Tutup</span>
+          <span class="material-symbols-outlined text-[18px]">close</span>
+        </button>
+      </div>
+
+      <!-- Modal Body (Scrollable) -->
+      <div class="p-5 overflow-y-auto space-y-4 flex-1">
+        <!-- Info Banner -->
+        <div class="p-3 bg-primary/5 rounded-2xl border border-primary/15 flex items-start gap-2.5">
+          <span class="material-symbols-outlined text-primary text-[20px] flex-shrink-0 mt-0.5">info</span>
+          <p class="text-[11px] text-on-surface leading-relaxed">
+            Misal order laundry <strong id="clothesModalWeightHint">4 Kg</strong> dengan rincian <strong>10 kaos, 3 kemeja, 2 celana pendek</strong>, dll. Fitur ini memudahkan kurir &amp; petugas saat pengambilan laundry dan membedakan cucian agar tidak tertukar.
+          </p>
+        </div>
+
+        <!-- Daftar Pilihan Jenis Pakaian -->
+        <div class="space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold text-on-surface">Pilih Jenis &amp; Kuantitas Pakaian (Pcs)</span>
+            <span class="text-[10px] text-on-surface-variant font-medium">Klik - / +</span>
+          </div>
+          <div class="grid grid-cols-1 gap-2" id="clothesItemsListContainer">
+            <!-- Dynamic Category List with Stepper Counters -->
+          </div>
+        </div>
+
+        <!-- Tambah Jenis Pakaian Kustom -->
+        <div class="p-3.5 bg-surface-container-low rounded-2xl border border-outline-variant/15 flex flex-col gap-2">
+          <label class="text-xs font-bold text-on-surface flex items-center gap-1.5">
+            <span class="material-symbols-outlined text-[16px] text-primary">add_circle</span>
+            <span>Tambah Jenis Pakaian Lainnya</span>
+          </label>
+          <div class="flex gap-2">
+            <input type="text" id="customClothesNameInput" placeholder="Misal: Jas Hujan, Topi, Rompi..." class="flex-1 py-2 px-3 text-xs rounded-xl bg-surface-container-lowest border border-outline-variant/30 text-on-surface placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-primary" onkeydown="if(event.key==='Enter') addCustomClothesItem()">
+            <button type="button" onclick="addCustomClothesItem()" class="px-3 py-2 rounded-xl bg-primary text-white font-bold text-xs flex items-center gap-1 hover:bg-primary/90 active:scale-95 transition-all shadow-xs">
+              <span class="material-symbols-outlined text-[16px]">add</span>
+              <span>Tambah</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Catatan Khusus Pakaian -->
+        <div class="space-y-1.5">
+          <label class="text-xs font-bold text-on-surface flex items-center gap-1.5">
+            <span class="material-symbols-outlined text-[16px] text-primary">edit_note</span>
+            <span>Catatan Khusus Pakaian (Opsional)</span>
+          </label>
+          <textarea id="clothesSpecialNotes" rows="2" placeholder="Misal: Kaos putih jangan dicampur pakaian luntur, kemeja biru ada noda di kerah, dll." class="w-full py-2.5 px-3 text-xs rounded-xl bg-surface-container-low border border-outline-variant/20 text-on-surface placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
+        </div>
+      </div>
+
+      <!-- Sticky Modal Footer -->
+      <div class="px-5 py-3.5 border-t border-surface-container-high bg-surface-container-lowest flex items-center justify-between gap-3 flex-shrink-0">
+        <div class="flex flex-col">
+          <span class="text-[10px] text-on-surface-variant font-medium">Total Terdata:</span>
+          <span class="text-sm font-extrabold text-primary" id="clothesModalTotalSummary">0 Pcs Pakaian</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <button type="button" onclick="resetClothesBreakdown()" class="px-3 py-2 rounded-xl bg-surface-container hover:bg-surface-container-high text-on-surface text-xs font-semibold active:scale-95 transition-all">
+            Reset
+          </button>
+          <button type="button" onclick="saveClothesBreakdown()" class="px-4 py-2 rounded-xl bg-primary hover:bg-primary/90 text-on-primary text-xs font-bold flex items-center gap-1.5 shadow-sm active:scale-95 transition-all">
+            <span class="material-symbols-outlined text-[16px]">check</span>
+            <span>Simpan Rincian</span>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
   <!-- 2. Checkout & Payment Confirmation Modal (Terintegrasi) -->
   <div id="modalCheckout" class="fixed inset-0 z-[80] bg-black/60 backdrop-blur-sm hidden flex items-end sm:items-center justify-center p-0 sm:p-4">
     <div class="bg-surface-container-lowest w-full max-w-[440px] rounded-t-3xl sm:rounded-3xl p-5 shadow-2xl flex flex-col gap-4 animate-in fade-in zoom-in-95 duration-200 border border-outline-variant/20 max-h-[92vh] overflow-y-auto">
@@ -1233,6 +1334,10 @@
           <div class="flex justify-between items-center">
             <span class="text-on-surface-variant">Parfum Pilihan</span>
             <span class="font-bold text-on-surface" id="coFragrance">Lavender Bliss</span>
+          </div>
+          <div class="flex justify-between items-start pt-0.5 hidden" id="coClothesBreakdownRow">
+            <span class="text-on-surface-variant flex-shrink-0">Rincian Pakaian</span>
+            <span class="font-bold text-primary text-right truncate max-w-[210px]" id="coClothesBreakdownSummary">-</span>
           </div>
           <div class="flex justify-between items-start pt-0.5">
             <span class="text-on-surface-variant flex-shrink-0">Alamat Jemput</span>
@@ -2820,11 +2925,13 @@
         pricePerKg: 12000,
         weightKg: 4,
         unitName: 'Kg',
-        date: 'Hari Ini, 24 Okt',
+        date: '',
         timeSlot: '13:00 - 15:00',
         perfume: 'Lavender Bliss',
         extraSoftener: false,
-        notes: ''
+        notes: '',
+        clothesItems: {},
+        clothesNotes: ''
       },
       tracking: {
         orderId: null,
@@ -3061,6 +3168,8 @@
 
       renderBookingPackagesUI();
       recalculatePrice();
+      initPickupDateSelector();
+      updateClothesPreviewUI();
     }
 
     function updateProfileCardUI() {
@@ -4736,6 +4845,7 @@ Halo Mas Fajar (Owner), saya telah menyelesaikan pembayaran keanggotaan ${target
                 <div>
                   <h4 class="text-xs font-bold text-on-surface">${o.serviceName || 'Paket Laundry'}</h4>
                   <p class="text-[11px] text-on-surface-variant">${o.perfume || 'Lavender Bliss'} • ${o.weightKg || 4} Kg</p>
+                  ${o.clothesTotalPcs > 0 ? `<span class="inline-flex items-center gap-1 text-[10px] font-semibold text-primary bg-primary/10 px-1.5 py-0.5 rounded-md mt-0.5"><span class="material-symbols-outlined text-[12px]">checkroom</span>${o.clothesTotalPcs} Pcs Pakaian</span>` : ''}
                   <p class="text-[11px] font-bold text-primary mt-0.5">Rp ${(o.total || 0).toLocaleString('id-ID')}</p>
                 </div>
                 <button onclick="chatOrderWhatsApp('${o.id}')" class="py-1.5 px-3 rounded-xl bg-emerald-600 text-white text-xs font-bold flex items-center gap-1 shadow-xs hover:bg-emerald-700 transition-all">
@@ -4783,6 +4893,7 @@ Halo Mas Fajar (Owner), saya telah menyelesaikan pembayaran keanggotaan ${target
                   <div>
                     <h4 class="text-xs font-bold text-on-surface">${o.serviceName || 'Paket Laundry'}</h4>
                     <p class="text-[11px] text-on-surface-variant">Total: <strong class="text-primary font-bold">Rp ${(o.total || 0).toLocaleString('id-ID')}</strong></p>
+                    ${o.clothesTotalPcs > 0 ? `<span class="inline-flex items-center gap-1 text-[10px] font-semibold text-primary bg-primary/10 px-1.5 py-0.5 rounded-md mt-0.5"><span class="material-symbols-outlined text-[12px]">checkroom</span>${o.clothesTotalPcs} Pcs Pakaian</span>` : ''}
                     ${isConfirmed && o.rating ? `
                       <span class="text-[10px] text-amber-500 font-bold block mt-0.5">⭐ ${o.rating}.0 • Ulasan Diberikan</span>
                     ` : ''}
@@ -5318,6 +5429,78 @@ Halo Mas Fajar (Owner), saya telah menyelesaikan pembayaran keanggotaan ${target
       box.innerHTML = html;
     }
 
+    // ========================================================
+    // --- JADWAL PENJEMPUTAN DINAMIS (SINKRON DENGAN TANGGAL) ---
+    // ========================================================
+    function initPickupDateSelector() {
+      const container = document.getElementById('pickupDateSelector');
+      if (!container) return;
+
+      const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
+      const fullMonthNames = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+
+      const now = new Date();
+      const d0 = new Date(now);
+      const d1 = new Date(now);
+      d1.setDate(now.getDate() + 1);
+      const d2 = new Date(now);
+      d2.setDate(now.getDate() + 2);
+
+      const dates = [
+        { label: 'Hari Ini', date: d0 },
+        { label: 'Besok', date: d1 },
+        { label: 'Lusa', date: d2 }
+      ];
+
+      const monthBadge = document.getElementById('currentMonthBadge');
+      if (monthBadge) {
+        monthBadge.innerText = `${fullMonthNames[now.getMonth()]} ${now.getFullYear()}`;
+      }
+
+      const items = dates.map(d => {
+        const day = d.date.getDate();
+        const m = monthNames[d.date.getMonth()];
+        const fullStr = `${d.label}, ${day} ${m}`;
+        return {
+          label: d.label,
+          dayStr: `${day} ${m}`,
+          fullStr: fullStr
+        };
+      });
+
+      // Default jika kosong atau masih hardcoded
+      if (!STATE.booking.date || STATE.booking.date.includes('24 Okt') || STATE.booking.date.includes('25 Okt') || STATE.booking.date.includes('26 Okt')) {
+        STATE.booking.date = items[0].fullStr;
+      }
+
+      const matchesAny = items.some(it => it.fullStr === STATE.booking.date);
+      if (!matchesAny) {
+        STATE.booking.date = items[0].fullStr;
+      }
+
+      let html = '';
+      items.forEach(item => {
+        const isSelected = (STATE.booking.date === item.fullStr);
+        if (isSelected) {
+          html += `
+            <button type="button" onclick="selectDate(this, '${item.fullStr}')" class="date-pill flex-1 min-w-[90px] py-2.5 px-3 rounded-xl bg-primary text-on-primary flex flex-col items-center justify-center shadow-sm">
+              <span class="text-[10px] uppercase tracking-wider opacity-90">${item.label}</span>
+              <span class="text-sm font-bold">${item.dayStr}</span>
+            </button>
+          `;
+        } else {
+          html += `
+            <button type="button" onclick="selectDate(this, '${item.fullStr}')" class="date-pill flex-1 min-w-[90px] py-2.5 px-3 rounded-xl bg-surface-container-low text-on-surface flex flex-col items-center justify-center hover:bg-surface-container transition-colors">
+              <span class="text-[10px] text-on-surface-variant uppercase tracking-wider">${item.label}</span>
+              <span class="text-sm font-bold">${item.dayStr}</span>
+            </button>
+          `;
+        }
+      });
+
+      container.innerHTML = html;
+    }
+
     function selectDate(btn, dateStr) {
       STATE.booking.date = dateStr;
       document.querySelectorAll('#pickupDateSelector .date-pill').forEach(b => {
@@ -5328,6 +5511,233 @@ Halo Mas Fajar (Owner), saya telah menyelesaikan pembayaran keanggotaan ${target
       btn.className = 'date-pill flex-1 min-w-[90px] py-2.5 px-3 rounded-xl bg-primary text-on-primary flex flex-col items-center justify-center shadow-sm';
       const topText = btn.querySelector('span:first-child');
       if (topText) topText.className = 'text-[10px] uppercase tracking-wider opacity-90';
+    }
+
+    // ========================================================
+    // --- RINCIAN BANYAKNYA & JENIS PAKAIAN (CLOTHES BREAKDOWN) ---
+    // ========================================================
+    const DEFAULT_CLOTHES_CATEGORIES = [
+      { id: 'kaos', name: 'Kaos / T-Shirt / Polo', icon: 'checkroom' },
+      { id: 'kemeja', name: 'Kemeja / Blus Kerja', icon: 'dry_cleaning' },
+      { id: 'celana_pendek', name: 'Celana Pendek / Boxer', icon: 'straighten' },
+      { id: 'celana_panjang', name: 'Celana Panjang / Jeans / Chino', icon: 'styler' },
+      { id: 'jaket', name: 'Jaket / Hoodie / Sweater', icon: 'layers' },
+      { id: 'underwear', name: 'Pakaian Dalam / Kaos Kaki', icon: 'laundry' },
+      { id: 'gamis', name: 'Gamis / Dress / Rok', icon: 'woman' },
+      { id: 'handuk', name: 'Handuk / Waslap', icon: 'shower' },
+      { id: 'sprei', name: 'Sprei / Sarung Bantal', icon: 'bed' },
+      { id: 'ibadah', name: 'Mukena / Sajadah / Sarung', icon: 'mosque' },
+      { id: 'hijab', name: 'Kerudung / Hijab', icon: 'face_retouching_natural' },
+      { id: 'piyama', name: 'Baju Tidur / Piyama', icon: 'bedtime' }
+    ];
+
+    let tempClothesItems = {};
+    let tempClothesNotes = '';
+
+    function renderClothesModalItems() {
+      const container = document.getElementById('clothesItemsListContainer');
+      if (!container) return;
+
+      const defaultNames = DEFAULT_CLOTHES_CATEGORIES.map(c => c.name);
+      const customKeys = Object.keys(tempClothesItems).filter(k => !defaultNames.includes(k));
+
+      let itemsToRender = DEFAULT_CLOTHES_CATEGORIES.map(c => ({
+        name: c.name,
+        icon: c.icon,
+        isCustom: false
+      }));
+
+      customKeys.forEach(k => {
+        itemsToRender.push({
+          name: k,
+          icon: 'inventory_2',
+          isCustom: true
+        });
+      });
+
+      let html = '';
+      itemsToRender.forEach(item => {
+        const qty = tempClothesItems[item.name] || 0;
+        const isChecked = qty > 0;
+        const safeName = item.name.replace(/'/g, "\\'");
+
+        html += `
+          <div class="flex items-center justify-between p-2.5 rounded-xl border transition-all ${
+            isChecked 
+              ? 'bg-primary/5 border-primary/30 shadow-2xs' 
+              : 'bg-surface-container-lowest border-outline-variant/15 hover:bg-surface-container-low'
+          }">
+            <div class="flex items-center gap-2.5 min-w-0 pr-2">
+              <div class="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 ${
+                isChecked ? 'bg-primary text-white' : 'bg-surface-container text-on-surface-variant'
+              }">
+                <span class="material-symbols-outlined text-[18px]">${item.icon}</span>
+              </div>
+              <div class="min-w-0">
+                <span class="text-xs font-semibold text-on-surface block truncate ${isChecked ? 'text-primary font-bold' : ''}">${item.name}</span>
+                ${item.isCustom ? '<span class="text-[9px] bg-secondary-fixed/50 text-on-secondary-fixed px-1.5 py-0.2 rounded font-medium">Item Kustom</span>' : ''}
+              </div>
+            </div>
+
+            <div class="flex items-center gap-1.5 flex-shrink-0 bg-surface-container-low p-1 rounded-full">
+              <button type="button" onclick="changeClothesQty('${safeName}', -1)" class="w-7 h-7 rounded-full bg-surface-container-lowest text-on-surface flex items-center justify-center font-bold shadow-2xs active:scale-90 hover:bg-surface-container transition-all ${qty === 0 ? 'opacity-40 cursor-not-allowed' : ''}">
+                <span class="material-symbols-outlined text-[15px]">remove</span>
+              </button>
+              <span class="text-xs font-bold text-on-surface px-1.5 min-w-[32px] text-center font-mono ${qty > 0 ? 'text-primary' : 'text-outline'}">${qty}</span>
+              <button type="button" onclick="changeClothesQty('${safeName}', 1)" class="w-7 h-7 rounded-full bg-primary text-white flex items-center justify-center font-bold shadow-2xs active:scale-90 hover:bg-primary/90 transition-all">
+                <span class="material-symbols-outlined text-[15px]">add</span>
+              </button>
+            </div>
+          </div>
+        `;
+      });
+
+      container.innerHTML = html;
+      updateClothesModalSummary();
+    }
+
+    function changeClothesQty(name, delta) {
+      const current = tempClothesItems[name] || 0;
+      const next = current + delta;
+      if (next <= 0) {
+        delete tempClothesItems[name];
+      } else {
+        tempClothesItems[name] = next;
+      }
+      renderClothesModalItems();
+    }
+
+    function addCustomClothesItem() {
+      const input = document.getElementById('customClothesNameInput');
+      if (!input) return;
+      const name = input.value.trim();
+      if (!name) {
+        showToast('Ketikkan nama jenis pakaian terlebih dahulu', 'info');
+        return;
+      }
+      tempClothesItems[name] = (tempClothesItems[name] || 0) + 1;
+      input.value = '';
+      renderClothesModalItems();
+      showToast(`✅ "${name}" berhasil ditambahkan!`, 'success');
+    }
+
+    function updateClothesModalSummary() {
+      const total = Object.values(tempClothesItems).reduce((a, b) => a + b, 0);
+      const el = document.getElementById('clothesModalTotalSummary');
+      if (el) {
+        el.innerText = `${total} Pcs Pakaian`;
+      }
+    }
+
+    function openClothesBreakdownModal() {
+      if (!STATE.booking.clothesItems) STATE.booking.clothesItems = {};
+      tempClothesItems = Object.assign({}, STATE.booking.clothesItems);
+      tempClothesNotes = STATE.booking.clothesNotes || '';
+
+      const notesEl = document.getElementById('clothesSpecialNotes');
+      if (notesEl) notesEl.value = tempClothesNotes;
+
+      const hintEl = document.getElementById('clothesModalWeightHint');
+      if (hintEl) {
+        const cat = LAUNDRY_CATALOG[STATE.booking.category] || LAUNDRY_CATALOG.kiloan;
+        hintEl.innerText = `${STATE.booking.weightKg || cat.defaultQty} ${cat.unit}`;
+      }
+
+      renderClothesModalItems();
+      openModal('modalClothesBreakdown');
+    }
+
+    function resetClothesBreakdown() {
+      tempClothesItems = {};
+      tempClothesNotes = '';
+      const notesEl = document.getElementById('clothesSpecialNotes');
+      if (notesEl) notesEl.value = '';
+      renderClothesModalItems();
+      showToast('Rincian pakaian dikosongkan', 'info');
+    }
+
+    function saveClothesBreakdown() {
+      STATE.booking.clothesItems = Object.assign({}, tempClothesItems);
+      const notesEl = document.getElementById('clothesSpecialNotes');
+      STATE.booking.clothesNotes = notesEl ? notesEl.value.trim() : '';
+
+      updateClothesPreviewUI();
+      closeModal('modalClothesBreakdown');
+
+      const total = Object.values(STATE.booking.clothesItems).reduce((a, b) => a + b, 0);
+      if (total > 0) {
+        showToast(`✅ Rincian ${total} pcs pakaian berhasil disimpan!`, 'success');
+      } else {
+        showToast('Rincian pakaian disimpan', 'info');
+      }
+    }
+
+    function updateClothesPreviewUI() {
+      const container = document.getElementById('clothesBreakdownPreviewContainer');
+      const badge = document.getElementById('clothesBreakdownBadge');
+      const btnLabel = document.getElementById('btnClothesBreakdownLabel');
+      if (!container) return;
+
+      if (!STATE.booking.clothesItems) STATE.booking.clothesItems = {};
+      const items = STATE.booking.clothesItems;
+      const activeKeys = Object.keys(items).filter(k => items[k] > 0);
+      const totalPcs = activeKeys.reduce((acc, k) => acc + items[k], 0);
+
+      if (totalPcs === 0) {
+        if (badge) {
+          badge.innerText = 'Opsional';
+          badge.className = 'text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-surface-container-high text-on-surface-variant';
+        }
+        if (btnLabel) {
+          btnLabel.innerText = 'Buka Menu Pilihan Jenis Pakaian';
+        }
+        container.innerHTML = `
+          <div class="flex items-center gap-2.5 text-xs text-on-surface-variant">
+            <div class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-outline flex-shrink-0">
+              <span class="material-symbols-outlined text-[18px]">styler</span>
+            </div>
+            <div class="flex-1 min-w-0">
+              <span class="font-bold text-on-surface block">Belum ada rincian pakaian dicatat</span>
+              <span class="text-[11px] text-outline block">Bantu kurir &amp; petugas agar pakaian tidak tertukar (misal: 10 kaos, 3 kemeja, dll).</span>
+            </div>
+          </div>
+        `;
+      } else {
+        if (badge) {
+          badge.innerText = `${totalPcs} Pcs Terdata`;
+          badge.className = 'text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-emerald-500/15 text-emerald-800 border border-emerald-500/20';
+        }
+        if (btnLabel) {
+          btnLabel.innerText = `Ubah Rincian Pakaian (${totalPcs} Pcs)`;
+        }
+
+        const chipsHtml = activeKeys.map(k => `
+          <span class="text-[11px] font-semibold bg-surface-container-lowest border border-outline-variant/30 px-2 py-1 rounded-lg text-on-surface flex items-center gap-1 shadow-2xs">
+            <strong class="text-primary font-mono font-bold">${items[k]}x</strong>
+            <span class="truncate max-w-[140px]">${k}</span>
+          </span>
+        `).join('');
+
+        const notesHtml = STATE.booking.clothesNotes 
+          ? `<div class="mt-2 pt-2 border-t border-outline-variant/15 text-[11px] text-on-surface-variant flex items-start gap-1.5">
+               <span class="material-symbols-outlined text-[15px] text-primary flex-shrink-0">edit_note</span>
+               <span class="italic">"${STATE.booking.clothesNotes}"</span>
+             </div>`
+          : '';
+
+        container.innerHTML = `
+          <div class="space-y-1.5">
+            <div class="flex items-center justify-between text-xs pb-1 border-b border-outline-variant/15">
+              <span class="text-on-surface-variant">Total Terdata:</span>
+              <span class="font-extrabold text-primary">${totalPcs} Pcs Pakaian</span>
+            </div>
+            <div class="flex flex-wrap gap-1.5 pt-1">
+              ${chipsHtml}
+            </div>
+            ${notesHtml}
+          </div>
+        `;
+      }
     }
 
     function selectTimeSlot(btn, slotStr) {
@@ -5621,6 +6031,23 @@ Halo Mas Fajar (Owner), saya telah menyelesaikan pembayaran keanggotaan ${target
 
       const coFragrance = document.getElementById('coFragrance');
       if (coFragrance) coFragrance.innerText = STATE.booking.perfume;
+
+      const coClothesRow = document.getElementById('coClothesBreakdownRow');
+      const coClothesSummary = document.getElementById('coClothesBreakdownSummary');
+      const clothesItems = STATE.booking.clothesItems || {};
+      const activeClothesKeys = Object.keys(clothesItems).filter(k => clothesItems[k] > 0);
+      const totalClothesPcs = activeClothesKeys.reduce((acc, k) => acc + clothesItems[k], 0);
+
+      if (totalClothesPcs > 0) {
+        if (coClothesRow) coClothesRow.classList.remove('hidden');
+        const shortList = activeClothesKeys.map(k => `${clothesItems[k]}x ${k.split('/')[0].trim()}`).join(', ');
+        if (coClothesSummary) {
+          coClothesSummary.innerText = `${totalClothesPcs} Pcs (${shortList})`;
+          coClothesSummary.title = activeClothesKeys.map(k => `${clothesItems[k]}x ${k}`).join(', ');
+        }
+      } else {
+        if (coClothesRow) coClothesRow.classList.add('hidden');
+      }
 
       const coAddress = document.getElementById('coAddressSummary');
       if (coAddress) coAddress.innerText = STATE.user.address || 'Belum diatur';
@@ -5943,6 +6370,17 @@ Halo Mas Fajar (Owner), saya telah menyelesaikan pembayaran keanggotaan ${target
         ? `• Ongkir: *GRATIS Antar-Jemput Radius 5 Km (Member Privilege)*\n`
         : `• Ongkir: *Standar Outlet*\n`;
 
+      let clothesBreakdownText = '';
+      const orderClothes = STATE.booking.clothesItems || {};
+      const orderClothesKeys = Object.keys(orderClothes).filter(k => orderClothes[k] > 0);
+      const totalClothesCount = orderClothesKeys.reduce((acc, k) => acc + orderClothes[k], 0);
+
+      if (totalClothesCount > 0) {
+        const lines = orderClothesKeys.map(k => `  • ${orderClothes[k]}x ${k}`);
+        const notesLine = STATE.booking.clothesNotes ? `\n  • Catatan Pakaian: _${STATE.booking.clothesNotes}_` : '';
+        clothesBreakdownText = `\n📋 *RINCIAN JENIS PAKAIAN (Total ${totalClothesCount} Pcs):*\n${lines.join('\n')}${notesLine}\n`;
+      }
+
       let proofText = '';
       if (uploadedPaymentProof) {
         proofText = `📸 *BUKTI PEMBAYARAN:* File struk transfer / QRIS (${uploadedPaymentProof.name}) sudah di-upload di aplikasi dan dilampirkan bersama pesan ini.`;
@@ -5965,7 +6403,7 @@ ${memberBadgeText}*No. WhatsApp / HP:* ${custPhone}
 • Pilihan Parfum: ${perfume}
 • Pelembut: ${softener}
 • Waktu Penjemputan: ${schedule}
-${deliveryText}• Catatan Khusus: ${notes}
+${clothesBreakdownText}${deliveryText}• Catatan Khusus: ${notes}
 
 💰 *RINCIAN PEMBAYARAN:*
 • Biaya Cucian: Rp ${(base + softenerAddon).toLocaleString('id-ID')}
@@ -6005,8 +6443,15 @@ Halo Mas Fajar (Owner), pesanan sudah saya buat via aplikasi. Mohon segera dicek
         status: 'proses',
         stage: 1,
         date: dateStr,
-        paymentNote: paymentNote
+        paymentNote: paymentNote,
+        clothesItems: Object.assign({}, STATE.booking.clothesItems || {}),
+        clothesTotalPcs: totalClothesCount,
+        clothesNotes: STATE.booking.clothesNotes || ''
       });
+
+      // Reset clothes breakdown for next order
+      STATE.booking.clothesItems = {};
+      STATE.booking.clothesNotes = '';
 
       saveState();
       updateUIElements();
