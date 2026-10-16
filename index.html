@@ -1948,14 +1948,14 @@
 
       <!-- QR Code & Link for other devices -->
       <div class="border-t border-surface-container-high pt-3 text-center">
-        <p class="text-xs font-bold text-on-surface mb-2">Buka dari HP di Jaringan Wi-Fi yang Sama:</p>
+        <p class="text-xs font-bold text-on-surface mb-2">Buka dari Browser HP:</p>
         
         <div class="p-3 rounded-2xl bg-white inline-block shadow-sm mb-2 border border-outline-variant/30">
-          <img src="https://api.qrserver.com/v1/create-qr-code/?size=160x160&amp;data=http://10.218.247.90:8080/" alt="QR Code Link HP" class="w-32 h-32 mx-auto"/>
+          <img id="lanQrImg" src="https://api.qrserver.com/v1/create-qr-code/?size=160x160&amp;data=https://fajarcreative.github.io/FreshWash/" alt="QR Code Link HP" class="w-32 h-32 mx-auto"/>
         </div>
         
         <div class="flex items-center gap-2 max-w-xs mx-auto">
-          <input type="text" readonly value="http://10.218.247.90:8080/" id="lanUrlInput" class="flex-1 bg-surface-container-low text-on-surface text-[11px] font-mono px-3 py-2 rounded-xl text-center border border-outline-variant/30 select-all"/>
+          <input type="text" readonly value="https://fajarcreative.github.io/FreshWash/" id="lanUrlInput" class="flex-1 bg-surface-container-low text-on-surface text-[11px] font-mono px-3 py-2 rounded-xl text-center border border-outline-variant/30 select-all"/>
           <button onclick="copyLanUrl()" class="px-3 py-2 rounded-xl bg-primary text-white text-xs font-bold shadow-xs active:scale-95 transition-transform flex items-center gap-1">
             <span class="material-symbols-outlined text-[14px]">content_copy</span>
             <span>Salin</span>
@@ -7280,6 +7280,13 @@ Halo Mas Fajar (Owner), pesanan sudah saya buat via aplikasi. Mohon segera dicek
     }
 
     function openDownloadModal() {
+      const currentUrl = (window.location.origin && window.location.origin !== 'null')
+        ? (window.location.origin + window.location.pathname)
+        : 'https://fajarcreative.github.io/FreshWash/';
+      const lanInput = document.getElementById('lanUrlInput');
+      const lanQr = document.getElementById('lanQrImg');
+      if (lanInput) lanInput.value = currentUrl;
+      if (lanQr) lanQr.src = `https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=${encodeURIComponent(currentUrl)}`;
       openModal('modalDownloadApp');
     }
 
@@ -7317,11 +7324,12 @@ Halo Mas Fajar (Owner), pesanan sudah saya buat via aplikasi. Mohon segera dicek
       }
     }
 
-    // Register PWA Service Worker
+    // Register & Force Auto-Update Service Worker
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
         navigator.serviceWorker.register('./service-worker.js')
           .then((registration) => {
+            registration.update();
             console.log('[PWA] Service Worker aktif:', registration.scope);
           })
           .catch((error) => {
