@@ -670,7 +670,7 @@
           </div>
         </div>
 
-        <!-- 3b. Rincian Banyaknya & Jenis Pakaian (Itemized Clothes Breakdown) -->
+        <!-- 3b. Rincian Banyaknya & Jenis Pakaian (Itemized Clothes Breakdown) - Khusus Kiloan -->
         <div class="bg-surface-container-lowest p-4 rounded-2xl shadow-sm flex flex-col gap-3.5 border border-outline-variant/15" id="clothesBreakdownCard">
           <div class="flex items-center justify-between">
             <div class="flex items-center gap-2">
@@ -683,7 +683,7 @@
             <span class="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-surface-container-high text-on-surface-variant" id="clothesBreakdownBadge">Opsional</span>
           </div>
 
-          <!-- Preview Container (Filled dynamically by updateClothesPreviewUI()) -->
+          <!-- Preview Container (Filled dynamically by updateItemBreakdownUI()) -->
           <div id="clothesBreakdownPreviewContainer" class="p-3 bg-surface-container-low rounded-xl">
             <!-- Rendered by updateClothesPreviewUI() -->
           </div>
@@ -691,6 +691,30 @@
           <button type="button" onclick="openClothesBreakdownModal()" class="w-full py-2.5 px-3 rounded-xl bg-primary/10 hover:bg-primary/20 text-primary text-xs font-bold flex items-center justify-center gap-2 transition-all active:scale-95 border border-primary/20">
             <span class="material-symbols-outlined text-[18px]">playlist_add_check</span>
             <span id="btnClothesBreakdownLabel">Buka Menu Pilihan Jenis Pakaian</span>
+          </button>
+        </div>
+
+        <!-- 3c. Rincian Jumlah & Spesifikasi Sepatu / Tas - Khusus Cuci Sepatu & Tas -->
+        <div class="bg-surface-container-lowest p-4 rounded-2xl shadow-sm flex flex-col gap-3.5 border border-outline-variant/15 hidden" id="shoesBagsBreakdownCard">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <span class="material-symbols-outlined text-primary text-[20px]">roller_skating</span>
+              <div>
+                <h2 class="text-sm font-bold text-on-surface">Rincian Sepatu &amp; Tas</h2>
+                <p class="text-[11px] text-on-surface-variant">Tentukan jumlah sepatu, jumlah tas &amp; spesifikasinya</p>
+              </div>
+            </div>
+            <span class="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-surface-container-high text-on-surface-variant" id="shoesBagsBreakdownBadge">Opsional</span>
+          </div>
+
+          <!-- Preview Container (Filled dynamically by updateShoesBagsPreviewUI()) -->
+          <div id="shoesBagsBreakdownPreviewContainer" class="p-3 bg-surface-container-low rounded-xl">
+            <!-- Rendered by updateShoesBagsPreviewUI() -->
+          </div>
+
+          <button type="button" onclick="openShoesBagsBreakdownModal()" class="w-full py-2.5 px-3 rounded-xl bg-primary/10 hover:bg-primary/20 text-primary text-xs font-bold flex items-center justify-center gap-2 transition-all active:scale-95 border border-primary/20">
+            <span class="material-symbols-outlined text-[18px]">rule</span>
+            <span id="btnShoesBagsBreakdownLabel">Buka Menu Pilihan Sepatu &amp; Tas</span>
           </button>
         </div>
 
@@ -1283,6 +1307,148 @@
     </div>
   </div>
 
+  <!-- Modal Rincian Sepatu & Tas (Menu Terpisah dengan Tombol Closing) -->
+  <div id="modalShoesBagsBreakdown" class="fixed inset-0 z-[85] bg-black/60 backdrop-blur-sm hidden flex items-end sm:items-center justify-center p-0 sm:p-4">
+    <div class="bg-surface-container-lowest w-full max-w-[460px] rounded-t-3xl sm:rounded-3xl shadow-2xl flex flex-col border border-outline-variant/20 max-h-[92vh] animate-in fade-in zoom-in-95 duration-200 overflow-hidden">
+      
+      <!-- Sticky Modal Header dengan Tombol Closing -->
+      <div class="flex items-center justify-between px-5 py-4 border-b border-surface-container-high bg-surface-container-lowest z-10 flex-shrink-0">
+        <div class="flex items-center gap-2.5 min-w-0">
+          <div class="w-9 h-9 rounded-full bg-primary/10 text-primary flex items-center justify-center flex-shrink-0">
+            <span class="material-symbols-outlined text-[20px]">roller_skating</span>
+          </div>
+          <div class="min-w-0">
+            <h3 class="text-sm font-bold text-on-surface truncate">Rincian Sepatu &amp; Tas</h3>
+            <p class="text-[10px] text-on-surface-variant truncate">Tentukan jumlah &amp; spesifikasi perawatannya</p>
+          </div>
+        </div>
+        <!-- Tombol Closing yang Jelas dan Mudah Ditekan -->
+        <button type="button" onclick="closeModal('modalShoesBagsBreakdown')" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-surface-container text-on-surface hover:bg-surface-container-high active:scale-95 transition-all text-xs font-bold border border-outline-variant/20 shadow-2xs" title="Tutup Menu">
+          <span>Tutup</span>
+          <span class="material-symbols-outlined text-[18px]">close</span>
+        </button>
+      </div>
+
+      <!-- Modal Body (Scrollable) -->
+      <div class="p-5 overflow-y-auto space-y-4 flex-1">
+        <!-- Info Banner -->
+        <div class="p-3 bg-primary/5 rounded-2xl border border-primary/15 flex items-start gap-2.5">
+          <span class="material-symbols-outlined text-primary text-[20px] flex-shrink-0 mt-0.5">info</span>
+          <p class="text-[11px] text-on-surface leading-relaxed">
+            Pilih berapa pasang sepatu &amp; berapa tas yang dicuci, serta cantumkan merk/tipe &amp; perawatannya (misal: <em>2 pasang sneakers putih + 1 tas ransel</em>) agar penanganan tepat &amp; hasil maksimal.
+          </p>
+        </div>
+
+        <!-- 1. Hitung Jumlah Sepatu & Tas -->
+        <div class="grid grid-cols-2 gap-3">
+          <!-- Stepper Sepatu -->
+          <div class="p-3 bg-surface-container-low rounded-2xl border border-outline-variant/15 flex flex-col gap-2">
+            <div class="flex items-center gap-1.5">
+              <span class="material-symbols-outlined text-primary text-[18px]">roller_skating</span>
+              <span class="text-xs font-bold text-on-surface">Jumlah Sepatu</span>
+            </div>
+            <div class="flex items-center justify-between bg-surface-container-lowest p-1 rounded-xl border border-outline-variant/20">
+              <button type="button" onclick="changeShoesQty(-1)" class="w-7 h-7 rounded-lg bg-surface-container text-on-surface flex items-center justify-center font-bold active:scale-90 hover:bg-surface-container-high transition-all">
+                <span class="material-symbols-outlined text-[16px]">remove</span>
+              </button>
+              <span class="text-xs font-bold text-on-surface font-mono" id="modalShoesQtyDisplay">0 Pasang</span>
+              <button type="button" onclick="changeShoesQty(1)" class="w-7 h-7 rounded-lg bg-primary text-white flex items-center justify-center font-bold active:scale-90 hover:bg-primary/90 transition-all">
+                <span class="material-symbols-outlined text-[16px]">add</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Stepper Tas -->
+          <div class="p-3 bg-surface-container-low rounded-2xl border border-outline-variant/15 flex flex-col gap-2">
+            <div class="flex items-center gap-1.5">
+              <span class="material-symbols-outlined text-primary text-[18px]">shopping_bag</span>
+              <span class="text-xs font-bold text-on-surface">Jumlah Tas</span>
+            </div>
+            <div class="flex items-center justify-between bg-surface-container-lowest p-1 rounded-xl border border-outline-variant/20">
+              <button type="button" onclick="changeBagsQty(-1)" class="w-7 h-7 rounded-lg bg-surface-container text-on-surface flex items-center justify-center font-bold active:scale-90 hover:bg-surface-container-high transition-all">
+                <span class="material-symbols-outlined text-[16px]">remove</span>
+              </button>
+              <span class="text-xs font-bold text-on-surface font-mono" id="modalBagsQtyDisplay">0 Item</span>
+              <button type="button" onclick="changeBagsQty(1)" class="w-7 h-7 rounded-lg bg-primary text-white flex items-center justify-center font-bold active:scale-90 hover:bg-primary/90 transition-all">
+                <span class="material-symbols-outlined text-[16px]">add</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. Pilihan Jenis / Tipe Sepatu -->
+        <div class="space-y-1.5">
+          <label class="text-xs font-bold text-on-surface flex items-center gap-1.5">
+            <span class="material-symbols-outlined text-[16px] text-primary">check_box</span>
+            <span>Jenis Sepatu yang Dicuci (Bisa pilih &gt; 1)</span>
+          </label>
+          <div class="flex flex-wrap gap-1.5" id="shoeTypePillsContainer">
+            <!-- Dynamic pills populated by renderShoesBagsModalUI() -->
+          </div>
+        </div>
+
+        <!-- 3. Pilihan Jenis / Tipe Tas -->
+        <div class="space-y-1.5">
+          <label class="text-xs font-bold text-on-surface flex items-center gap-1.5">
+            <span class="material-symbols-outlined text-[16px] text-primary">check_box</span>
+            <span>Jenis Tas yang Dicuci (Bisa pilih &gt; 1)</span>
+          </label>
+          <div class="flex flex-wrap gap-1.5" id="bagTypePillsContainer">
+            <!-- Dynamic pills populated by renderShoesBagsModalUI() -->
+          </div>
+        </div>
+
+        <!-- 4. Input Merk / Spesifikasi Item -->
+        <div class="space-y-1.5">
+          <label class="text-xs font-bold text-on-surface flex items-center gap-1.5">
+            <span class="material-symbols-outlined text-[16px] text-primary">branding_watermark</span>
+            <span>Merk &amp; Spesifikasi Warna/Bahan</span>
+          </label>
+          <input type="text" id="shoesBagsBrandInput" placeholder="Misal: Sneakers Nike Air Jordan putih, Ransel Eiger hitam cordura" class="w-full py-2.5 px-3 text-xs rounded-xl bg-surface-container-low border border-outline-variant/20 text-on-surface placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-primary">
+        </div>
+
+        <!-- 5. Kebutuhan Perawatan Khusus (Treatment) -->
+        <div class="space-y-1.5">
+          <label class="text-xs font-bold text-on-surface flex items-center gap-1.5">
+            <span class="material-symbols-outlined text-[16px] text-primary">auto_fix_high</span>
+            <span>Kebutuhan Perawatan / Keluhan Khusus</span>
+          </label>
+          <div class="flex flex-wrap gap-1.5" id="shoesBagsTreatmentPillsContainer">
+            <!-- Dynamic pills populated by renderShoesBagsModalUI() -->
+          </div>
+        </div>
+
+        <!-- 6. Catatan Khusus Tambahan -->
+        <div class="space-y-1.5">
+          <label class="text-xs font-bold text-on-surface flex items-center gap-1.5">
+            <span class="material-symbols-outlined text-[16px] text-primary">edit_note</span>
+            <span>Catatan Kondisi / Keluhan Lainnya (Opsional)</span>
+          </label>
+          <textarea id="shoesBagsNotesInput" rows="2" placeholder="Misal: Insole sepatu kiri ada robek sedikit, resleting depan tas agak seret, jangan disikat bagian sablon." class="w-full py-2.5 px-3 text-xs rounded-xl bg-surface-container-low border border-outline-variant/20 text-on-surface placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
+        </div>
+
+      </div>
+
+      <!-- Sticky Modal Footer -->
+      <div class="px-5 py-3.5 border-t border-surface-container-high bg-surface-container-lowest flex items-center justify-between gap-3 flex-shrink-0">
+        <div class="flex flex-col">
+          <span class="text-[10px] text-on-surface-variant font-medium">Total Rincian:</span>
+          <span class="text-sm font-extrabold text-primary" id="shoesBagsModalTotalSummary">0 Sepatu • 0 Tas</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <button type="button" onclick="resetShoesBagsBreakdown()" class="px-3 py-2 rounded-xl bg-surface-container hover:bg-surface-container-high text-on-surface text-xs font-semibold active:scale-95 transition-all">
+            Reset
+          </button>
+          <button type="button" onclick="saveShoesBagsBreakdown()" class="px-4 py-2 rounded-xl bg-primary hover:bg-primary/90 text-on-primary text-xs font-bold flex items-center gap-1.5 shadow-sm active:scale-95 transition-all">
+            <span class="material-symbols-outlined text-[16px]">check</span>
+            <span>Simpan Rincian</span>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
   <!-- 2. Checkout & Payment Confirmation Modal (Terintegrasi) -->
   <div id="modalCheckout" class="fixed inset-0 z-[80] bg-black/60 backdrop-blur-sm hidden flex items-end sm:items-center justify-center p-0 sm:p-4">
     <div class="bg-surface-container-lowest w-full max-w-[440px] rounded-t-3xl sm:rounded-3xl p-5 shadow-2xl flex flex-col gap-4 animate-in fade-in zoom-in-95 duration-200 border border-outline-variant/20 max-h-[92vh] overflow-y-auto">
@@ -1338,6 +1504,10 @@
           <div class="flex justify-between items-start pt-0.5 hidden" id="coClothesBreakdownRow">
             <span class="text-on-surface-variant flex-shrink-0">Rincian Pakaian</span>
             <span class="font-bold text-primary text-right truncate max-w-[210px]" id="coClothesBreakdownSummary">-</span>
+          </div>
+          <div class="flex justify-between items-start pt-0.5 hidden" id="coShoesBagsBreakdownRow">
+            <span class="text-on-surface-variant flex-shrink-0">Rincian Sepatu &amp; Tas</span>
+            <span class="font-bold text-primary text-right truncate max-w-[210px]" id="coShoesBagsBreakdownSummary">-</span>
           </div>
           <div class="flex justify-between items-start pt-0.5">
             <span class="text-on-surface-variant flex-shrink-0">Alamat Jemput</span>
@@ -2931,7 +3101,14 @@
         extraSoftener: false,
         notes: '',
         clothesItems: {},
-        clothesNotes: ''
+        clothesNotes: '',
+        shoesQty: 0,
+        bagsQty: 0,
+        shoeTypes: [],
+        bagTypes: [],
+        shoesBagsBrandSpec: '',
+        shoesBagsTreatments: [],
+        shoesBagsNotes: ''
       },
       tracking: {
         orderId: null,
@@ -3169,7 +3346,7 @@
       renderBookingPackagesUI();
       recalculatePrice();
       initPickupDateSelector();
-      updateClothesPreviewUI();
+      updateItemBreakdownUI();
     }
 
     function updateProfileCardUI() {
@@ -4846,6 +5023,7 @@ Halo Mas Fajar (Owner), saya telah menyelesaikan pembayaran keanggotaan ${target
                   <h4 class="text-xs font-bold text-on-surface">${o.serviceName || 'Paket Laundry'}</h4>
                   <p class="text-[11px] text-on-surface-variant">${o.perfume || 'Lavender Bliss'} • ${o.weightKg || 4} Kg</p>
                   ${o.clothesTotalPcs > 0 ? `<span class="inline-flex items-center gap-1 text-[10px] font-semibold text-primary bg-primary/10 px-1.5 py-0.5 rounded-md mt-0.5"><span class="material-symbols-outlined text-[12px]">checkroom</span>${o.clothesTotalPcs} Pcs Pakaian</span>` : ''}
+                  ${(o.shoesQty > 0 || o.bagsQty > 0) ? `<span class="inline-flex items-center gap-1 text-[10px] font-semibold text-teal-800 bg-teal-100 px-1.5 py-0.5 rounded-md mt-0.5"><span class="material-symbols-outlined text-[12px]">roller_skating</span>${o.shoesQty || 0} Sepatu • ${o.bagsQty || 0} Tas</span>` : ''}
                   <p class="text-[11px] font-bold text-primary mt-0.5">Rp ${(o.total || 0).toLocaleString('id-ID')}</p>
                 </div>
                 <button onclick="chatOrderWhatsApp('${o.id}')" class="py-1.5 px-3 rounded-xl bg-emerald-600 text-white text-xs font-bold flex items-center gap-1 shadow-xs hover:bg-emerald-700 transition-all">
@@ -4894,6 +5072,7 @@ Halo Mas Fajar (Owner), saya telah menyelesaikan pembayaran keanggotaan ${target
                     <h4 class="text-xs font-bold text-on-surface">${o.serviceName || 'Paket Laundry'}</h4>
                     <p class="text-[11px] text-on-surface-variant">Total: <strong class="text-primary font-bold">Rp ${(o.total || 0).toLocaleString('id-ID')}</strong></p>
                     ${o.clothesTotalPcs > 0 ? `<span class="inline-flex items-center gap-1 text-[10px] font-semibold text-primary bg-primary/10 px-1.5 py-0.5 rounded-md mt-0.5"><span class="material-symbols-outlined text-[12px]">checkroom</span>${o.clothesTotalPcs} Pcs Pakaian</span>` : ''}
+                    ${(o.shoesQty > 0 || o.bagsQty > 0) ? `<span class="inline-flex items-center gap-1 text-[10px] font-semibold text-teal-800 bg-teal-100 px-1.5 py-0.5 rounded-md mt-0.5"><span class="material-symbols-outlined text-[12px]">roller_skating</span>${o.shoesQty || 0} Sepatu • ${o.bagsQty || 0} Tas</span>` : ''}
                     ${isConfirmed && o.rating ? `
                       <span class="text-[10px] text-amber-500 font-bold block mt-0.5">⭐ ${o.rating}.0 • Ulasan Diberikan</span>
                     ` : ''}
@@ -5224,6 +5403,7 @@ Halo Mas Fajar (Owner), saya telah menyelesaikan pembayaran keanggotaan ${target
 
       renderBookingPackagesUI();
       recalculatePrice();
+      updateItemBreakdownUI();
     }
 
     function setServicePackage(pkgId) {
@@ -5237,6 +5417,7 @@ Halo Mas Fajar (Owner), saya telah menyelesaikan pembayaran keanggotaan ${target
 
       renderBookingPackagesUI();
       recalculatePrice();
+      updateItemBreakdownUI();
     }
 
     function renderBookingPackagesUI() {
@@ -5740,6 +5921,326 @@ Halo Mas Fajar (Owner), saya telah menyelesaikan pembayaran keanggotaan ${target
       }
     }
 
+    // ========================================================
+    // --- RINCIAN JUMLAH & SPESIFIKASI SEPATU & TAS ---
+    // ========================================================
+    const SHOE_TYPES_LIST = [
+      'Sneakers / Kanvas',
+      'Sepatu Kulit / Formal',
+      'Suede / Nubuck',
+      'Running / Olahraga',
+      'Flatshoes / Heels',
+      'Boots / Safety'
+    ];
+
+    const BAG_TYPES_LIST = [
+      'Tas Ransel / Backpack',
+      'Sling Bag / Selempang',
+      'Tote Bag / Kanvas',
+      'Handbag / Tas Kerja',
+      'Tas Kulit / Branded',
+      'Koper / Travel Bag'
+    ];
+
+    const SHOES_BAGS_TREATMENTS_LIST = [
+      'Unyellowing Sol Kuning',
+      'Leather Care / Polish',
+      'Deep Clean Noda Membandel',
+      'Deodorizing & UV Steril',
+      'Lem Sol / Perbaikan Ringan'
+    ];
+
+    let tempShoesQty = 0;
+    let tempBagsQty = 0;
+    let tempShoeTypes = [];
+    let tempBagTypes = [];
+    let tempTreatments = [];
+
+    function openShoesBagsBreakdownModal() {
+      tempShoesQty = STATE.booking.shoesQty || 0;
+      tempBagsQty = STATE.booking.bagsQty || 0;
+
+      tempShoeTypes = Array.isArray(STATE.booking.shoeTypes) ? [...STATE.booking.shoeTypes] : [];
+      tempBagTypes = Array.isArray(STATE.booking.bagTypes) ? [...STATE.booking.bagTypes] : [];
+      tempTreatments = Array.isArray(STATE.booking.shoesBagsTreatments) ? [...STATE.booking.shoesBagsTreatments] : [];
+
+      const brandInput = document.getElementById('shoesBagsBrandInput');
+      if (brandInput) brandInput.value = STATE.booking.shoesBagsBrandSpec || '';
+
+      const notesInput = document.getElementById('shoesBagsNotesInput');
+      if (notesInput) notesInput.value = STATE.booking.shoesBagsNotes || '';
+
+      renderShoesBagsModalUI();
+      openModal('modalShoesBagsBreakdown');
+    }
+
+    function changeShoesQty(delta) {
+      tempShoesQty = Math.max(0, tempShoesQty + delta);
+      updateShoesBagsCountersDisplay();
+    }
+
+    function changeBagsQty(delta) {
+      tempBagsQty = Math.max(0, tempBagsQty + delta);
+      updateShoesBagsCountersDisplay();
+    }
+
+    function toggleShoeType(type) {
+      const idx = tempShoeTypes.indexOf(type);
+      if (idx > -1) {
+        tempShoeTypes.splice(idx, 1);
+      } else {
+        tempShoeTypes.push(type);
+        if (tempShoesQty === 0) tempShoesQty = 1;
+      }
+      renderShoesBagsModalUI();
+    }
+
+    function toggleBagType(type) {
+      const idx = tempBagTypes.indexOf(type);
+      if (idx > -1) {
+        tempBagTypes.splice(idx, 1);
+      } else {
+        tempBagTypes.push(type);
+        if (tempBagsQty === 0) tempBagsQty = 1;
+      }
+      renderShoesBagsModalUI();
+    }
+
+    function toggleShoesBagsTreatment(treatment) {
+      const idx = tempTreatments.indexOf(treatment);
+      if (idx > -1) {
+        tempTreatments.splice(idx, 1);
+      } else {
+        tempTreatments.push(treatment);
+      }
+      renderShoesBagsModalUI();
+    }
+
+    function updateShoesBagsCountersDisplay() {
+      const elShoes = document.getElementById('modalShoesQtyDisplay');
+      if (elShoes) elShoes.innerText = `${tempShoesQty} Pasang`;
+
+      const elBags = document.getElementById('modalBagsQtyDisplay');
+      if (elBags) elBags.innerText = `${tempBagsQty} Item`;
+
+      const totalEl = document.getElementById('shoesBagsModalTotalSummary');
+      if (totalEl) {
+        totalEl.innerText = `${tempShoesQty} Sepatu • ${tempBagsQty} Tas`;
+      }
+    }
+
+    function renderShoesBagsModalUI() {
+      updateShoesBagsCountersDisplay();
+
+      // Render Shoe Type Pills
+      const shoeContainer = document.getElementById('shoeTypePillsContainer');
+      if (shoeContainer) {
+        shoeContainer.innerHTML = SHOE_TYPES_LIST.map(type => {
+          const isSelected = tempShoeTypes.includes(type);
+          const safeType = type.replace(/'/g, "\\'");
+          return `
+            <button type="button" onclick="toggleShoeType('${safeType}')" class="py-1.5 px-3 rounded-xl text-xs font-semibold transition-all flex items-center gap-1 active:scale-95 ${
+              isSelected 
+                ? 'bg-primary text-on-primary shadow-2xs font-bold' 
+                : 'bg-surface-container text-on-surface hover:bg-surface-container-high border border-outline-variant/15'
+            }">
+              <span class="material-symbols-outlined text-[15px]">${isSelected ? 'check_circle' : 'add_circle'}</span>
+              <span>${type}</span>
+            </button>
+          `;
+        }).join('');
+      }
+
+      // Render Bag Type Pills
+      const bagContainer = document.getElementById('bagTypePillsContainer');
+      if (bagContainer) {
+        bagContainer.innerHTML = BAG_TYPES_LIST.map(type => {
+          const isSelected = tempBagTypes.includes(type);
+          const safeType = type.replace(/'/g, "\\'");
+          return `
+            <button type="button" onclick="toggleBagType('${safeType}')" class="py-1.5 px-3 rounded-xl text-xs font-semibold transition-all flex items-center gap-1 active:scale-95 ${
+              isSelected 
+                ? 'bg-teal-700 text-white shadow-2xs font-bold' 
+                : 'bg-surface-container text-on-surface hover:bg-surface-container-high border border-outline-variant/15'
+            }">
+              <span class="material-symbols-outlined text-[15px]">${isSelected ? 'check_circle' : 'add_circle'}</span>
+              <span>${type}</span>
+            </button>
+          `;
+        }).join('');
+      }
+
+      // Render Treatment Pills
+      const treatmentContainer = document.getElementById('shoesBagsTreatmentPillsContainer');
+      if (treatmentContainer) {
+        treatmentContainer.innerHTML = SHOES_BAGS_TREATMENTS_LIST.map(t => {
+          const isSelected = tempTreatments.includes(t);
+          const safeT = t.replace(/'/g, "\\'");
+          return `
+            <button type="button" onclick="toggleShoesBagsTreatment('${safeT}')" class="py-1.5 px-3 rounded-xl text-xs font-semibold transition-all flex items-center gap-1 active:scale-95 ${
+              isSelected 
+                ? 'bg-amber-600 text-white shadow-2xs font-bold' 
+                : 'bg-surface-container text-on-surface hover:bg-surface-container-high border border-outline-variant/15'
+            }">
+              <span class="material-symbols-outlined text-[15px]">${isSelected ? 'check' : 'local_offer'}</span>
+              <span>${t}</span>
+            </button>
+          `;
+        }).join('');
+      }
+    }
+
+    function resetShoesBagsBreakdown() {
+      tempShoesQty = 0;
+      tempBagsQty = 0;
+      tempShoeTypes = [];
+      tempBagTypes = [];
+      tempTreatments = [];
+      const brandInput = document.getElementById('shoesBagsBrandInput');
+      if (brandInput) brandInput.value = '';
+      const notesInput = document.getElementById('shoesBagsNotesInput');
+      if (notesInput) notesInput.value = '';
+      renderShoesBagsModalUI();
+      showToast('Rincian sepatu & tas dikosongkan', 'info');
+    }
+
+    function saveShoesBagsBreakdown() {
+      STATE.booking.shoesQty = tempShoesQty;
+      STATE.booking.bagsQty = tempBagsQty;
+      STATE.booking.shoeTypes = [...tempShoeTypes];
+      STATE.booking.bagTypes = [...tempBagTypes];
+      STATE.booking.shoesBagsTreatments = [...tempTreatments];
+
+      const brandInput = document.getElementById('shoesBagsBrandInput');
+      STATE.booking.shoesBagsBrandSpec = brandInput ? brandInput.value.trim() : '';
+
+      const notesInput = document.getElementById('shoesBagsNotesInput');
+      STATE.booking.shoesBagsNotes = notesInput ? notesInput.value.trim() : '';
+
+      const totalItemCount = tempShoesQty + tempBagsQty;
+      if (totalItemCount > 0) {
+        STATE.booking.weightKg = totalItemCount;
+        const display = document.getElementById('bookingWeightDisplay');
+        const cat = LAUNDRY_CATALOG[STATE.booking.category] || LAUNDRY_CATALOG.sepatu;
+        if (display) display.innerText = `${totalItemCount} ${cat.unit}`;
+        recalculatePrice();
+      }
+
+      updateItemBreakdownUI();
+      closeModal('modalShoesBagsBreakdown');
+
+      if (totalItemCount > 0 || STATE.booking.shoesBagsBrandSpec) {
+        showToast(`✅ Rincian ${tempShoesQty} sepatu & ${tempBagsQty} tas berhasil disimpan!`, 'success');
+      } else {
+        showToast('Rincian sepatu & tas disimpan', 'info');
+      }
+    }
+
+    function updateShoesBagsPreviewUI() {
+      const container = document.getElementById('shoesBagsBreakdownPreviewContainer');
+      const badge = document.getElementById('shoesBagsBreakdownBadge');
+      const btnLabel = document.getElementById('btnShoesBagsBreakdownLabel');
+      if (!container) return;
+
+      const sQty = STATE.booking.shoesQty || 0;
+      const bQty = STATE.booking.bagsQty || 0;
+      const sTypes = STATE.booking.shoeTypes || [];
+      const bTypes = STATE.booking.bagTypes || [];
+      const treatments = STATE.booking.shoesBagsTreatments || [];
+      const brandSpec = STATE.booking.shoesBagsBrandSpec || '';
+      const notes = STATE.booking.shoesBagsNotes || '';
+
+      const hasData = (sQty > 0 || bQty > 0 || brandSpec || sTypes.length > 0 || bTypes.length > 0);
+
+      if (!hasData) {
+        if (badge) {
+          badge.innerText = 'Opsional';
+          badge.className = 'text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-surface-container-high text-on-surface-variant';
+        }
+        if (btnLabel) {
+          btnLabel.innerText = 'Buka Menu Pilihan Sepatu & Tas';
+        }
+        container.innerHTML = `
+          <div class="flex items-center gap-2.5 text-xs text-on-surface-variant">
+            <div class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-outline flex-shrink-0">
+              <span class="material-symbols-outlined text-[18px]">roller_skating</span>
+            </div>
+            <div class="flex-1 min-w-0">
+              <span class="font-bold text-on-surface block">Belum ada rincian sepatu/tas dicatat</span>
+              <span class="text-[11px] text-outline block">Pilih jumlah sepatu, jumlah tas, merk &amp; spesifikasi perawatannya.</span>
+            </div>
+          </div>
+        `;
+      } else {
+        if (badge) {
+          badge.innerText = `${sQty} Sepatu • ${bQty} Tas Terdata`;
+          badge.className = 'text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-emerald-500/15 text-emerald-800 border border-emerald-500/20';
+        }
+        if (btnLabel) {
+          btnLabel.innerText = `Ubah Rincian Sepatu & Tas (${sQty} Sepatu, ${bQty} Tas)`;
+        }
+
+        let chipsHtml = '';
+        if (sQty > 0) {
+          chipsHtml += `<span class="text-[11px] font-semibold bg-surface-container-lowest border border-outline-variant/30 px-2 py-1 rounded-lg text-primary flex items-center gap-1 shadow-2xs font-bold">👟 ${sQty} Pasang Sepatu</span>`;
+        }
+        if (bQty > 0) {
+          chipsHtml += `<span class="text-[11px] font-semibold bg-surface-container-lowest border border-outline-variant/30 px-2 py-1 rounded-lg text-teal-700 flex items-center gap-1 shadow-2xs font-bold">🎒 ${bQty} Item Tas</span>`;
+        }
+        sTypes.forEach(t => {
+          chipsHtml += `<span class="text-[11px] bg-primary/10 text-primary px-2 py-0.5 rounded-md font-medium">${t}</span>`;
+        });
+        bTypes.forEach(t => {
+          chipsHtml += `<span class="text-[11px] bg-teal-500/10 text-teal-800 px-2 py-0.5 rounded-md font-medium">${t}</span>`;
+        });
+        treatments.forEach(t => {
+          chipsHtml += `<span class="text-[11px] bg-amber-500/15 text-amber-800 px-2 py-0.5 rounded-md font-medium">⚡ ${t}</span>`;
+        });
+
+        const brandHtml = brandSpec 
+          ? `<p class="text-[11px] text-on-surface mt-1.5 pt-1.5 border-t border-outline-variant/10">🏷️ <strong>Merk/Spesifikasi:</strong> ${brandSpec}</p>` 
+          : '';
+
+        const notesHtml = notes 
+          ? `<p class="text-[11px] text-on-surface-variant italic mt-1 flex items-start gap-1"><span class="material-symbols-outlined text-[14px] text-primary flex-shrink-0 mt-0.5">edit_note</span><span>"${notes}"</span></p>` 
+          : '';
+
+        container.innerHTML = `
+          <div class="space-y-1.5">
+            <div class="flex items-center justify-between text-xs pb-1 border-b border-outline-variant/15">
+              <span class="text-on-surface-variant">Rincian Terdata:</span>
+              <span class="font-extrabold text-primary">${sQty} Pasang Sepatu • ${bQty} Tas</span>
+            </div>
+            <div class="flex flex-wrap gap-1.5 pt-1">
+              ${chipsHtml}
+            </div>
+            ${brandHtml}
+            ${notesHtml}
+          </div>
+        `;
+      }
+    }
+
+    function updateItemBreakdownUI() {
+      const currentCat = STATE.booking.category || 'kiloan';
+      const clothesCard = document.getElementById('clothesBreakdownCard');
+      const shoesBagsCard = document.getElementById('shoesBagsBreakdownCard');
+
+      if (currentCat === 'kiloan') {
+        if (clothesCard) clothesCard.classList.remove('hidden');
+        if (shoesBagsCard) shoesBagsCard.classList.add('hidden');
+        updateClothesPreviewUI();
+      } else if (currentCat === 'sepatu') {
+        if (clothesCard) clothesCard.classList.add('hidden');
+        if (shoesBagsCard) shoesBagsCard.classList.remove('hidden');
+        updateShoesBagsPreviewUI();
+      } else {
+        // Pada menu selain kiloan dan cuci sepatu & tas (misal satuan dan bedcover), sembunyikan rincian
+        if (clothesCard) clothesCard.classList.add('hidden');
+        if (shoesBagsCard) shoesBagsCard.classList.add('hidden');
+      }
+    }
+
     function selectTimeSlot(btn, slotStr) {
       STATE.booking.timeSlot = slotStr;
       document.querySelectorAll('#timeSlotContainer .slot-btn').forEach(b => {
@@ -6034,19 +6535,47 @@ Halo Mas Fajar (Owner), saya telah menyelesaikan pembayaran keanggotaan ${target
 
       const coClothesRow = document.getElementById('coClothesBreakdownRow');
       const coClothesSummary = document.getElementById('coClothesBreakdownSummary');
-      const clothesItems = STATE.booking.clothesItems || {};
-      const activeClothesKeys = Object.keys(clothesItems).filter(k => clothesItems[k] > 0);
-      const totalClothesPcs = activeClothesKeys.reduce((acc, k) => acc + clothesItems[k], 0);
+      const coShoesBagsRow = document.getElementById('coShoesBagsBreakdownRow');
+      const coShoesBagsSummary = document.getElementById('coShoesBagsBreakdownSummary');
 
-      if (totalClothesPcs > 0) {
-        if (coClothesRow) coClothesRow.classList.remove('hidden');
-        const shortList = activeClothesKeys.map(k => `${clothesItems[k]}x ${k.split('/')[0].trim()}`).join(', ');
-        if (coClothesSummary) {
-          coClothesSummary.innerText = `${totalClothesPcs} Pcs (${shortList})`;
-          coClothesSummary.title = activeClothesKeys.map(k => `${clothesItems[k]}x ${k}`).join(', ');
+      if (STATE.booking.category === 'kiloan') {
+        if (coShoesBagsRow) coShoesBagsRow.classList.add('hidden');
+        const clothesItems = STATE.booking.clothesItems || {};
+        const activeClothesKeys = Object.keys(clothesItems).filter(k => clothesItems[k] > 0);
+        const totalClothesPcs = activeClothesKeys.reduce((acc, k) => acc + clothesItems[k], 0);
+
+        if (totalClothesPcs > 0) {
+          if (coClothesRow) coClothesRow.classList.remove('hidden');
+          const shortList = activeClothesKeys.map(k => `${clothesItems[k]}x ${k.split('/')[0].trim()}`).join(', ');
+          if (coClothesSummary) {
+            coClothesSummary.innerText = `${totalClothesPcs} Pcs (${shortList})`;
+            coClothesSummary.title = activeClothesKeys.map(k => `${clothesItems[k]}x ${k}`).join(', ');
+          }
+        } else {
+          if (coClothesRow) coClothesRow.classList.add('hidden');
+        }
+      } else if (STATE.booking.category === 'sepatu') {
+        if (coClothesRow) coClothesRow.classList.add('hidden');
+        const sQty = STATE.booking.shoesQty || 0;
+        const bQty = STATE.booking.bagsQty || 0;
+        const brandSpec = STATE.booking.shoesBagsBrandSpec || '';
+        const hasSpec = sQty > 0 || bQty > 0 || Boolean(brandSpec);
+
+        if (hasSpec) {
+          if (coShoesBagsRow) coShoesBagsRow.classList.remove('hidden');
+          let textParts = [];
+          if (sQty > 0) textParts.push(`${sQty} Sepatu`);
+          if (bQty > 0) textParts.push(`${bQty} Tas`);
+          if (brandSpec) textParts.push(brandSpec);
+          if (coShoesBagsSummary) {
+            coShoesBagsSummary.innerText = textParts.join(' • ') || 'Spesifikasi terdata';
+          }
+        } else {
+          if (coShoesBagsRow) coShoesBagsRow.classList.add('hidden');
         }
       } else {
         if (coClothesRow) coClothesRow.classList.add('hidden');
+        if (coShoesBagsRow) coShoesBagsRow.classList.add('hidden');
       }
 
       const coAddress = document.getElementById('coAddressSummary');
@@ -6370,15 +6899,36 @@ Halo Mas Fajar (Owner), saya telah menyelesaikan pembayaran keanggotaan ${target
         ? `• Ongkir: *GRATIS Antar-Jemput Radius 5 Km (Member Privilege)*\n`
         : `• Ongkir: *Standar Outlet*\n`;
 
-      let clothesBreakdownText = '';
-      const orderClothes = STATE.booking.clothesItems || {};
-      const orderClothesKeys = Object.keys(orderClothes).filter(k => orderClothes[k] > 0);
-      const totalClothesCount = orderClothesKeys.reduce((acc, k) => acc + orderClothes[k], 0);
+      let breakdownBlockText = '';
+      if (STATE.booking.category === 'kiloan') {
+        const orderClothes = STATE.booking.clothesItems || {};
+        const orderClothesKeys = Object.keys(orderClothes).filter(k => orderClothes[k] > 0);
+        const totalClothesCount = orderClothesKeys.reduce((acc, k) => acc + orderClothes[k], 0);
 
-      if (totalClothesCount > 0) {
-        const lines = orderClothesKeys.map(k => `  • ${orderClothes[k]}x ${k}`);
-        const notesLine = STATE.booking.clothesNotes ? `\n  • Catatan Pakaian: _${STATE.booking.clothesNotes}_` : '';
-        clothesBreakdownText = `\n📋 *RINCIAN JENIS PAKAIAN (Total ${totalClothesCount} Pcs):*\n${lines.join('\n')}${notesLine}\n`;
+        if (totalClothesCount > 0) {
+          const lines = orderClothesKeys.map(k => `  • ${orderClothes[k]}x ${k}`);
+          const notesLine = STATE.booking.clothesNotes ? `\n  • Catatan Pakaian: _${STATE.booking.clothesNotes}_` : '';
+          breakdownBlockText = `\n📋 *RINCIAN JENIS PAKAIAN (Total ${totalClothesCount} Pcs):*\n${lines.join('\n')}${notesLine}\n`;
+        }
+      } else if (STATE.booking.category === 'sepatu') {
+        const sQty = STATE.booking.shoesQty || 0;
+        const bQty = STATE.booking.bagsQty || 0;
+        const sTypes = (STATE.booking.shoeTypes || []).join(', ');
+        const bTypes = (STATE.booking.bagTypes || []).join(', ');
+        const specs = STATE.booking.shoesBagsBrandSpec || '';
+        const treatments = (STATE.booking.shoesBagsTreatments || []).join(', ');
+        const sbNotes = STATE.booking.shoesBagsNotes || '';
+
+        if (sQty > 0 || bQty > 0 || specs || treatments || sbNotes) {
+          let lines = [];
+          if (sQty > 0) lines.push(`  • Jumlah Sepatu: ${sQty} Pasang ${sTypes ? `(${sTypes})` : ''}`);
+          if (bQty > 0) lines.push(`  • Jumlah Tas: ${bQty} Item ${bTypes ? `(${bTypes})` : ''}`);
+          if (specs) lines.push(`  • Merk & Spesifikasi: ${specs}`);
+          if (treatments) lines.push(`  • Kebutuhan Treatment: ${treatments}`);
+          if (sbNotes) lines.push(`  • Catatan Kondisi: _${sbNotes}_`);
+
+          breakdownBlockText = `\n👟 *RINCIAN SEPATU & TAS:*\n${lines.join('\n')}\n`;
+        }
       }
 
       let proofText = '';
@@ -6403,7 +6953,7 @@ ${memberBadgeText}*No. WhatsApp / HP:* ${custPhone}
 • Pilihan Parfum: ${perfume}
 • Pelembut: ${softener}
 • Waktu Penjemputan: ${schedule}
-${clothesBreakdownText}${deliveryText}• Catatan Khusus: ${notes}
+${breakdownBlockText}${deliveryText}• Catatan Khusus: ${notes}
 
 💰 *RINCIAN PEMBAYARAN:*
 • Biaya Cucian: Rp ${(base + softenerAddon).toLocaleString('id-ID')}
@@ -6445,13 +6995,27 @@ Halo Mas Fajar (Owner), pesanan sudah saya buat via aplikasi. Mohon segera dicek
         date: dateStr,
         paymentNote: paymentNote,
         clothesItems: Object.assign({}, STATE.booking.clothesItems || {}),
-        clothesTotalPcs: totalClothesCount,
-        clothesNotes: STATE.booking.clothesNotes || ''
+        clothesTotalPcs: STATE.booking.category === 'kiloan' ? Object.values(STATE.booking.clothesItems || {}).reduce((a, b) => a + b, 0) : 0,
+        clothesNotes: STATE.booking.clothesNotes || '',
+        shoesQty: STATE.booking.shoesQty || 0,
+        bagsQty: STATE.booking.bagsQty || 0,
+        shoeTypes: [...(STATE.booking.shoeTypes || [])],
+        bagTypes: [...(STATE.booking.bagTypes || [])],
+        shoesBagsBrandSpec: STATE.booking.shoesBagsBrandSpec || '',
+        shoesBagsTreatments: [...(STATE.booking.shoesBagsTreatments || [])],
+        shoesBagsNotes: STATE.booking.shoesBagsNotes || ''
       });
 
-      // Reset clothes breakdown for next order
+      // Reset clothes & shoes/bags breakdown for next order
       STATE.booking.clothesItems = {};
       STATE.booking.clothesNotes = '';
+      STATE.booking.shoesQty = 0;
+      STATE.booking.bagsQty = 0;
+      STATE.booking.shoeTypes = [];
+      STATE.booking.bagTypes = [];
+      STATE.booking.shoesBagsBrandSpec = '';
+      STATE.booking.shoesBagsTreatments = [];
+      STATE.booking.shoesBagsNotes = '';
 
       saveState();
       updateUIElements();
