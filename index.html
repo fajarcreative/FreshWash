@@ -6868,7 +6868,7 @@ Halo Mas Fajar (Owner), saya telah menyelesaikan pembayaran keanggotaan ${target
 
     function quickTopUpForOrder() {}
 
-    async function confirmPlaceOrder() {
+    function confirmPlaceOrder() {
       const { base, softenerAddon, discountAmount, memberDiscountAmount, total, isFreePickup } = recalculatePrice();
       let payOption = document.querySelector('input[name="pay_option"]:checked')?.value || 'qris';
       if (!['qris', 'bca', 'mandiri', 'bri', 'bsi'].includes(payOption)) {
@@ -7007,50 +7007,32 @@ ${proofText}
 ----------------------------------------
 Halo Mas Fajar (Owner), pesanan sudah saya buat via aplikasi. Mohon segera dicek & kurir dijadwalkan ya. Terima kasih! 🙏`;
 
-      // Kirim pesanan ke WhatsApp beserta foto bukti bayar langsung
-      let sharedDirectly = false;
-
-      // 1. Jika pengguna melampirkan foto struk, kirim gambar langsung bersama template via Web Share API (HP Android & iOS)
-      if (uploadedPaymentProof && uploadedPaymentProof.file && navigator.share && navigator.canShare) {
-        const shareData = {
-          title: `Pesanan FreshWash ${newCode}`,
-          text: waMessage,
-          files: [uploadedPaymentProof.file]
-        };
-
-        if (navigator.canShare({ files: [uploadedPaymentProof.file] })) {
-          try {
-            await navigator.share(shareData);
-            sharedDirectly = true;
-          } catch (shareErr) {
-            if (shareErr.name === 'AbortError') {
-              sharedDirectly = true; // User menekan batal di sheet share
-            } else {
-              console.warn('Web Share API error:', shareErr);
-            }
-          }
+      // Salin foto struk ke clipboard jika didukung browser
+      if (uploadedPaymentProof && uploadedPaymentProof.file && navigator.clipboard && window.ClipboardItem) {
+        try {
+          navigator.clipboard.write([
+            new ClipboardItem({ [uploadedPaymentProof.file.type]: uploadedPaymentProof.file })
+          ]);
+        } catch (clipErr) {
+          console.warn('Clipboard write error:', clipErr);
         }
       }
 
-      // 2. Jika Web Share file tidak didukung / gagal, salin foto ke clipboard otomatis jika didukung lalu buka link WhatsApp
-      if (!sharedDirectly) {
-        if (uploadedPaymentProof && uploadedPaymentProof.file && navigator.clipboard && window.ClipboardItem) {
-          try {
-            await navigator.clipboard.write([
-              new ClipboardItem({ [uploadedPaymentProof.file.type]: uploadedPaymentProof.file })
-            ]);
-            showToast('Foto bukti transfer telah otomatis disalin ke clipboard! Tempel (Paste) di chat WhatsApp. 📸', 'info');
-          } catch (clipErr) {
-            console.warn('Clipboard write error:', clipErr);
-          }
+      // Selalu buka link WhatsApp langsung & otomatis ke nomor Owner (0823-3890-3403)
+      const waUrl = `https://wa.me/${ownerPhone}?text=${encodeURIComponent(waMessage)}`;
+      try {
+        const win = window.open(waUrl, '_blank');
+        if (!win || win.closed || typeof win.closed === 'undefined') {
+          window.location.href = waUrl;
         }
+      } catch (e) {
+        window.location.href = waUrl;
+      }
 
-        const waUrl = `https://wa.me/${ownerPhone}?text=${encodeURIComponent(waMessage)}`;
-        try {
-          window.open(waUrl, '_blank');
-        } catch (e) {
-          console.warn('Could not open WhatsApp window', e);
-        }
+      if (uploadedPaymentProof) {
+        showToast('Membuka WhatsApp Owner (0823-3890-3403)... Foto struk sudah disalin, tinggal Tempel (Paste) di chat WhatsApp! 📸', 'success');
+      } else {
+        showToast('Membuka WhatsApp Owner (0823-3890-3403)...', 'success');
       }
 
       const paymentNote = `Lunas via ${methodTitle} (Rp ${total.toLocaleString('id-ID')})`;
