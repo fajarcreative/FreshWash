@@ -1,6 +1,7 @@
-const CACHE_NAME = 'freshwash-pwa-v7';
+const CACHE_NAME = 'freshwash-pwa-v8';
 const ASSETS_TO_CACHE = [
   './',
+  './config.js',
   './index.html',
   './manifest.json',
   './assets/icon.svg',

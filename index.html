@@ -22,6 +22,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
   
+  <!-- Whitelabel / Rebranding Configuration -->
+  <script src="config.js"></script>
+
   <script src="https://cdn.tailwindcss.com"></script>
   <script id="tailwind-config">
     tailwind.config = {
@@ -3115,19 +3118,19 @@
         freeWashCoupons: 0
       },
       merchant: {
-        storeName: 'FreshWash Bening Laundry',
-        ownerName: 'Fajar Hisbulloh',
-        ownerPhone: '082338903403',
+        storeName: (window.APP_CONFIG?.brand?.fullName) || 'FreshWash Bening Laundry',
+        ownerName: (window.APP_CONFIG?.owner?.name) || 'Fajar Hisbulloh',
+        ownerPhone: (window.APP_CONFIG?.owner?.phone) || '082338903403',
         bankCode: 'bca',
-        bankName: 'BCA (Bank Central Asia)',
-        accountNumber: '827708128921',
-        accountHolder: 'FAJAR HISBULLOH',
-        qrisType: 'generated', // 'generated' or 'custom_image'
-        qrisImage: '',
-        qrisNmid: 'ID1024392819230',
-        qrisMerchantName: 'FRESHWASH BENING LAUNDRY',
-        city: 'Jakarta',
-        instructions: 'Scan QRIS pengusaha di atas untuk pembayaran pesanan. Pembayaran langsung masuk ke rekening bank pemilik laundry.'
+        bankName: (window.APP_CONFIG?.payment?.banks?.bca?.bankName) || 'BCA (Bank Central Asia)',
+        accountNumber: (window.APP_CONFIG?.payment?.banks?.bca?.cleanNumber) || '827708128921',
+        accountHolder: (window.APP_CONFIG?.payment?.banks?.bca?.accountHolder) || 'FAJAR HISBULLOH',
+        qrisType: (window.APP_CONFIG?.payment?.qris?.type) || 'generated', // 'generated' or 'custom_image'
+        qrisImage: (window.APP_CONFIG?.payment?.qris?.customImageUrl) || '',
+        qrisNmid: (window.APP_CONFIG?.payment?.qris?.nmid) || 'ID1024392819230',
+        qrisMerchantName: (window.APP_CONFIG?.payment?.qris?.merchantName) || 'FRESHWASH BENING LAUNDRY',
+        city: (window.APP_CONFIG?.brand?.city) || 'Jakarta',
+        instructions: (window.APP_CONFIG?.payment?.qris?.instructions) || 'Scan QRIS pengusaha di atas untuk pembayaran pesanan. Pembayaran langsung masuk ke rekening bank pemilik laundry.'
       },
       booking: {
         category: 'kiloan',
@@ -3338,8 +3341,11 @@
       const orders = Array.isArray(STATE.orders) ? STATE.orders : [];
       const ord = orders.find(o => o.id === orderId);
       const info = ord ? `${ord.serviceName || 'Laundry'} (${ord.id})` : (orderId || 'Pesanan');
-      const msg = `Halo FreshWash (Mas Fajar Hisbulloh), saya ingin menanyakan status pesanan laundry saya: *${info}*. Mohon infonya ya. Terima kasih! 🙏`;
-      window.open(`https://wa.me/6282338903403?text=${encodeURIComponent(msg)}`, '_blank');
+      const ownerPhone = (window.APP_CONFIG?.owner?.phone) || '6282338903403';
+      const brandName = (window.APP_CONFIG?.brand?.name) || 'FreshWash';
+      const ownerSalutation = (window.APP_CONFIG?.owner?.salutation) || 'Mas Fajar Hisbulloh';
+      const msg = `Halo ${brandName} (${ownerSalutation}), saya ingin menanyakan status pesanan laundry saya: *${info}*. Mohon infonya ya. Terima kasih! 🙏`;
+      window.open(`https://wa.me/${ownerPhone}?text=${encodeURIComponent(msg)}`, '_blank');
     }
 
     function trackSpecificOrder(orderId) {
@@ -4334,12 +4340,16 @@
         method: methodLabel
       });
 
-      // WhatsApp Confirmation Message to Owner Fajar Hisbulloh (082338903403)
-      const ownerPhone = '6282338903403';
+      // WhatsApp Confirmation Message to Owner
+      const ownerPhone = (window.APP_CONFIG?.owner?.phone) || '6282338903403';
+      const ownerSalutation = (window.APP_CONFIG?.owner?.salutation) || 'Mas Fajar';
+      const ownerName = (window.APP_CONFIG?.owner?.name) || 'Fajar Hisbulloh';
+      const brandName = (window.APP_CONFIG?.brand?.name) || 'FreshWash';
+      const brandFullName = (window.APP_CONFIG?.brand?.fullName) || 'FreshWash Official';
       const custName = STATE.user.name || STATE.user.email.split('@')[0];
-      const custPhone = STATE.user.phone || '+62 823-3890-3403';
+      const custPhone = STATE.user.phone || (window.APP_CONFIG?.owner?.displayPhone) || '+62 823-3890-3403';
       const waMsg = 
-`*KONFIRMASI AKTIVASI MEMBER - FRESHWASH*
+`*KONFIRMASI AKTIVASI MEMBER - ${brandName.toUpperCase()}*
 ----------------------------------------
 *Jenis Aktivasi:* ${isUpgrade ? 'UPGRADE MEMBER' : 'MEMBER BARU'}
 *Paket Member:* ${target.badge}
@@ -4350,7 +4360,7 @@
 💳 *RINCIAN PEMBAYARAN:*
 • Total Tagihan: *Rp ${price.toLocaleString('id-ID')}*
 • Metode: *${methodLabel}*
-• Rekening Tujuan: *FreshWash Official (Fajar Hisbulloh)*
+• Rekening Tujuan: *${brandFullName} (${ownerName})*
 • Status: *Sudah Dibayar / Lunas*
 
 📅 *MASA AKTIF KEANGGOTAAN:*
@@ -4360,9 +4370,9 @@
 🎁 *HAK KEUNTUNGAN MEMBER:*
 • Diskon Transaksi: ${target.discount}% Otomatis
 • Gratis Antar-Jemput: Radius 5 Km (Min. Cuci Rp30.000)
-${target.freeWashBonusWeight > 0 ? `• Bonus Cuci Gratis: 1x Tiap 10 Transaksi (Maks ${target.freeWashBonusWeight} kg)\n` : ''}${target.hasPriority ? '• Layanan: Prioritas Utama FreshWash VIP\n' : ''}
+${target.freeWashBonusWeight > 0 ? `• Bonus Cuci Gratis: 1x Tiap 10 Transaksi (Maks ${target.freeWashBonusWeight} kg)\n` : ''}${target.hasPriority ? `• Layanan: Prioritas Utama ${brandName} VIP\n` : ''}
 ----------------------------------------
-Halo Mas Fajar (Owner), saya telah menyelesaikan pembayaran keanggotaan ${target.name}. Mohon dikonfirmasi ya. Terima kasih! 🙏`;
+Halo ${ownerSalutation} (Owner), saya telah menyelesaikan pembayaran keanggotaan ${target.name}. Mohon dikonfirmasi ya. Terima kasih! 🙏`;
 
       const waUrl = `https://wa.me/${ownerPhone}?text=${encodeURIComponent(waMsg)}`;
       try {
@@ -6650,6 +6660,38 @@ Halo Mas Fajar (Owner), saya telah menyelesaikan pembayaran keanggotaan ${target
 
       if (!detailBox) return;
 
+      const cfg = window.APP_CONFIG || {};
+      const qrisCfg = cfg.payment?.qris || {
+        storeName: 'FreshWash Bening Laundry',
+        merchantName: 'FRESHWASH BENING LAUNDRY',
+        nmid: 'ID1024392819230',
+        city: 'Jakarta'
+      };
+      const bcaCfg = cfg.payment?.banks?.bca || {
+        accountNumber: '8277 0812 8921',
+        cleanNumber: '827708128921',
+        accountHolder: 'FAJAR HISBULLOH',
+        instruction: 'Transfer Bank Manual / m-BCA'
+      };
+      const mdrCfg = cfg.payment?.banks?.mandiri || {
+        accountNumber: '1370 0192 8821',
+        cleanNumber: '137001928821',
+        accountHolder: 'FAJAR HISBULLOH',
+        instruction: 'Livin by Mandiri / ATM'
+      };
+      const briCfg = cfg.payment?.banks?.bri || {
+        accountNumber: '0341 0100 2891 503',
+        cleanNumber: '034101002891503',
+        accountHolder: 'FAJAR HISBULLOH',
+        instruction: 'BRImo / ATM BRI'
+      };
+      const bsiCfg = cfg.payment?.banks?.bsi || {
+        accountNumber: '7182 9901 82',
+        cleanNumber: '7182990182',
+        accountHolder: 'FAJAR HISBULLOH',
+        instruction: 'BSI Mobile / ATM Bersama'
+      };
+
       if (option === 'qris') {
         if (warningEl) warningEl.classList.add('hidden');
         if (proofSection) proofSection.classList.remove('hidden');
@@ -6658,28 +6700,32 @@ Halo Mas Fajar (Owner), saya telah menyelesaikan pembayaran keanggotaan ${target
           proofBadge.className = 'text-[9px] bg-teal-100 text-teal-800 font-bold px-2 py-0.5 rounded-full';
         }
 
+        const qrisImgSrc = (qrisCfg.type === 'custom_image' && qrisCfg.customImageUrl)
+          ? qrisCfg.customImageUrl
+          : 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=FRESHWASH_QRIS_STORE_PAYMENT';
+
         detailBox.innerHTML = `
           <div class="flex items-center justify-between pb-2 border-b border-teal-500/20">
             <div class="flex items-center gap-2">
               <span class="material-symbols-outlined text-teal-700 text-[20px]">qr_code_scanner</span>
               <div>
                 <span class="text-xs font-bold text-on-surface block">QRIS Toko Resmi</span>
-                <span class="text-[10px] text-teal-800 font-semibold">FreshWash Bening Laundry</span>
+                <span class="text-[10px] text-teal-800 font-semibold">${qrisCfg.storeName || 'FreshWash Bening Laundry'}</span>
               </div>
             </div>
             <span class="text-[9px] bg-teal-100 text-teal-800 font-bold px-2 py-0.5 rounded-full">Scan &amp; Bayar</span>
           </div>
           <div class="p-3 bg-white rounded-xl border border-outline-variant/30 text-center my-1.5 shadow-2xs">
-            <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=FRESHWASH_QRIS_STORE_PAYMENT" alt="QRIS Toko" class="w-36 h-36 mx-auto object-contain rounded-md"/>
-            <p class="text-xs font-bold text-slate-800 mt-1.5">FRESHWASH BENING LAUNDRY</p>
-            <p class="text-[10px] text-slate-500 font-medium">NMID: ID1024392819230 • Jakarta</p>
+            <img src="${qrisImgSrc}" alt="QRIS Toko" class="w-36 h-36 mx-auto object-contain rounded-md"/>
+            <p class="text-xs font-bold text-slate-800 mt-1.5">${qrisCfg.merchantName || 'FRESHWASH BENING LAUNDRY'}</p>
+            <p class="text-[10px] text-slate-500 font-medium">NMID: ${qrisCfg.nmid || 'ID1024392819230'} • ${qrisCfg.city || cfg.brand?.city || 'Jakarta'}</p>
           </div>
           <div class="flex items-center justify-between p-2 rounded-lg bg-surface-container-lowest">
             <div>
               <span class="text-[10px] text-on-surface-variant block">NMID Resmi Toko:</span>
-              <span class="text-xs font-mono font-bold text-primary">ID1024392819230</span>
+              <span class="text-xs font-mono font-bold text-primary">${qrisCfg.nmid || 'ID1024392819230'}</span>
             </div>
-            <button type="button" onclick="copyTextToClipboard('ID1024392819230', 'NMID QRIS Toko')" class="px-2.5 py-1 rounded-lg bg-teal-50 hover:bg-teal-100 text-teal-800 text-xs font-bold flex items-center gap-1 transition-all border border-teal-200">
+            <button type="button" onclick="copyTextToClipboard('${qrisCfg.nmid || 'ID1024392819230'}', 'NMID QRIS Toko')" class="px-2.5 py-1 rounded-lg bg-teal-50 hover:bg-teal-100 text-teal-800 text-xs font-bold flex items-center gap-1 transition-all border border-teal-200">
               <span class="material-symbols-outlined text-[13px]">content_copy</span>
               <span>Salin NMID</span>
             </button>
@@ -6709,7 +6755,7 @@ Halo Mas Fajar (Owner), saya telah menyelesaikan pembayaran keanggotaan ${target
               <div class="w-6 h-6 rounded-md bg-blue-600 text-white flex items-center justify-center font-bold text-[10px]">BCA</div>
               <div>
                 <span class="text-xs font-bold text-on-surface block">Bank BCA Toko Laundry</span>
-                <span class="text-[10px] text-on-surface-variant">Transfer Bank Manual / m-BCA</span>
+                <span class="text-[10px] text-on-surface-variant">${bcaCfg.instruction || 'Transfer Bank Manual / m-BCA'}</span>
               </div>
             </div>
             <span class="text-[9px] bg-blue-100 text-blue-800 font-bold px-2 py-0.5 rounded-full">Rekening Toko</span>
@@ -6717,10 +6763,10 @@ Halo Mas Fajar (Owner), saya telah menyelesaikan pembayaran keanggotaan ${target
           <div class="p-3 bg-surface-container-lowest rounded-xl flex items-center justify-between border border-outline-variant/20 shadow-2xs">
             <div>
               <span class="text-[10px] text-on-surface-variant block">Nomor Rekening BCA Toko:</span>
-              <span class="text-sm font-mono font-bold text-on-surface tracking-wider">8277 0812 8921</span>
-              <span class="text-[10px] text-on-surface-variant block mt-0.5">a/n <strong class="text-on-surface font-bold">FAJAR HISBULLOH</strong></span>
+              <span class="text-sm font-mono font-bold text-on-surface tracking-wider">${bcaCfg.accountNumber || '8277 0812 8921'}</span>
+              <span class="text-[10px] text-on-surface-variant block mt-0.5">a/n <strong class="text-on-surface font-bold">${bcaCfg.accountHolder || 'FAJAR HISBULLOH'}</strong></span>
             </div>
-            <button type="button" onclick="copyTextToClipboard('827708128921', 'Nomor rekening BCA Toko')" class="px-3 py-1.5 rounded-xl bg-primary text-white hover:bg-primary/90 text-xs font-bold flex items-center gap-1 shadow-xs transition-all active:scale-95">
+            <button type="button" onclick="copyTextToClipboard('${bcaCfg.cleanNumber || '827708128921'}', 'Nomor rekening BCA Toko')" class="px-3 py-1.5 rounded-xl bg-primary text-white hover:bg-primary/90 text-xs font-bold flex items-center gap-1 shadow-xs transition-all active:scale-95">
               <span class="material-symbols-outlined text-[14px]">content_copy</span>
               <span>Salin</span>
             </button>
@@ -6751,7 +6797,7 @@ Halo Mas Fajar (Owner), saya telah menyelesaikan pembayaran keanggotaan ${target
               <div class="w-6 h-6 rounded-md bg-amber-600 text-white flex items-center justify-center font-bold text-[9px]">MDR</div>
               <div>
                 <span class="text-xs font-bold text-on-surface block">Bank Mandiri Toko Laundry</span>
-                <span class="text-[10px] text-on-surface-variant">Livin by Mandiri / ATM</span>
+                <span class="text-[10px] text-on-surface-variant">${mdrCfg.instruction || 'Livin by Mandiri / ATM'}</span>
               </div>
             </div>
             <span class="text-[9px] bg-amber-100 text-amber-800 font-bold px-2 py-0.5 rounded-full">Rekening Toko</span>
@@ -6759,10 +6805,10 @@ Halo Mas Fajar (Owner), saya telah menyelesaikan pembayaran keanggotaan ${target
           <div class="p-3 bg-surface-container-lowest rounded-xl flex items-center justify-between border border-outline-variant/20 shadow-2xs">
             <div>
               <span class="text-[10px] text-on-surface-variant block">Nomor Rekening Mandiri Toko:</span>
-              <span class="text-sm font-mono font-bold text-on-surface tracking-wider">1370 0192 8821</span>
-              <span class="text-[10px] text-on-surface-variant block mt-0.5">a/n <strong class="text-on-surface font-bold">FAJAR HISBULLOH</strong></span>
+              <span class="text-sm font-mono font-bold text-on-surface tracking-wider">${mdrCfg.accountNumber || '1370 0192 8821'}</span>
+              <span class="text-[10px] text-on-surface-variant block mt-0.5">a/n <strong class="text-on-surface font-bold">${mdrCfg.accountHolder || 'FAJAR HISBULLOH'}</strong></span>
             </div>
-            <button type="button" onclick="copyTextToClipboard('137001928821', 'Nomor rekening Mandiri Toko')" class="px-3 py-1.5 rounded-xl bg-primary text-white hover:bg-primary/90 text-xs font-bold flex items-center gap-1 shadow-xs transition-all active:scale-95">
+            <button type="button" onclick="copyTextToClipboard('${mdrCfg.cleanNumber || '137001928821'}', 'Nomor rekening Mandiri Toko')" class="px-3 py-1.5 rounded-xl bg-primary text-white hover:bg-primary/90 text-xs font-bold flex items-center gap-1 shadow-xs transition-all active:scale-95">
               <span class="material-symbols-outlined text-[14px]">content_copy</span>
               <span>Salin</span>
             </button>
@@ -6793,7 +6839,7 @@ Halo Mas Fajar (Owner), saya telah menyelesaikan pembayaran keanggotaan ${target
               <div class="w-6 h-6 rounded-md bg-sky-600 text-white flex items-center justify-center font-bold text-[10px]">BRI</div>
               <div>
                 <span class="text-xs font-bold text-on-surface block">Bank BRI Toko Laundry</span>
-                <span class="text-[10px] text-on-surface-variant">BRImo / ATM BRI</span>
+                <span class="text-[10px] text-on-surface-variant">${briCfg.instruction || 'BRImo / ATM BRI'}</span>
               </div>
             </div>
             <span class="text-[9px] bg-sky-100 text-sky-800 font-bold px-2 py-0.5 rounded-full">Rekening Toko</span>
@@ -6801,10 +6847,10 @@ Halo Mas Fajar (Owner), saya telah menyelesaikan pembayaran keanggotaan ${target
           <div class="p-3 bg-surface-container-lowest rounded-xl flex items-center justify-between border border-outline-variant/20 shadow-2xs">
             <div>
               <span class="text-[10px] text-on-surface-variant block">Nomor Rekening BRI Toko:</span>
-              <span class="text-sm font-mono font-bold text-on-surface tracking-wider">0341 0100 2891 503</span>
-              <span class="text-[10px] text-on-surface-variant block mt-0.5">a/n <strong class="text-on-surface font-bold">FAJAR HISBULLOH</strong></span>
+              <span class="text-sm font-mono font-bold text-on-surface tracking-wider">${briCfg.accountNumber || '0341 0100 2891 503'}</span>
+              <span class="text-[10px] text-on-surface-variant block mt-0.5">a/n <strong class="text-on-surface font-bold">${briCfg.accountHolder || 'FAJAR HISBULLOH'}</strong></span>
             </div>
-            <button type="button" onclick="copyTextToClipboard('034101002891503', 'Nomor rekening BRI Toko')" class="px-3 py-1.5 rounded-xl bg-primary text-white hover:bg-primary/90 text-xs font-bold flex items-center gap-1 shadow-xs transition-all active:scale-95">
+            <button type="button" onclick="copyTextToClipboard('${briCfg.cleanNumber || '034101002891503'}', 'Nomor rekening BRI Toko')" class="px-3 py-1.5 rounded-xl bg-primary text-white hover:bg-primary/90 text-xs font-bold flex items-center gap-1 shadow-xs transition-all active:scale-95">
               <span class="material-symbols-outlined text-[14px]">content_copy</span>
               <span>Salin</span>
             </button>
@@ -6835,7 +6881,7 @@ Halo Mas Fajar (Owner), saya telah menyelesaikan pembayaran keanggotaan ${target
               <div class="w-6 h-6 rounded-md bg-emerald-700 text-white flex items-center justify-center font-bold text-[10px]">BSI</div>
               <div>
                 <span class="text-xs font-bold text-on-surface block">Bank BSI (Syariah) Toko</span>
-                <span class="text-[10px] text-on-surface-variant">BSI Mobile / ATM Bersama</span>
+                <span class="text-[10px] text-on-surface-variant">${bsiCfg.instruction || 'BSI Mobile / ATM Bersama'}</span>
               </div>
             </div>
             <span class="text-[9px] bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded-full">Rekening Toko</span>
@@ -6843,10 +6889,10 @@ Halo Mas Fajar (Owner), saya telah menyelesaikan pembayaran keanggotaan ${target
           <div class="p-3 bg-surface-container-lowest rounded-xl flex items-center justify-between border border-outline-variant/20 shadow-2xs">
             <div>
               <span class="text-[10px] text-on-surface-variant block">Nomor Rekening BSI Toko:</span>
-              <span class="text-sm font-mono font-bold text-on-surface tracking-wider">7182 9901 82</span>
-              <span class="text-[10px] text-on-surface-variant block mt-0.5">a/n <strong class="text-on-surface font-bold">FAJAR HISBULLOH</strong></span>
+              <span class="text-sm font-mono font-bold text-on-surface tracking-wider">${bsiCfg.accountNumber || '7182 9901 82'}</span>
+              <span class="text-[10px] text-on-surface-variant block mt-0.5">a/n <strong class="text-on-surface font-bold">${bsiCfg.accountHolder || 'FAJAR HISBULLOH'}</strong></span>
             </div>
-            <button type="button" onclick="copyTextToClipboard('7182990182', 'Nomor rekening BSI Toko')" class="px-3 py-1.5 rounded-xl bg-primary text-white hover:bg-primary/90 text-xs font-bold flex items-center gap-1 shadow-xs transition-all active:scale-95">
+            <button type="button" onclick="copyTextToClipboard('${bsiCfg.cleanNumber || '7182990182'}', 'Nomor rekening BSI Toko')" class="px-3 py-1.5 rounded-xl bg-primary text-white hover:bg-primary/90 text-xs font-bold flex items-center gap-1 shadow-xs transition-all active:scale-95">
               <span class="material-symbols-outlined text-[14px]">content_copy</span>
               <span>Salin</span>
             </button>
@@ -6880,26 +6926,38 @@ Halo Mas Fajar (Owner), saya telah menyelesaikan pembayaran keanggotaan ${target
       STATE.user.points += 100; // 100 Poin tiap mencuci
 
       // Map Payment Method Details (Hanya Bank atau QRIS Toko)
+      const cfg = window.APP_CONFIG || {};
+      const qrisCfg = cfg.payment?.qris || {
+        storeName: 'FreshWash Bening Laundry',
+        merchantName: 'FRESHWASH BENING LAUNDRY',
+        nmid: 'ID1024392819230',
+        accountHolder: 'FAJAR HISBULLOH'
+      };
+      const bcaCfg = cfg.payment?.banks?.bca || { accountNumber: '8277 0812 8921', accountHolder: 'FAJAR HISBULLOH' };
+      const mdrCfg = cfg.payment?.banks?.mandiri || { accountNumber: '1370 0192 8821', accountHolder: 'FAJAR HISBULLOH' };
+      const briCfg = cfg.payment?.banks?.bri || { accountNumber: '0341 0100 2891 503', accountHolder: 'FAJAR HISBULLOH' };
+      const bsiCfg = cfg.payment?.banks?.bsi || { accountNumber: '7182 9901 82', accountHolder: 'FAJAR HISBULLOH' };
+
       let methodTitle = 'QRIS Toko Resmi';
-      let methodDetail = 'QRIS Toko Resmi (ID1024392819230 - FreshWash Bening Laundry)';
-      let targetAccount = 'QRIS Toko a/n FAJAR HISBULLOH';
+      let methodDetail = `QRIS Toko Resmi (${qrisCfg.nmid || 'ID1024392819230'} - ${qrisCfg.storeName || 'FreshWash Bening Laundry'})`;
+      let targetAccount = `QRIS Toko a/n ${qrisCfg.accountHolder || 'FAJAR HISBULLOH'}`;
 
       if (payOption === 'bca') {
         methodTitle = 'Transfer Bank BCA Toko';
-        methodDetail = 'Bank BCA (8277 0812 8921 a/n FAJAR HISBULLOH)';
-        targetAccount = 'BCA: 8277 0812 8921 a/n FAJAR HISBULLOH';
+        methodDetail = `Bank BCA (${bcaCfg.accountNumber || '8277 0812 8921'} a/n ${bcaCfg.accountHolder || 'FAJAR HISBULLOH'})`;
+        targetAccount = `BCA: ${bcaCfg.accountNumber || '8277 0812 8921'} a/n ${bcaCfg.accountHolder || 'FAJAR HISBULLOH'}`;
       } else if (payOption === 'mandiri') {
         methodTitle = 'Transfer Bank Mandiri Toko';
-        methodDetail = 'Bank Mandiri (1370 0192 8821 a/n FAJAR HISBULLOH)';
-        targetAccount = 'Mandiri: 1370 0192 8821 a/n FAJAR HISBULLOH';
+        methodDetail = `Bank Mandiri (${mdrCfg.accountNumber || '1370 0192 8821'} a/n ${mdrCfg.accountHolder || 'FAJAR HISBULLOH'})`;
+        targetAccount = `Mandiri: ${mdrCfg.accountNumber || '1370 0192 8821'} a/n ${mdrCfg.accountHolder || 'FAJAR HISBULLOH'}`;
       } else if (payOption === 'bri') {
         methodTitle = 'Transfer Bank BRI Toko';
-        methodDetail = 'Bank BRI (0341 0100 2891 503 a/n FAJAR HISBULLOH)';
-        targetAccount = 'BRI: 0341 0100 2891 503 a/n FAJAR HISBULLOH';
+        methodDetail = `Bank BRI (${briCfg.accountNumber || '0341 0100 2891 503'} a/n ${briCfg.accountHolder || 'FAJAR HISBULLOH'})`;
+        targetAccount = `BRI: ${briCfg.accountNumber || '0341 0100 2891 503'} a/n ${briCfg.accountHolder || 'FAJAR HISBULLOH'}`;
       } else if (payOption === 'bsi') {
         methodTitle = 'Transfer Bank BSI Toko';
-        methodDetail = 'Bank BSI Syariah (7182 9901 82 a/n FAJAR HISBULLOH)';
-        targetAccount = 'BSI: 7182 9901 82 a/n FAJAR HISBULLOH';
+        methodDetail = `Bank BSI Syariah (${bsiCfg.accountNumber || '7182 9901 82'} a/n ${bsiCfg.accountHolder || 'FAJAR HISBULLOH'})`;
+        targetAccount = `BSI: ${bsiCfg.accountNumber || '7182 9901 82'} a/n ${bsiCfg.accountHolder || 'FAJAR HISBULLOH'}`;
       }
 
       // Record in Transactions
@@ -6914,10 +6972,12 @@ Halo Mas Fajar (Owner), saya telah menyelesaikan pembayaran keanggotaan ${target
         method: methodTitle
       });
 
-      // Construct WhatsApp message to Owner Fajar Hisbulloh
-      const ownerPhone = '6282338903403';
+      // Construct WhatsApp message to Owner
+      const ownerPhone = (window.APP_CONFIG?.owner?.phone) || '6282338903403';
+      const ownerSalutation = (window.APP_CONFIG?.owner?.salutation) || 'Mas Fajar';
+      const brandName = (window.APP_CONFIG?.brand?.name) || 'FreshWash';
       const custName = STATE.user.name || (STATE.user.email ? STATE.user.email.split('@')[0] : 'Pelanggan');
-      const custPhone = STATE.user.phone || '+62 823-3890-3403';
+      const custPhone = STATE.user.phone || (window.APP_CONFIG?.owner?.displayPhone) || '+62 823-3890-3403';
       const custAddress = STATE.user.address || 'Belum mencantumkan alamat lengkap';
       const notes = document.getElementById('bookingNotes')?.value?.trim() || 'Tidak ada catatan khusus';
       
@@ -6928,7 +6988,7 @@ Halo Mas Fajar (Owner), saya telah menyelesaikan pembayaran keanggotaan ${target
 
       const schedule = `${STATE.booking.date} (${STATE.booking.timeSlot})`;
       const perfume = STATE.booking.perfume || 'Lavender Bliss';
-      const softener = STATE.booking.extraSoftener ? 'Ekstra Pelembut Premium (+Rp ' + softenerAddon.toLocaleString('id-ID') + ')' : 'Standar FreshWash';
+      const softener = STATE.booking.extraSoftener ? 'Ekstra Pelembut Premium (+Rp ' + softenerAddon.toLocaleString('id-ID') + ')' : `Standar ${brandName}`;
       const discountText = (discountAmount > 0)
         ? `• Diskon Promo 30% (BERSIHSEGAR): *-Rp ${discountAmount.toLocaleString('id-ID')}*\n`
         : '';
@@ -6981,7 +7041,7 @@ Halo Mas Fajar (Owner), saya telah menyelesaikan pembayaran keanggotaan ${target
       const memberBadgeText = (STATE.user && STATE.user.isMember) ? `✨ *MEMBER AKTIF:* ${STATE.user.tier}\n` : '';
 
       const waMessage = 
-`*PESANAN LAUNDRY BARU - FRESHWASH*
+`*PESANAN LAUNDRY BARU - ${brandName.toUpperCase()}*
 ----------------------------------------
 *No. Pesanan:* ${newCode}
 *Nama Pelanggan:* ${custName}
@@ -7005,7 +7065,7 @@ ${discountText}${memberDiscountText}• Total Tagihan: *Rp ${total.toLocaleStrin
 ${proofText}
 
 ----------------------------------------
-Halo Mas Fajar (Owner), pesanan sudah saya buat via aplikasi. Mohon segera dicek & kurir dijadwalkan ya. Terima kasih! 🙏`;
+Halo ${ownerSalutation} (Owner), pesanan sudah saya buat via aplikasi. Mohon segera dicek & kurir dijadwalkan ya. Terima kasih! 🙏`;
 
       // Salin foto struk ke clipboard jika didukung browser
       if (uploadedPaymentProof && uploadedPaymentProof.file && navigator.clipboard && window.ClipboardItem) {
@@ -7193,8 +7253,11 @@ Halo Mas Fajar (Owner), pesanan sudah saya buat via aplikasi. Mohon segera dicek
     }
 
     function openSupportModal() {
-      showToast('Menghubungkan ke Customer Care WhatsApp (+62 823-3890-3403)...', 'success');
-      window.open('https://wa.me/6282338903403?text=Halo%20FreshWash%20Support%2C%20saya%20butuh%20bantuan%20pesanan%20laundry', '_blank');
+      const ownerPhone = (window.APP_CONFIG?.owner?.phone) || '6282338903403';
+      const displayPhone = (window.APP_CONFIG?.owner?.displayPhone) || '+62 823-3890-3403';
+      const brandName = (window.APP_CONFIG?.brand?.name) || 'FreshWash';
+      showToast(`Menghubungkan ke Customer Care WhatsApp (${displayPhone})...`, 'success');
+      window.open(`https://wa.me/${ownerPhone}?text=Halo%20${encodeURIComponent(brandName)}%20Support%2C%20saya%20butuh%20bantuan%20pesanan%20laundry`, '_blank');
     }
 
     // --- TOP UP LOGIC & PAYMENT GATEWAY CONTROLLER ---
@@ -8207,16 +8270,19 @@ Halo Mas Fajar (Owner), pesanan sudah saya buat via aplikasi. Mohon segera dicek
 
     function sendPaymentProofWA() {
       const active = STATE.activePayment || {};
-      const ownerPhone = '6282338903403';
+      const ownerPhone = (window.APP_CONFIG?.owner?.phone) || '6282338903403';
+      const ownerSalutation = (window.APP_CONFIG?.owner?.salutation) || 'Mas Fajar';
+      const brandFullName = (window.APP_CONFIG?.brand?.fullName) || 'FreshWash Bening Laundry';
+      const displayPhone = (window.APP_CONFIG?.owner?.displayPhone) || '0823-3890-3403';
       const amountStr = `Rp ${(active.amount || 48000).toLocaleString('id-ID')}`;
       const orderRef = active.orderCode || active.ref || (STATE.tracking.orderId || '#FW-ORDER');
       const custName = STATE.user.name || (STATE.user.email ? STATE.user.email.split('@')[0] : 'Pelanggan');
 
-      const message = `Halo Mas Fajar (Owner FreshWash Bening Laundry),\n\nSaya atas nama *${custName}* ingin mengonfirmasi pembayaran pesanan Laundry *${orderRef}* sebesar *${amountStr}*.\n\nBerikut bukti transfer / struk pembayaran saya lampirkan di chat ini. Mohon pesanan segera diproses ya kak. Terima kasih! 🙏`;
+      const message = `Halo ${ownerSalutation} (Owner ${brandFullName}),\n\nSaya atas nama *${custName}* ingin mengonfirmasi pembayaran pesanan Laundry *${orderRef}* sebesar *${amountStr}*.\n\nBerikut bukti transfer / struk pembayaran saya lampirkan di chat ini. Mohon pesanan segera diproses ya kak. Terima kasih! 🙏`;
 
       const waUrl = `https://wa.me/${ownerPhone}?text=${encodeURIComponent(message)}`;
       window.open(waUrl, '_blank');
-      showToast('Membuka WhatsApp ke Owner (0823-3890-3403)...', 'success');
+      showToast(`Membuka WhatsApp ke Owner (${displayPhone})...`, 'success');
     }
 
     function confirmLogout() {
@@ -8403,8 +8469,130 @@ Halo Mas Fajar (Owner), pesanan sudah saya buat via aplikasi. Mohon segera dicek
       });
     }
 
+    // Apply dynamic configuration from window.APP_CONFIG (Whitelabel / Rebranding)
+    function applyAppConfig() {
+      if (!window.APP_CONFIG) return;
+      const cfg = window.APP_CONFIG;
+      const brand = cfg.brand || {};
+      const owner = cfg.owner || {};
+      const payment = cfg.payment || {};
+      const banks = payment.banks || {};
+      const qris = payment.qris || {};
+
+      // 1. Dynamic Page Title
+      if (brand.name) {
+        document.title = brand.tagline ? `${brand.name} - ${brand.tagline}` : `${brand.name} - Smart Laundry`;
+      }
+
+      // 2. Dynamic Header Brand Name
+      const headerBrand = document.querySelector('header .font-headline-sm');
+      if (headerBrand && brand.name) {
+        headerBrand.innerText = brand.name;
+      }
+
+      // 3. Dynamic PWA Install Banner & Metas
+      const pwaTitle = document.querySelector('#pwaInstallBanner h4');
+      if (pwaTitle && brand.name) {
+        pwaTitle.innerText = `Pasang ${brand.name} di HP`;
+      }
+      const appleMeta = document.querySelector('meta[name="apple-mobile-web-app-title"]');
+      if (appleMeta && brand.shortName) {
+        appleMeta.setAttribute('content', brand.shortName);
+      }
+
+      // 4. Update WhatsApp links & phone texts
+      const targetPhone = owner.phone || '6282338903403';
+      const displayPhone = owner.displayPhone || targetPhone;
+
+      document.querySelectorAll('a[href*="wa.me/"]').forEach(a => {
+        let href = a.getAttribute('href');
+        if (href) {
+          href = href.replace(/wa\.me\/[0-9]+/, `wa.me/${targetPhone}`);
+          if (brand.name && brand.name !== 'FreshWash') {
+            href = href.replace(/FreshWash/g, encodeURIComponent(brand.name));
+          }
+          a.setAttribute('href', href);
+        }
+        if (a.innerText && a.innerText.includes('0823-3890-3403')) {
+          a.innerHTML = a.innerHTML.replace(/0823-3890-3403/g, displayPhone);
+        }
+      });
+
+      // 5. Update checkout modal footer note
+      const coFooterP = document.querySelector('#modalCheckout p.text-on-surface-variant');
+      if (coFooterP) {
+        coFooterP.innerHTML = `Chat WhatsApp terhubung langsung ke Owner ${owner.name || 'Laundry'} (<strong>${displayPhone}</strong>)`;
+      }
+
+      // 6. Update Account Screen / Store Info Modal
+      const modalStoreInfo = document.getElementById('modalStorePaymentInfo');
+      if (modalStoreInfo) {
+        const storeBadge = modalStoreInfo.querySelector('.text-teal-300');
+        if (storeBadge && brand.fullName) storeBadge.innerText = brand.fullName;
+
+        const storeOwnerP = modalStoreInfo.querySelector('p.text-slate-300');
+        if (storeOwnerP && (owner.name || displayPhone)) {
+          storeOwnerP.innerHTML = `Pemilik / Kasir: <strong class="text-white">${owner.name || 'Owner'}</strong> • WhatsApp: <strong class="text-white">${displayPhone}</strong>`;
+        }
+
+        const qrisImg = modalStoreInfo.querySelector('img[alt="QRIS Resmi Toko"]');
+        if (qrisImg && qris.type === 'custom_image' && qris.customImageUrl) {
+          qrisImg.src = qris.customImageUrl;
+        }
+
+        const qrisStoreP = modalStoreInfo.querySelector('.w-44 + div p.text-slate-900');
+        if (qrisStoreP && qris.merchantName) qrisStoreP.innerText = qris.merchantName;
+
+        const qrisNmidP = modalStoreInfo.querySelector('.w-44 + div p.text-slate-500');
+        if (qrisNmidP && qris.nmid) {
+          qrisNmidP.innerText = `NMID: ${qris.nmid} • ${qris.city || brand.city || 'Indonesia'}`;
+        }
+      }
+
+      // 7. Update Bank Cards inside #modalCheckout and #modalBuyMembership
+      if (banks.bca) {
+        document.querySelectorAll('span').forEach(s => {
+          if (s.innerText && s.innerText.includes('8277 0812 8921 • a/n FAJAR HISBULLOH')) {
+            s.innerText = `${banks.bca.accountNumber} • a/n ${banks.bca.accountHolder}`;
+          }
+        });
+      }
+      if (banks.mandiri) {
+        document.querySelectorAll('span').forEach(s => {
+          if (s.innerText && s.innerText.includes('1370 0192 8821 • a/n FAJAR HISBULLOH')) {
+            s.innerText = `${banks.mandiri.accountNumber} • a/n ${banks.mandiri.accountHolder}`;
+          }
+        });
+      }
+      if (banks.bri) {
+        document.querySelectorAll('span').forEach(s => {
+          if (s.innerText && s.innerText.includes('0341 0100 2891 503 • a/n FAJAR HISBULLOH')) {
+            s.innerText = `${banks.bri.accountNumber} • a/n ${banks.bri.accountHolder}`;
+          }
+        });
+      }
+      if (banks.bsi) {
+        document.querySelectorAll('span').forEach(s => {
+          if (s.innerText && s.innerText.includes('7182 9901 82 • a/n FAJAR HISBULLOH')) {
+            s.innerText = `${banks.bsi.accountNumber} • a/n ${banks.bsi.accountHolder}`;
+          }
+        });
+      }
+
+      // 8. Update Gateway modal static labels if open
+      const gwHolder = document.getElementById('gwAccountHolder');
+      if (gwHolder && banks.bca?.accountHolder) {
+        gwHolder.innerText = banks.bca.accountHolder;
+      }
+      const gwQStore = document.getElementById('gwQRISStoreName');
+      if (gwQStore && brand.fullName) gwQStore.innerText = brand.fullName;
+      const gwQOwner = document.getElementById('gwQRISOwnerName');
+      if (gwQOwner && owner.name) gwQOwner.innerText = `a/n ${owner.name}`;
+    }
+
     // Initialize application on load
     document.addEventListener('DOMContentLoaded', () => {
+      applyAppConfig();
       const initialHash = window.location.hash.replace('#', '');
       if (['beranda', 'pesan-antar', 'akun'].includes(initialHash)) {
         switchScreen(initialHash);
